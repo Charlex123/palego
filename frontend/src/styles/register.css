@@ -1,0 +1,39 @@
+.forminput {
+    @apply appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-100;
+    border-radius: 12px;
+}
+.formlabel {
+    @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2
+}
+.formTag {
+    @apply w-full max-w-lg
+}
+.formDiv {
+    @apply flex flex-wrap -mx-3 mb-6
+}
+.innerformDiv {
+    @apply w-full px-3
+}
+.formpTag {
+    @apply text-gray-600 text-xs italic
+}
+.formflexDiv {
+    @apply flex flex-wrap -mx-3 mb-2
+}
+.formchildFlex {
+    @apply w-full md:w-1/2 px-3 mb-6 md:mb-0
+}
+.labelDiv {
+    @apply my-2
+}
+.regContainer {
+    @apply bg-white border border-gray-200 border-opacity-50 px-8
+}
+.registerButton {
+    @apply w-full bg-gray-200 hover:bg-gray-100 text-gray-900 font-bold my-4 py-2 px-4 rounded focus:outline-none mx-auto text-center;
+    border-radius: 12px;
+}
+.passhideshowButton {
+    @apply bg-transparent border-none border-0 text-gray-400;
+    text-align: right;float: right;margin-top: -1.8rem;margin-right: .5rem;
+}
