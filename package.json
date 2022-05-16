@@ -1,7 +1,7 @@
 {
   "name": "palego",
   "version": "1.0.0",
-  "description": "Notes Taking App",
+  "description": "Palego Trading Robot",
   "main": "server.js",
   "type": "module",
   "scripts": {
