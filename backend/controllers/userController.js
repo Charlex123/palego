@@ -1,6 +1,12 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
+import Referral from "../models/referralModel.js";
 import generateToken from "../utils/generateToken.js";
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+import {v4 as uuidv4} from "uuid";
+
+dotenv.config();
 
 //@description     Auth the user
 //@route           POST /api/users/login
@@ -29,7 +35,7 @@ const authUser = asyncHandler(async (req, res) => {
 //@route           POST /api/users/
 //@access          Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, pic } = req.body;
+  const { username, sponsorId, email, password, pic } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -39,9 +45,11 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create({
-    name,
+    username,
+    sponsorId,
     email,
     password,
+    emailcode: uuid,
     pic,
   });
 
