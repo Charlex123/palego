@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import Schema from "mongoose";
 
 const userSchema = mongoose.Schema(
   {
@@ -11,6 +12,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       unique: true
+    },
+    refId: {
+      type: Schema.Types.ObjectId,
+      ref: "referrals",
     },
     password: {
       type: String,

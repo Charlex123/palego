@@ -35,7 +35,7 @@ const authUser = asyncHandler(async (req, res) => {
 //@route           POST /api/users/
 //@access          Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, sponsorId, email, password, pic } = req.body;
+  const { username, email, password, pic } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -46,14 +46,33 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const user = await User.create({
     username,
-    sponsorId,
     email,
     password,
-    emailcode: uuid,
+    emailcode: uuidv4(),
     pic,
   });
 
   if (user) {
+
+    const sponsorId = req.body.sponsorId;
+    if(sponsorId) {
+
+      const { sponsorId } = req.body;
+    
+      const ref = await Referral.create({
+        sponsorId
+      });
+    
+      // if (ref) {
+      //   res.status(201).json({
+      //     sponsorId: ref.sponsorId
+      //   });
+      // } else {
+      //   res.status(400);
+      //   throw new Error("Referral not found");
+      // }
+    };
+    
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -67,6 +86,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 });
+
 
 // @desc    GET user profile
 // @route   GET /api/users/profile
