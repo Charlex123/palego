@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 import Schema from "mongoose";
 
-const userSchema = new mongoose.Schema(
+const referralSchema = new mongoose.Schema(
   {
     sponsorId: {
       type: String,
       required: true
     },
     userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
       },
     createdAt : {
         type: Date,
@@ -21,6 +21,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const Referral = mongoose.model("referrals", userSchema);
+const Referral = mongoose.model("referrals", referralSchema);
 
 export default Referral;

@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import Referral from "../models/referralModel.js";
 import generateToken from "../utils/generateToken.js";
+import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import {v4 as uuidv4} from "uuid";
@@ -63,16 +64,22 @@ const registerUser = asyncHandler(async (req, res) => {
         sponsorId
       });
     
+      if(ref) {
+        const sponsor = await User.findById(mongoose.Types.ObjectId(sponsorId));
+        console.log(sponsor.username)
+        res.status(201).json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          sponsorId: ref.sponsorId,
+          sponsor: sponsor.username,
+          isAdmin: user.isAdmin,
+          pic: user.pic,
+          token: generateToken(user._id),
+        });
+      }
       
-      res.status(201).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        sponsorId: ref.sponsorId,
-        isAdmin: user.isAdmin,
-        pic: user.pic,
-        token: generateToken(user._id),
-      });
+      
     }else {
       res.status(201).json({
         _id: user._id,
