@@ -63,24 +63,28 @@ const registerUser = asyncHandler(async (req, res) => {
         sponsorId
       });
     
-      // if (ref) {
-      //   res.status(201).json({
-      //     sponsorId: ref.sponsorId
-      //   });
-      // } else {
-      //   res.status(400);
-      //   throw new Error("Referral not found");
-      // }
-    };
+      
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        sponsorId: ref.sponsorId,
+        isAdmin: user.isAdmin,
+        pic: user.pic,
+        token: generateToken(user._id),
+      });
+    }else {
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        pic: user.pic,
+        token: generateToken(user._id),
+      });
+    }
     
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      pic: user.pic,
-      token: generateToken(user._id),
-    });
+    
   } else {
     res.status(400);
     throw new Error("User not found");
