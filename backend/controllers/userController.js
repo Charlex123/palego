@@ -6,8 +6,65 @@ import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import {v4 as uuidv4} from "uuid";
-
+import sgTransport from "nodemailer-sendgrid-transport";
 dotenv.config();
+
+
+// async..await is not allowed in global scope, must use a wrapper
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.AUTH_EMAIL, // generated ethereal user
+      pass: process.env.AUTH_PASS, // generated ethereal password
+    }
+  });
+
+  // var options = {
+  //   auth: {
+  //     api_user: process.env.AUTH_USRER,
+  //     api_key: process.env.AUTH_PASS
+  //   }
+  // }
+  
+  // var client = nodemailer.createTransport(sgTransport(options));
+  
+  // var email = {
+  //   from: 'awesome@bar.com',
+  //   to: 'mr.walrus@foo.com',
+  //   subject: 'Hello',
+  //   text: 'Hello world',
+  //   html: '<b>Hello world</b>'
+  // };
+  
+  // client.sendMail(email, function(err, info){
+  //     if (err ){
+  //       console.log(err);
+  //     }
+  //     else {
+  //       console.log('Message sent: ' + info.response);
+  //     }
+  // });
+
+  transporter.verify((error, success) => {
+    if(error) {
+     console.log(error) 
+    }else {
+      console.log("ready for message");
+      console.log(success);
+    }
+  })
+
+  // send mail with defined transport object
+  // let info = await transporter.sendMail({
+    // from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    // to: "bar@example.com, baz@example.com", // list of receivers
+    // subject: "Hello ✔", // Subject line
+    // text: "Hello world?", // plain text body
+    // html: "<b>Hello world?</b>", // html body
+  // });
+
+
 
 //@description     Auth the user
 //@route           POST /api/users/login
@@ -18,6 +75,11 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
+    const getdirectreferrals = await Referral.find(user._id).populate({
+      path:"sponsorId", select:['username','_id','email']
+    });
+    console.log(getdirectreferrals)
+
     res.json({
       _id: user._id,
       name: user.name,
@@ -59,20 +121,25 @@ const registerUser = asyncHandler(async (req, res) => {
     if(sponsorId) {
 
       const { sponsorId } = req.body;
-    
+      const userId = user._id;
+      console.log(userId)
       const ref = await Referral.create({
-        sponsorId
+        sponsorId,userId
       });
-    
+      
+      const getdirectreferrals = await Referral.find(user._id).populate({
+        path:"sponsorId", select:['username','_id','email']
+      });
+      console.log(getdirectreferrals)
       if(ref) {
-        const sponsor = await User.findById(mongoose.Types.ObjectId(sponsorId));
-        console.log(sponsor.username)
+        const getsponsor = await User.findById(mongoose.Types.ObjectId(sponsorId));
+        
         res.status(201).json({
           _id: user._id,
           name: user.name,
           email: user.email,
           sponsorId: ref.sponsorId,
-          sponsor: sponsor.username,
+          sponsor: getsponsor.username,
           isAdmin: user.isAdmin,
           pic: user.pic,
           token: generateToken(user._id),

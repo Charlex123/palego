@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Schema from "mongoose";
-
+const ObjectIdd = Schema.Types.ObjectId;
 const referralSchema = new mongoose.Schema(
   {
     sponsorId: {
@@ -8,9 +8,9 @@ const referralSchema = new mongoose.Schema(
       required: true
     },
     userId: {
-        type: mongoose.Types.ObjectId,
-        ref: 'User'
-      },
+      type: {ObjectIdd},
+      required: true
+    },
     createdAt : {
         type: Date,
         default: Date.now()

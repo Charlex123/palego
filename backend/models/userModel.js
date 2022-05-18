@@ -14,8 +14,8 @@ const userSchema = mongoose.Schema(
       unique: true
     },
     refId: {
-      type: mongoose.Types.ObjectId,
-      ref: "Referral",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "referrals",
     },
     password: {
       type: String,
