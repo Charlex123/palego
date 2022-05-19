@@ -24,6 +24,7 @@ import ReferralLink from './ReferralLink';
 export default function DashboardApp() {
   const theme = useTheme();
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
+  console.log(userDetails)
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">

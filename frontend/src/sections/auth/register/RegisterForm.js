@@ -72,7 +72,7 @@ export default function RegisterForm() {
   
         localStorage.setItem("userInfo", JSON.stringify(data))
         setLoading(false)
-        navigate("/dashboard/app", { replace: true })
+        navigate(`/dashboard/app/${data.username}`, { replace: true })
       } catch (error) {
         setError(error.response.data.message)
         console.log(error.response.data)

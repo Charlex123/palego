@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Schema from "mongoose";
-const ObjectIdd = Schema.Types.ObjectId;
 const referralSchema = new mongoose.Schema(
   {
     sponsorId: {
@@ -8,7 +7,7 @@ const referralSchema = new mongoose.Schema(
       required: true
     },
     userId: {
-      type: {ObjectIdd},
+      type: mongoose.Schema.Types.ObjectId,
       required: true
     },
     createdAt : {

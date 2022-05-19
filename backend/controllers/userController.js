@@ -93,22 +93,24 @@ const authUser = asyncHandler(async (req, res) => {
     // get user id
     const userid = user._id;
     //check if user has a referral
-    const referral = await Referral.find({ userid });
-
+    console.log(userid)
+    const referral = await Referral.find({ userId: user._id }); 
+    const sponsorid = referral[0].sponsorId;
+    console.log(sponsorid)
     if(referral) {
-      const getdirectreferrals = await Referral.find(user._id).populate({
-        path:"userId", select:['username','_id','email']
+      const getsponsor = await User.find({_id:sponsorid});
+      const upline = getsponsor[0].username;
+      const getusersuplines = await User.find(user._id).populate({
+        path:"refId", model:"referrals"
       });
-      console.log(getdirectreferrals)
-      
-      // const getsponsor = await User.findById(mongoose.Types.ObjectId(sponsorId));
-          
+      console.log(getsponsor[0].username)
+      console.log(getsponsor+"----getsponsor")
           res.status(201).json({
             _id: user._id,
             username: user.username,
             email: user.email,
-            // sponsorId: ref.sponsorId,
-            // sponsor: getsponsor.username,
+            sponsorId: sponsorid,
+            sponsor: upline,
             isAdmin: user.isAdmin,
             pic: user.pic,
             token: generateToken(user._id),
@@ -165,37 +167,26 @@ const registerUser = asyncHandler(async (req, res) => {
 
       const { sponsorId } = req.body;
       const userId = user._id;
-      console.log(userId)
       const ref = await Referral.create({
         sponsorId,userId
       });
-      
+
       if(ref) {
-        sendverificationMail(result, res);
-        // const getsponsor = await User.findById(mongoose.Types.ObjectId(sponsorId));
+        const addrefId = User.updateOne(
+          {_id:user._id}, 
+          {refId: ref._id },
+          {multi:true}, 
+            function(err, numberAffected){  
+            });
+        if(addrefId) {
+          // sendverificationMail(result, res)
+        }
         
-        // res.status(201).json({
-        //   _id: user._id,
-        //   name: user.name,
-        //   email: user.email,
-        //   sponsorId: ref.sponsorId,
-        //   sponsor: getsponsor.username,
-        //   isAdmin: user.isAdmin,
-        //   pic: user.pic,
-        //   token: generateToken(user._id),
-        // });
       }
       
       
     }else {
-      // res.status(201).json({
-      //   _id: user._id,
-      //   name: user.name,
-      //   email: user.email,
-      //   isAdmin: user.isAdmin,
-      //   pic: user.pic,
-      //   token: generateToken(user._id),
-      // });
+      // sendverificationMail(result, res)
     }
     
     
