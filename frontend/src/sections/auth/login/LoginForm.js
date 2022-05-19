@@ -48,14 +48,17 @@ export default function LoginForm() {
         }
       }  
       setLoading(true)
-      const {data} = await axios.post("/api/users/login", {
+      const {data} = await axios.post("/api/users/login/users", {
         email,
         password
       }, config);
 
+      console.log(data)
+      console.log(data.email)
+      console.log(data.username)
       localStorage.setItem("userInfo", JSON.stringify(data))
       setLoading(false)
-      navigate("/dashboard/app", { replace: true })
+      navigate(`/dashboard/app/${data.username}`, { replace: true })
     } catch (error) {
       console.log(error.response.data)
     }

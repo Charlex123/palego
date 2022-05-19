@@ -5,15 +5,17 @@ import Iconify from '../../components/Iconify';
 
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
+const userDetails = JSON.parse(localStorage.getItem('userInfo'));
+
 const navConfig = [
   {
     title: 'dashboard',
-    path: '/dashboard/app',
+    path:`/dashboard/app/${userDetails.username}`,
     icon: getIcon('eva:pie-chart-2-fill'),
   },
   {
     title: 'user',
-    path: '/dashboard/user',
+    path: `/dashboard/user/${userDetails.username}`,
     icon: getIcon('eva:people-fill'),
   },
   {
@@ -28,7 +30,7 @@ const navConfig = [
   },
   {
     title: 'login',
-    path: '/login',
+    path: '/login/users',
     icon: getIcon('eva:lock-fill'),
   },
   {

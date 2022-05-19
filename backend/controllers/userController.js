@@ -90,19 +90,41 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
-    const getdirectreferrals = await Referral.find(user._id).populate({
-      path:"sponsorId", select:['username','_id','email']
-    });
-    console.log(getdirectreferrals)
+    // get user id
+    const userid = user._id;
+    //check if user has a referral
+    const referral = await Referral.find({ userid });
 
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      pic: user.pic,
-      token: generateToken(user._id),
-    });
+    if(referral) {
+      const getdirectreferrals = await Referral.find(user._id).populate({
+        path:"userId", select:['username','_id','email']
+      });
+      console.log(getdirectreferrals)
+      
+      // const getsponsor = await User.findById(mongoose.Types.ObjectId(sponsorId));
+          
+          res.status(201).json({
+            _id: user._id,
+            name: user.username,
+            email: user.email,
+            // sponsorId: ref.sponsorId,
+            // sponsor: getsponsor.username,
+            isAdmin: user.isAdmin,
+            pic: user.pic,
+            token: generateToken(user._id),
+          });
+    }else {
+      res.status(201).json({
+        _id: user._id,
+        name: user.username,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        pic: user.pic,
+        token: generateToken(user._id),
+      });
+    }
+    
+    
   } else {
     res.status(401);
     throw new Error("Invalid Email or Password");
@@ -117,7 +139,12 @@ const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password, pic } = req.body;
 
   const userExists = await User.findOne({ email });
+  const usernameExists = await User.findOne({ username });
 
+  if (usernameExists) {
+    res.status(404);
+    throw new Error("Username already exists");
+  }
   if (userExists) {
     res.status(404);
     throw new Error("User already exists");
