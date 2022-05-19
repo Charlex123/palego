@@ -12,6 +12,7 @@ import Verify from './pages/Verify';
 import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 import ReferralLink from './pages/ReferralLink';
+import Home from './Home';
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +32,7 @@ export default function Router() {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app/:id" /> },
+        { path: '/', element: <Home /> },
         { path: 'login/users', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },

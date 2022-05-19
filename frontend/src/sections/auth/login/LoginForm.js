@@ -53,9 +53,6 @@ export default function LoginForm() {
         password
       }, config);
 
-      console.log(data)
-      console.log(data.email)
-      console.log(data.username)
       localStorage.setItem("userInfo", JSON.stringify(data))
       setLoading(false)
       navigate(`/dashboard/app/${data.username}`, { replace: true })

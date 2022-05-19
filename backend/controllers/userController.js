@@ -105,7 +105,7 @@ const authUser = asyncHandler(async (req, res) => {
           
           res.status(201).json({
             _id: user._id,
-            name: user.username,
+            username: user.username,
             email: user.email,
             // sponsorId: ref.sponsorId,
             // sponsor: getsponsor.username,
@@ -116,7 +116,7 @@ const authUser = asyncHandler(async (req, res) => {
     }else {
       res.status(201).json({
         _id: user._id,
-        name: user.username,
+        username: user.username,
         email: user.email,
         isAdmin: user.isAdmin,
         pic: user.pic,
@@ -124,7 +124,7 @@ const authUser = asyncHandler(async (req, res) => {
       });
     }
     
-    
+
   } else {
     res.status(401);
     throw new Error("Invalid Email or Password");
