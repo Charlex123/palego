@@ -55,6 +55,21 @@ dotenv.config();
     }
   })
 
+  const sendverificationMail = ({_id, email, username}, res) => {
+    const currentUrl = "http://localhost:3000/";
+    const uniqueString = uuidv4() + _id;
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL,
+      to: email,
+      subject: "Confirm Your Email",
+      html: `<div><p>Hello ${username}, you have signed up with PALEGO, the best crypto trading bot. Thank you for tusting us with you funds and we will not disappoint</p>
+      <p>Confirm your email with the link below to have access to our platform <br/>
+        <a href=${currentUrl+"user/verify/"+_id+"/"+uniqueString}>Confirm Email</a>
+      </p>
+      </div>`,
+    }
+  }
+
   // send mail with defined transport object
   // let info = await transporter.sendMail({
     // from: '"Fred Foo 👻" <foo@example.com>', // sender address
@@ -94,6 +109,7 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
+
 //@description     Register new user
 //@route           POST /api/users/
 //@access          Public
@@ -127,35 +143,32 @@ const registerUser = asyncHandler(async (req, res) => {
         sponsorId,userId
       });
       
-      const getdirectreferrals = await Referral.find(user._id).populate({
-        path:"sponsorId", select:['username','_id','email']
-      });
-      console.log(getdirectreferrals)
       if(ref) {
-        const getsponsor = await User.findById(mongoose.Types.ObjectId(sponsorId));
+        sendverificationMail(result, res);
+        // const getsponsor = await User.findById(mongoose.Types.ObjectId(sponsorId));
         
-        res.status(201).json({
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          sponsorId: ref.sponsorId,
-          sponsor: getsponsor.username,
-          isAdmin: user.isAdmin,
-          pic: user.pic,
-          token: generateToken(user._id),
-        });
+        // res.status(201).json({
+        //   _id: user._id,
+        //   name: user.name,
+        //   email: user.email,
+        //   sponsorId: ref.sponsorId,
+        //   sponsor: getsponsor.username,
+        //   isAdmin: user.isAdmin,
+        //   pic: user.pic,
+        //   token: generateToken(user._id),
+        // });
       }
       
       
     }else {
-      res.status(201).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        pic: user.pic,
-        token: generateToken(user._id),
-      });
+      // res.status(201).json({
+      //   _id: user._id,
+      //   name: user.name,
+      //   email: user.email,
+      //   isAdmin: user.isAdmin,
+      //   pic: user.pic,
+      //   token: generateToken(user._id),
+      // });
     }
     
     

@@ -8,6 +8,7 @@ import User from './pages/User';
 import Login from './pages/Login';
 import NotFound from './pages/Page404';
 import Register from './pages/Register';
+import Verify from './pages/Verify';
 import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 import ReferralLink from './pages/ReferralLink';
@@ -38,6 +39,7 @@ export default function Router() {
       ],
     },
     {path: '/register/user/:id', element: <Register/>},
+    {path: '/verify/user/:id', element: <Verify/>},
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
