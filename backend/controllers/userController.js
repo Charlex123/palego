@@ -93,18 +93,17 @@ const authUser = asyncHandler(async (req, res) => {
     // get user id
     const userid = user._id;
     //check if user has a referral
-    console.log(userid)
     const referral = await Referral.find({ userId: user._id }); 
-    const sponsorid = referral[0].sponsorId;
-    console.log(sponsorid)
-    if(referral) {
+    console.log(referral)
+    if(referral && referral[0].sponsorId) {
+      const sponsorid = referral[0].sponsorId;
       const getsponsor = await User.find({_id:sponsorid});
       const upline = getsponsor[0].username;
-      const getusersuplines = await User.find(user._id).populate({
-        path:"refId", model:"referrals"
-      });
-      console.log(getsponsor[0].username)
-      console.log(getsponsor+"----getsponsor")
+      const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
+      console.log(noofDirectDownlines)
+      // const getusersuplines = await User.find(user._id).populate({
+      //   path:"refId", model:"referrals"
+      // });
           res.status(201).json({
             _id: user._id,
             username: user.username,
