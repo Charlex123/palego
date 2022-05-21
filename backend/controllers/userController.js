@@ -109,6 +109,7 @@ const authUser = asyncHandler(async (req, res) => {
             username: user.username,
             email: user.email,
             sponsorId: sponsorid,
+            directdownlines: noofDirectDownlines,
             sponsor: upline,
             isAdmin: user.isAdmin,
             pic: user.pic,

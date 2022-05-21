@@ -24,13 +24,13 @@ import ReferralLink from './ReferralLink';
 export default function DashboardApp() {
   const theme = useTheme();
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
-  console.log(userDetails)
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }} style={{textTransform: 'capitalize'}}>
           Hi, Welcome back {userDetails.username}
           <div>My upline: {userDetails.sponsor}</div>
+          <div>My Direct DownLines: {userDetails.directdownlines}</div>
         </Typography>
         <div>My Referral Link: 
           <Button href={`http://localhost:3000/register/user/${userDetails._id}`} target="_blank" variant="">
