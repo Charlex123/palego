@@ -58,9 +58,9 @@ export default function Login() {
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
-
+  const userDetails = JSON.parse(localStorage.getItem('userInfo'));
   return (
-    <Page title="Login">
+    <Page title="Verify Email">
       <RootStyle>
         <HeaderStyle>
           <Logo />
@@ -69,7 +69,7 @@ export default function Login() {
         <Container maxWidth="sm">
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Sign in to Palego
+              Verify Your Email
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>

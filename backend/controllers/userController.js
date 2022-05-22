@@ -80,54 +80,33 @@ dotenv.config();
       // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
     }
   }
-  
-  // const sendverificationMail = () => {
-  //   // res.status(201).json({
-  //   //   _id: user._id,
-  //   //   username: user.username,
-  //   //   email: user.email,
-  //   //   sponsorId: sponsorid,
-  //   //   directdownlines: noofDirectDownlines,
-  //   //   sponsor: upline,
-  //   //   isAdmin: user.isAdmin,
-  //   //   pic: user.pic,
-  //   //   token: generateToken(user._id),
-  //   // })
-  //   const currentUrl = "http://localhost:3000/";
-  //   const uniqueString = uuidv4();
-  //   const mailOptions = {
-  //     from: process.env.AUTH_EMAIL,
-  //     to: "charlesmuoka1@gmail.com",
-  //     subject: "Confirm Your Email",
-  //     html: `<div><p>Hello ${"charles"}, you have signed up with PALEGO, the best crypto trading bot. Thank you for tusting us with you funds and we will not disappoint</p>
-  //     <p>Confirm your email with the link below to have access to our platform <br/>
-  //       <a href=${currentUrl+"user/verify/"+"/"+uniqueString}>Confirm Email</a>
-  //     </p>
-  //     </div>`,
-  //   }
 
-  //   const sender = transporter.sendMail(mailOptions);
-  //   if(sender){
-  //     console.log("Message sent: %s", sender.messageId);
-  //     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-  //     // Preview only available when sending through an Ethereal account
-  //     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(sender));
-  //     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-  //   }
+  const verificationSuccess = (_id,username,email) => {
+      
+    const currentUrl = "http://localhost:5000/";
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL,
+      to: email,
+      subject: "Email Verificaton Success",
+      html: `<div><p>Hello ${username}, you have signed up with PALEGO, the best crypto trading bot. Thank you for tusting us with you funds and we will not disappoint</p>
+      <p>Confirm your email with the link below to have access to our platform <br/>
+        <a href=${currentUrl+"user/verify/"+_id+"/"+emailCode}>Confirm Email</a>
+      </p>
+      </div>`,
+    }
     
-  // }
+    const sender = transporter.sendMail(mailOptions);
+    if(sender){
+      console.log("Message sent: %s", sender.messageId);
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-  // send mail with defined transport object
-  // let info = await transporter.sendMail({
-    // from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    // to: "bar@example.com, baz@example.com", // list of receivers
-    // subject: "Hello ✔", // Subject line
-    // text: "Hello world?", // plain text body
-    // html: "<b>Hello world?</b>", // html body
-  // });
-
-
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(sender));
+      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    }
+  }
+  
 
 //@description     Auth the user
 //@route           POST /api/users/login
@@ -234,13 +213,17 @@ const registerUser = asyncHandler(async (req, res) => {
       
       
     }else {
+
     }
     const _id = user._id;
     const username = user.username;
     const emailCode = user.emailcode;
-    const email = user.email
+    const email = user.email;
+    const verifystatus = user.verified;
 
-    sendverificationMail(_id,username,emailCode,email) 
+    if(verifystatus === false) {
+      sendverificationMail(_id,username,emailCode,email);
+    }
     
   } else {
     res.status(400);
@@ -279,4 +262,98 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, updateUserProfile, registerUser };
+
+const resetPassword = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.pic = req.body.pic || user.pic;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      pic: updatedUser.pic,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
+
+
+const verifyUser = asyncHandler(async (req, res) => {
+  const verifyuser = await User.findById(req.user._id);
+
+  if (verifyuser) {
+    verifyuser.verified = true;
+    
+    const verifiedUser = await verifyuser.save();
+    const _id = verifiedUser._id;
+    const username = verifiedUser.username;
+    const email = verifiedUser.email;
+
+      verificationSuccess(_id, username, email);
+      res.json({
+        _id: verifiedUser._id,
+        username: verifiedUser.username,
+        email: verifiedUser.email,
+        pic: verifiedUser.pic,
+        isAdmin: verifiedUser.isAdmin,
+        token: generateToken(verifiedUser._id),
+      });
+    } else {
+      res.status(404);
+      throw new Error("User Not Found");
+    }
+});
+
+
+const resendverificationMail = asyncHandler(async (req, res) => {
+  const resendmailuser = await User.findById(req.user._id);
+
+  if (resendmailuser) {
+    if(resendmailuser.verified === false) {
+    
+        const _id = resendmailuser._id;
+        const username = resendmailuser.username;
+        const emailCode = resendmailuser.emailcode;
+        const email = resendmailuser.email;
+
+        sendverificationMail(_id,username,emailCode,email);
+
+        res.json({
+          _id: resendmailuser._id,
+          username: resendmailuser.username,
+          email: resendmailuser.email,
+          pic: resendmailuser.pic,
+          isAdmin: resendmailuser.isAdmin,
+          token: generateToken(resendmailuser._id),
+        });
+      }else {
+        res.json({
+          _id: resendmailuser._id,
+          username: resendmailuser.username,
+          email: resendmailuser.email,
+          pic: resendmailuser.pic,
+          isAdmin: resendmailuser.isAdmin,
+          token: generateToken(resendmailuser._id),
+        });
+      }
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
+export { authUser, updateUserProfile, registerUser, verifyUser, resendverificationMail, resetPassword };

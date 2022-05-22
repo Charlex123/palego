@@ -10,6 +10,8 @@ import NotFound from './pages/Page404';
 import Register from './pages/Register';
 import Verify from './pages/Verify';
 import Products from './pages/Products';
+import RegSuccess from './pages/RegSuccess';
+import ResetPassword from './pages/ResetPassword';
 import DashboardApp from './pages/DashboardApp';
 import ReferralLink from './pages/ReferralLink';
 import Home from './Home';
@@ -41,6 +43,8 @@ export default function Router() {
     },
     {path: '/register/user/:id', element: <Register/>},
     {path: '/verify/user/:id', element: <Verify/>},
+    {path: '/resetpassword/user/:id', element: <ResetPassword/>},
+    {path: '/regsuccess/user/:id', element: <RegSuccess/>},
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
