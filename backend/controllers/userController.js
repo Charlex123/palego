@@ -55,20 +55,68 @@ dotenv.config();
     }
   })
 
-  const sendverificationMail = ({_id, email, username}, res) => {
-    const currentUrl = "http://localhost:3000/";
-    const uniqueString = uuidv4() + _id;
+  
+  const sendverificationMail = (_id,username,emailCode,email) => {
+      
+    const currentUrl = "http://localhost:5000/";
     const mailOptions = {
       from: process.env.AUTH_EMAIL,
       to: email,
       subject: "Confirm Your Email",
       html: `<div><p>Hello ${username}, you have signed up with PALEGO, the best crypto trading bot. Thank you for tusting us with you funds and we will not disappoint</p>
       <p>Confirm your email with the link below to have access to our platform <br/>
-        <a href=${currentUrl+"user/verify/"+_id+"/"+uniqueString}>Confirm Email</a>
+        <a href=${currentUrl+"user/verify/"+_id+"/"+emailCode}>Confirm Email</a>
       </p>
       </div>`,
     }
+    
+    const sender = transporter.sendMail(mailOptions);
+    if(sender){
+      console.log("Message sent: %s", sender.messageId);
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(sender));
+      // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    }
   }
+  
+  // const sendverificationMail = () => {
+  //   // res.status(201).json({
+  //   //   _id: user._id,
+  //   //   username: user.username,
+  //   //   email: user.email,
+  //   //   sponsorId: sponsorid,
+  //   //   directdownlines: noofDirectDownlines,
+  //   //   sponsor: upline,
+  //   //   isAdmin: user.isAdmin,
+  //   //   pic: user.pic,
+  //   //   token: generateToken(user._id),
+  //   // })
+  //   const currentUrl = "http://localhost:3000/";
+  //   const uniqueString = uuidv4();
+  //   const mailOptions = {
+  //     from: process.env.AUTH_EMAIL,
+  //     to: "charlesmuoka1@gmail.com",
+  //     subject: "Confirm Your Email",
+  //     html: `<div><p>Hello ${"charles"}, you have signed up with PALEGO, the best crypto trading bot. Thank you for tusting us with you funds and we will not disappoint</p>
+  //     <p>Confirm your email with the link below to have access to our platform <br/>
+  //       <a href=${currentUrl+"user/verify/"+"/"+uniqueString}>Confirm Email</a>
+  //     </p>
+  //     </div>`,
+  //   }
+
+  //   const sender = transporter.sendMail(mailOptions);
+  //   if(sender){
+  //     console.log("Message sent: %s", sender.messageId);
+  //     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  //     // Preview only available when sending through an Ethereal account
+  //     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(sender));
+  //     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  //   }
+    
+  // }
 
   // send mail with defined transport object
   // let info = await transporter.sendMail({
@@ -179,16 +227,20 @@ const registerUser = asyncHandler(async (req, res) => {
             function(err, numberAffected){  
             });
         if(addrefId) {
-          // sendverificationMail(result, res)
+
         }
         
       }
       
       
     }else {
-      // sendverificationMail(result, res)
     }
-    
+    const _id = user._id;
+    const username = user.username;
+    const emailCode = user.emailcode;
+    const email = user.email
+
+    sendverificationMail(_id,username,emailCode,email) 
     
   } else {
     res.status(400);
