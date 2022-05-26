@@ -170,13 +170,14 @@ body {
 }
 .earnmore .howrefworks .col-md-4 {
   border: 1px solid #7b7bec1f;border-radius: 16px;text-align: center;background-color: #0000ff6c;
-  justify-content: center;color: #dbd7d7;padding: .4rem;margin: 0 auto;width: 30%;
+  justify-content: center;color: #dbd7d7;padding: 0;margin: 2rem auto;width: 30%;
 }
 .earnmore .howrefworks .col-md-4 h1 {
   margin: -2rem auto;font-size: 20px;font-family: "Nunito";
 }
 .earnmore .howrefworks .col-md-4 img {
-  text-align: center;justify-content: center;margin: auto;max-width: 15rem;
+  text-align: center;justify-content: center;margin: 2rem auto;max-width: 10rem;
+  padding: 1rem 1rem 0 0;
 }
 .bg-image-overlay {
   /* position: absolute;
@@ -287,7 +288,7 @@ body {
   }
   .earnmore .howrefworks .col-md-4 {
     border: 1px solid #7b7bec1f;border-radius: 16px;text-align: center;background-color: #0000ff6c;
-    justify-content: center;color: #dbd7d7;padding: .4rem;margin: 2rem auto;width: 40%;
+    justify-content: center;color: #dbd7d7;padding: .4rem;margin: 2rem auto;width: 46%;
   }
 }
 @media screen and (max-width: 567px) {

@@ -331,6 +331,7 @@ export default function Home() {
                     </div>
                 </section>
             <section className="testimony">
+                <h1>What Our Users Say</h1>
                 <div className="container">
                     <div  id="demo" className="carousel slide" data-ride="carousel">
                         <div className="carousel-inner">

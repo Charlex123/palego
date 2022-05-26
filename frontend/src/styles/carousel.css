@@ -2,18 +2,22 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik+Wet+Paint:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Creepster:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Sofia:400,700&display=swap');
 
 .testimony {
     margin-bottom: 5rem;
 }
+.testimony h1 {
+    font-family: "Sofia";color: #6959fabe;margin: 1rem auto;text-align: center;
+}
 @media screen and (max-width: 767px) and (min-width: 567px) {
     .testimony {
-        margin-bottom: 5rem;margin-top: 83rem !important;
+        margin-bottom: 5rem;margin-top: 65rem !important;
     }
 }
 @media screen and (max-width: 567px) {
     .testimony {
-        margin-bottom: 5rem;margin-top: 83rem !important;
+        margin-bottom: 5rem;margin-top: 80rem !important;
     }
 }
 #demo{
