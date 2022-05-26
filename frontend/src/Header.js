@@ -25,11 +25,11 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" className="navtoggler bg-primary"/>
                     <Navbar.Collapse id="responsive-navbar-nav" placement="end" className="justify-content-end">
                         <Nav>
-                            <Nav.Link href="#features" className="nav-link">Home</Nav.Link>
-                            <Nav.Link href="#pricing" className="nav-link">About</Nav.Link>
-                            <Nav.Link href="#pricing" className="nav-link">Faq</Nav.Link>
-                            <Nav.Link href="../#mintnft" className="nav-link"><Button className="login">Login</Button></Nav.Link>
-                            <Nav.Link eventKey={2} href="#" className="nav-link">
+                            <Nav.Link href="../" className="nav-link">Home</Nav.Link>
+                            <Nav.Link href="../#about-us" className="nav-link">About</Nav.Link>
+                            <Nav.Link href="../#faq" className="nav-link">Faq</Nav.Link>
+                            <Nav.Link href="../login/users" className="nav-link"><Button className="login">Login</Button></Nav.Link>
+                            <Nav.Link eventKey={2} href="../register" className="nav-link">
                                 <Button className="signup">SIGN UP</Button>
                             </Nav.Link>
                         </Nav>
