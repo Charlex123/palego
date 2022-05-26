@@ -5,6 +5,8 @@ import { Grid, Container, Typography, Link, Button } from '@mui/material';
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
+// Styles
+import "../styles/styles.css";
 // sections
 import {
   AppTasks,
@@ -24,21 +26,24 @@ import ReferralLink from './ReferralLink';
 export default function DashboardApp() {
   const theme = useTheme();
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
+  const sponsor = userDetails.sponsor || "None";
+  const directdownlines = userDetails.directdownlines || 0;
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }} style={{textTransform: 'capitalize'}}>
           Hi, Welcome back {userDetails.username}
-          <div>My upline: {userDetails.sponsor}</div>
-          <div>My Direct DownLines: {userDetails.directdownlines}</div>
+          <div className='bonus'><small>You have received a <span style={{color: 'green'}}>$10</span> welcome bonus </small></div>
+          {/* <div>My upline: {sponsor}</div>
+          <div>My Direct DownLines: {directdownlines}</div> */}
         </Typography>
-        <div>My Referral Link: 
-          <Button href={`http://localhost:3000/register/user/${userDetails._id}`} target="_blank" variant="">
+        <div className='reflink'>My Referral Link: 
+          <Button href={`http://localhost:3000/register/user/${userDetails._id}`} target="_blank" variant="" style={{fontSize: 14,}}>
           {`http://localhost:3000/register/user/${userDetails._id}`}
           </Button>
-          <Link to={`http://localhost:3000/register/user/${userDetails._id}`} target="_blank" variant="">
+          {/* <Link to={`http://localhost:3000/register/user/${userDetails._id}`} target="_blank" variant="">
           {`http://localhost:3000/register/user/${userDetails._id}`}
-          </Link>
+          </Link> */}
         </div>
 
 

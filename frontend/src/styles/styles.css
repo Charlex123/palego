@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rubik+Wet+Paint:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Creepster:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+
+body {
+  background-color: #01011f !important;
+}
+.head-area {
+  width: 100%;
+}
+.navbar {
+  background-color: #01011f;padding: 0 2rem;
+} 
+.navbar .nav-link {
+  margin: .3rem .6rem 0 .6rem ;color: #d6d2d2d8 !important;font-weight: 500;font-family: "Nunito";
+  font-weight: 600;
+}
+.navbar .nav-link button.login{
+  background-color: transparent !important;border-radius: 8px;color: #093de6 !important;border: 1px solid #3636eb96;
+  margin-left: 4rem;
+}
+.navbar .nav-link button.signup{
+  background-color: #3636eb96 !important;border-radius: 8px;color: #d6d2d2d8 !important;border: none;
+  margin-left: 0;
+}
+.navtoggler {
+  background-color: #3636eb96;color: #3636eb;
+}
+.headbtn {
+  background-color: #3636eb96 !important;border-radius: 8px;color: #d6d2d2d8 !important;border: none;
+  font-family: 'Nunito';
+  margin: .4rem;
+  padding: .4rem 1rem;
+  font-weight: bold;
+  color: black;
+  border-radius: 8px;
+  font-size: 20px;
+  z-index: 999;
+  position: relative;
+}
+.headbtn2 {
+  background-color: transparent !important;border-radius: 8px;color: #093de6 !important;border: 1px solid #3636eb96;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: .4rem 1rem;
+  margin: .4rem;
+  font-family: 'Nunito';
+  font-size: 20px;
+  position: relative;
+  z-index: 999;
+}
+.headbtn2 a {
+  color: #3636eb96 !important;
+  text-decoration: none;
+}
+@media screen and (max-width: 991px ) {
+  .navbar .nav-link button.login{
+    background-color: transparent !important;border-radius: 8px;color: #093de6 !important;border: 1px solid #3636eb96;
+    margin-left: 0;
+  }
+}
+.head-content {
+  padding: 0 2rem;
+  height : 100%;
+    z-index : 6;
+    background : url('/src/images/ab-bg.jpg') no-repeat center right;
+    -webkit-background-size : cover;
+            background-size : cover;
+            position: relative;
+}
+.head-content .container {
+  padding: 0 1rem !important;
+  margin: 0 1rem !important;
+}
+.head-content h1 {
+  color: #3636eb;z-index: 99999;position: relative;font-family: "Poppins";
+  font-weight: 900;
+}
+.head-content h2 {
+  color: #dbd7d7;z-index: 99999;position: relative;font-family: "Poppins";
+  font-weight: 700;
+}
+.head-content p {
+  color: #dbd7d7;z-index: 99999;position: relative;font-family: "Nunito";
+  font-weight: 600;font-size: 20px;
+}
+.head-bg-image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  opacity: .6;
+  z-index: 0;
+}
+.head-content img {
+  z-index: 999;position: relative;margin: 5rem auto;padding-left: 5rem;
+}
+.tradingwidgets {
+  background-color: #01011f;padding: 4rem auto;margin: auto;
+}
+.tradingwidgets h1 {
+  font-family: "Poppins";padding: 4rem auto;text-align: center;
+  color: #d6d2d2d8;margin-bottom: 2rem !important;
+}
+.about-section {
+  height : 100%;
+  z-index : 6;
+  background: #01011f;
+  -webkit-background-size : cover;
+          background-size : cover;
+          position: relative;
+          margin-top: -2rem;
+          height: inherit;padding: 4rem auto;
+          margin-bottom: 5rem !important;
+}
+.about-section .container {
+  position: relative;
+  z-index: 5;
+  color: #ffffff;
+}
+.about-section h1 {
+  font-size: 35px;
+  padding-top: 4rem;
+  margin: 2rem auto;
+}
+.about-section p {
+  font-size: 18px;margin: 1rem 0;text-align: left;
+}
+.about-section img {
+  padding: 5rem 0 0 5rem;
+}
+.bg-image-overlay {
+  /* position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  opacity: .8;
+  z-index: 2; */
+}
+.faqs-section {
+  padding: 4rem auto;background-color: #01011f;
+}
+.faqs-section h1 {
+  padding: 4rem auto;
+  font-size: 35px;color: #dbd7d7;
+  font-weight: bold;margin: 1rem auto;
+}
+.faqs-section .title {
+  font-weight: bold;text-transform: capitalize;
+}
+.howitworks {
+  padding: 4rem;margin: 2rem auto;width: 100%;text-align: center;
+}
+.howitworks h1 {
+  text-align: center;margin: 4rem auto;color: #d6d2d2d8;font-family: "Poppins";
+}
+.howitworks .col-md-4 {
+  border: 1px solid #7b7bec1f;border-radius: 16px;text-align: center;
+  justify-content: center;color: #dbd7d7;padding: .4rem;margin: 0 auto;width: 30%;
+}
+@media screen and (max-width: 1200px) and (min-width: 991px) {
+  .tradingwidgets {
+    background-color: #01011f;padding: 1rem;margin: auto;
+  }
+}
+@media screen and (max-width: 991px) and (min-width: 767px) {
+  .tradingwidgets {
+    background-color: #01011f;padding: 4rem 4rem 4rem 4rem;margin: auto;
+  }
+  .howitworks {
+    padding: 1rem;margin: 2rem auto;width: 100%;text-align: center;
+  }
+  .howitworks .col-md-4 {
+    border: 1px solid #7b7bec1f;border-radius: 16px;text-align: center;
+    justify-content: center;color: #dbd7d7;padding: .4rem;margin: 0 auto;width: 25%;
+  }
+}
+@media screen and (max-width: 767px) and (min-width: 567px) {
+  .howitworks .col-md-4 {
+    border: 1px solid #7b7bec1f;border-radius: 16px;text-align: center;
+    justify-content: center;color: #dbd7d7;padding: .4rem;margin: 2rem auto;width: 40%;
+  }
+}
+@media screen and (max-width: 567px) {
+  .howitworks .col-md-4 {
+    border: 1px solid #7b7bec1f;border-radius: 16px;text-align: center;
+    justify-content: center;color: #dbd7d7;padding: .4rem;margin: 2rem auto;width: 95%;
+  }
+}
+.howitworks .col-md-4 h1 {
+  margin: 1rem auto;font-size: 20px;font-family: "Nunito";
+}
+.howitworks .col-md-4 img {
+  width: 5rem;height: 5rem;text-align: center;
+  margin: 2rem auto;
+}
+.whychooseus {
+  
+}
+.whychooseus h1 {
+  text-align: center;margin: 4rem auto;color: #d6d2d2d8;font-family: "Poppins";
+}
+.whychooseus .col-md-4 {
+  border: 1px solid #7b7bec1f;border-radius: 16px;text-align: center;
+  justify-content: center;color: #dbd7d7;padding: .4rem;margin: 0 auto;width: 30%;
+}
+.whychooseus .col-md-4 h1 {
+  margin: 1rem auto;font-size: 20px;font-family: "Nunito";
+}
+.whychooseus .col-md-4 img {
+  width: 5rem;height: 5rem;text-align: center;
+  margin: 2rem auto;
+}

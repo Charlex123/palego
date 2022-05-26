@@ -1,4 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Card, Link, Container, Typography } from '@mui/material';
@@ -7,8 +9,9 @@ import useResponsive from '../hooks/useResponsive';
 // components
 import Page from '../components/Page';
 import Logo from '../components/Logo';
-// sections
-
+// Error handling
+import Loading from "../components/Loading";
+import ErrorMessage from "../components/ErrorMessage";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -59,24 +62,12 @@ export default function RegSuccess() {
 
   const mdUp = useResponsive('up', 'md');
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
-  const [e, setEmail] = useState("");
+//   get userid
+  const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const [passwordinputType, setpasswordinputType] = useState("password");
-  const [eyeIcon, setEyeIcon] = useState(<FontAwesomeIcon icon={faEye} />);
-  
-  
-  const togglePasswordVisiblity = () => {
-    if(passwordinputType === "password") {
-      setpasswordinputType("text")
-      setEyeIcon(<FontAwesomeIcon icon={faEye} />)
-    }else {
-      setpasswordinputType("password")
-      setEyeIcon(<FontAwesomeIcon icon={faEyeSlash} />);
-    }
-  };
-  
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -88,13 +79,12 @@ export default function RegSuccess() {
         }
       }  
       setLoading(true)
-      const {data} = await axios.post("/api/users/login/users", {
-        email,
-        password
+      const {data} = await axios.post("/api/users/regsuccess/users", {
+        id
       }, config);
       localStorage.setItem("userInfo", JSON.stringify(data))
       setLoading(false)
-      navigate(`/dashboard/app/${data.username}`, { replace: true })
+      navigate(`/verify/user/${data.username}`, { replace: true })
     } catch (error) {
       console.log(error.response.data)
     }

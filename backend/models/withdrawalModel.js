@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = mongoose.Schema(
+const withdrawalSchema = mongoose.Schema(
   {
     name: {
       type: String,
@@ -34,6 +34,6 @@ const userSchema = mongoose.Schema(
 );
 
 
-const User = mongoose.model("users", userSchema);
+const Withdrawal = mongoose.model("withdrawals", withdrawalSchema);
 
-export default User;
+export default Withdrawal;
