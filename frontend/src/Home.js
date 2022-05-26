@@ -2,17 +2,19 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css'
 import Accordion from 'react-bootstrap/Accordion';
-import { Button } from "react-bootstrap/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheckSquare, faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faInstagram, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import TradingViewWidget, { BarStyles, Themes, IntervalTypes } from "react-tradingview-widget";
+import Icon from 'react-fa';
+import Carousel, { slidesToShowPlugin, slidesToScrollPlugin, arrowsPlugin  } from '@brainhubeu/react-carousel';
 import './styles/index.css';
 import "./styles/styles.css";
+import "./styles/carousel.css";
 import TradeViewChart from 'react-crypto-chart';
 // import ChartsGrid from "./ChartsGrid";
 import Header from "./Header";
@@ -23,6 +25,15 @@ import signup from './images/add-user.png';
 import invest from './images/invest.png';
 import profit from './images/profit.png';
 import withdraw from './images/withdraw.png';
+import finance from './images/finance.svg';
+import protect from './images/protect.svg';
+import partner1 from './images/logo.png';
+import partner2 from './images/binancelogo.png';
+import partner3 from './images/logo.png';
+import partner4 from './images/logo.png';
+import partner5 from './images/binancelogo.png';
+import teamearn from './images/teamearn.png';
+import secure from './images/secure.svg';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { providers } from "ethers";
 
@@ -136,8 +147,11 @@ export default function Home() {
                                 Withdraw Your Funds 
                             </div>
                         </div>
+                        <div className="youtubelink mx-auto text-center">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/uI6slvVUU2o" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        </div>
                     </section>
-                    <section className="about-section pt-120 pb-120 px-3" id="about-us">
+                    <section className="about-section px-3" id="about-us">
                     <div className='bg-image-overlay'></div>
                     <div className="container">
                         <div className="col-md-12">
@@ -171,27 +185,29 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
+                
                 <section className="whychooseus">
                         <div><h1>WHY CHOOSE PALEGOR</h1></div>
                         <div className="row">
                             <div className="col-md-4">
-                                <div><h1>Sign Up</h1></div>
-                                <img src={signup} />
-                                Sign Up With PalegoR. 
+                                <div><h1>Security</h1></div>
+                                <img src={secure} />
+                                All Details And Transactions Are Secured In blockChain 
                             </div>
                             <div className="col-md-4">
-                                <div><h1>Profit</h1></div>
-                                <img src={profit} />
-                                Watch Your Profit Daily At 1-2% With Our Arbitrage Robot.
+                                <div><h1>Protection</h1></div>
+                                <img src={protect} />
+                                Funds Are Protected
                             </div>
                             <div className="col-md-4">
-                                <div><h1>Withdarw</h1></div>
-                                <img src={withdraw} />
-                                Withdraw Your Funds 
+                                <div><h1>Profit Guaranteed</h1></div>
+                                <img src={finance} />
+                                Profits Are Guaranteed 
                             </div>
                         </div>
                     </section>
-                <section className="faqs-section pt-120 pb-120" id="faq">
+
+                <section className="faqs-section" id="faq">
                 <div className="container">
                     <div className="section__header section__header__center">
                         <h1 className="text-center">
@@ -265,49 +281,197 @@ export default function Home() {
                     </Accordion>
                 </div>
             </section>
-            <section>
-            <footer className="bg--theme--overlay footer-section bg_fixed bg_img">
-                <div className="banner-shape-top">
-                        </div>
-                            <div className="container mx-auto">
-                            <div className="footer-top pt-120 pb-3  top--wave-wrapper ">
-                                <div className="footer-logo">
-                                    <a href="" >
-                                        <img src={logo} width="180px" height="30px" alt="logo"/>
-                                    </a>
-                                    <p className="footer--text">
-                                        PalegoR Collection features 8888 animated NFT’s created by a group of talented individuals lead by Art H.
-                                    </p>
+            <section className="earnmore px-3" id="">
+                    <div className='bg-image-overlay'></div>
+                    <div className="container">
+                        <div className="col-md-12">
+                            <div className="about__content">
+                                <div className="section__header">
+                                    <h1 className="text-center mt-4 pt-4">
+                                        EARN MORE BY BUILDING YOUR TEAM
+                                    </h1>
                                 </div>
-                                
-                                <div className='w-full mx-auto text-enter px-8 py-4'>
-                                    <h5 className='text-warning mx-auto text-center mb-4'>FOLLOW</h5>
-                                    <ul className="pt-1 flex mx-auto text-center" style={{width:'50%'}}>
-                                        <li className="flex mx-auto text-center" style={{cursor: 'pointer'}}>
-                                            <a href="https://twitter.com/SpecterOfArtNFT/status/1498512097008783360?s=20&t=FFLpsJW2b4N46qA_KcUVkA">
-                                                <FontAwesomeIcon icon={faTwitter} className="fa-2x fa_timer text-warning"/>
-                                            </a>
-                                        </li>
-                                        <li className="flex mx-auto text-center" style={{cursor: 'pointer'}}>
-                                            <a href="https://www.instagram.com/specterofartnft">
-                                                <FontAwesomeIcon icon={faInstagram} className="fa-2x fa_timer text-warning"/>
-                                            </a>
-                                        </li>
-                                        <li className="flex mx-auto text-center" style={{cursor: 'pointer'}}>
-                                            <a href="https://discord.com/invite/yZ8YBkwN">
-                                                <FontAwesomeIcon icon={faDiscord} className="fa-2x fa_timer text-warning"/>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <p className="section__title">
+                                            Earn more by building your team Earn more by building your team Earn more by building your team Earn more by building your team
+                                            Earn more by building your team Earn more by building your team Earn more by building your team Earn more by building your team 
+                                            Earn more by building your team Earn more by building your team
+                                        </p>
+                                        
+                                    </div>
+                                    <div className="col-md-6">
+                                        <img src={teamearn} className="img-fluid" />
+                                    </div>
+                                </div>
+                                <div className="howrefworks">
+                                    <h1 className="text-center mt-4 pt-4">
+                                        How Our Referral System Works
+                                    </h1>
+                                    <div className="row">
+                                        <div className="col-md-4">
+                                            <h1>Security</h1>
+                                            <img src={teamearn} />
+                                            All Details And Transactions Are Secured In blockChain 
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div><h1>Protection</h1></div>
+                                            <img src={teamearn} />
+                                            Funds Are Protected
+                                        </div>
+                                        <div className="col-md-4">
+                                            <div><h1>Profit Guaranteed</h1></div>
+                                            <img src={teamearn} />
+                                            Profits Are Guaranteed 
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="footer-bottom py-3">
-                                <div className="copyright text--white text-center">
-                                    Palegor © 2022        
+                        </div>
+                    </div>
+                </section>
+            <section className="testimony">
+                <div className="container">
+                    <div  id="demo" className="carousel slide" data-ride="carousel">
+                        <div className="carousel-inner">
+                        <div className="carousel-item active">
+                            <div className="carousel-caption">
+                            <p>If Shai Reznik's TDD videos don't convince you to add automated testing your code,
+                                I don't know what will.This was the very best explanation of frameworks for brginners 
+                                that I've ever seen.
+                            </p>
+                            <img src="https://i.imgur.com/lE89Aey.jpg"/>
+                            <div id="image-caption">Nick Doe</div>
+                            </div>   
+                        </div>
+                        <div className="carousel-item">
+                            <div className="carousel-caption">
+                            <p>If Shai Reznik's TDD videos don't convince you to add automated testing your code,
+                                I don't know what will.This was the very best explanation of frameworks for brginners 
+                                that I've ever seen.</p>
+                                <img src="https://i.imgur.com/QptVdsp.jpg" className="img-fluid"/>
+                                <div id="image-caption">Cromption Greves</div>
+                            </div>   
+                        </div>
+                        <div className="carousel-item">
+                            <div className="carousel-caption">
+                            <p>If Shai Reznik's TDD videos don't convince you to add automated testing your code,
+                                I don't know what will.This was the very best explanation of frameworks for brginners 
+                                that I've ever seen.</p>
+                                <img src="https://i.imgur.com/jQWThIn.jpg" className="img-fluid"/>
+                                <div id="image-caption">Harry Mon</div>
+                            </div>   
+                        </div>
+                        </div>
+                        <a className="carousel-control-prev" href="#demo" data-slide="prev">
+                            <button style={{fontSize: 30, fontWeight: 'bolder',background: 'rgba(7, 6, 44, 0.336)', color: '#ffffff', width: 'max-content', padding: '0 .4rem', borderRadius: 8}}><Icon name="angle-double-left" /></button>
+                        </a>
+                        <a className="carousel-control-next" href="#demo" data-slide="next">
+                            <button style={{fontSize: 30, fontWeight: 'bolder',background: 'rgba(7, 6, 44, 0.336)', color: '#ffffff', width: 'max-content', padding: '0 .4rem', borderRadius: 8}}><Icon name="angle-double-right" /></button>
+                        </a>
+                    </div >
+                    
+                </div>
+            </section>
+            <section className="partners">
+                <h1>OUR PARTNERS</h1>
+                <div className="partner-cont">
+                    <div className="partner-inner"><img src={partner1} /></div>
+                    <div className="partner-inner"><img src={partner2} /></div>
+                    <div className="partner-inner"><img src={partner3} /></div>
+                    <div className="partner-inner"><img src={partner4} /></div>
+                    <div className="partner-inner"><img src={partner5} /></div>
+                </div>
+            </section>
+            <section className="footer-section">
+                <footer className="text-center text-lg-start ">
+                    <div className="container p-4 pb-0">
+                        <section className="">
+                            <div className="row">
+                            <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                                <h6 className="text-uppercase mb-4 font-weight-bold">
+                                    <img src={logo} width="120px" height="20px" className="" alt="logo"/>
+                                </h6>
+                                <p>
+                                Here you can use rows and columns to organize your footer
+                                content. Lorem ipsum dolor sit amet, consectetur adipisicing
+                                elit.
+                                </p>
+                            </div>
+
+                            <hr className="w-100 clearfix d-md-none" />
+
+                            <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                                <h6 className="text-uppercase mb-4 font-weight-bold">Products</h6>
+                                <p>
+                                <a className="">MDBootstrap</a>
+                                </p>
+                                <p>
+                                <a className="">MDWordPress</a>
+                                </p>
+                                <p>
+                                <a className="">BrandFlow</a>
+                                </p>
+                                <p>
+                                <a className="">Bootstrap Angular</a>
+                                </p>
+                            </div>
+
+                            <hr className="w-100 clearfix d-md-none" />
+
+                            <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                                <h6 className="text-uppercase mb-4 font-weight-bold">
+                                Navigate
+                                </h6>
+                                <p>
+                                <a className="">Your Account</a>
+                                </p>
+                                <p>
+                                <a className="">Become an Affiliate</a>
+                                </p>
+                                <p>
+                                <a className="">Shipping Rates</a>
+                                </p>
+                                <p>
+                                <a className="">Help</a>
+                                </p>
+                            </div>
+
+                            <hr className="w-100 clearfix d-md-none" />
+
+                            </div>
+                        </section>
+
+                        <hr className="my-3"/>
+
+                        <section className="p-3 pt-0">
+                            <div className="row d-flex align-items-center">
+                            <div className="col-md-7 col-lg-8 text-center text-md-start">
+                                <div className="p-3">  
+                                    © 2022 Copyright: <a className="" href="#">PalegoR</a>
                                 </div>
                             </div>
-                        </div>
-                    </footer>
+                            <div className="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
+                                <a className="btn  btn-floating m-1 " role="button">
+                                    <FontAwesomeIcon icon={faTwitter} className="fa_timer text-white"/>
+                                </a>
+
+                                <a className="btn  btn-floating m-1 " role="button">
+                                    <FontAwesomeIcon icon={faFacebook} className="fa_timer text-white"/>
+                                </a>
+
+                                <a className="btn  btn-floating m-1 " role="button">
+                                    <FontAwesomeIcon icon={faInstagram} className="fa_timer text-white"/>
+                                </a>
+
+                                <a className="btn  btn-floating m-1 " role="button">
+                                    <FontAwesomeIcon icon={faTelegram} className="fa_timer text-white"/>
+                                </a>
+                            </div>
+                            </div>
+                        </section>
+                    </div>
+                </footer>
             </section>
     </>
   );

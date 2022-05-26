@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rubik+Wet+Paint:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Creepster:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+
+.testimony {
+    margin-bottom: 5rem;
+}
+@media screen and (max-width: 767px) and (min-width: 567px) {
+    .testimony {
+        margin-bottom: 5rem;margin-top: 83rem !important;
+    }
+}
+@media screen and (max-width: 567px) {
+    .testimony {
+        margin-bottom: 5rem;margin-top: 83rem !important;
+    }
+}
+#demo{
+    background: linear-gradient(112deg, #6b6969 50%, rgb(21, 27, 83) 50%);
+    max-width: 900px;
+    margin: auto;
+}
+.carousel-caption {
+    position: initial;
+    z-index: 10;
+    padding: 5rem 8rem;
+    color: rgba(253, 253, 253, 0.856);
+    text-align: center;
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 2rem;
+    font-family: "Nunito";
+}
+@media(max-width:767px){
+    .carousel-caption {
+        position: initial;
+        z-index: 10;
+        padding: 3rem 2rem;
+        color: rgba(253, 253, 253, 0.856);
+        text-align: center;
+        font-size: 0.7rem;
+        font-style: italic;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+}
+.carousel-caption img{
+    width: 6rem;
+    border-radius: 5rem;
+    margin-top: 2rem;
+}
+@media(max-width:767px){
+    .carousel-caption img{
+        width: 4rem;
+        border-radius: 4rem;
+        margin-top: 1rem;
+    }
+}
+#image-caption{
+    font-style: normal;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+@media(max-width:767px){
+    #image-caption{
+        font-style: normal;
+        font-size: 0.6rem;
+        margin-top: 0.5rem;
+    }
+}
+i{
+    background-color: rgba(7, 6, 44, 0.336);
+    padding: 1.4rem;
+}
+@media(max-width:767px){
+    i{
+        padding: 0.8rem;
+    }
+}
+.carousel-control-prev{
+    justify-content: flex-start;
+}
+
+.carousel-control-next {
+    justify-content: flex-end;
+}
+.carousel-control-prev,.carousel-control-next{
+    transition: none;
+    opacity: unset;
+}
