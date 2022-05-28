@@ -36,7 +36,10 @@ import teamearn from './images/teamearn.png';
 import secure from './images/secure.svg';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { providers } from "ethers";
+<<<<<<< HEAD
 import Web3 from "web3";
+=======
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
 
 library.add(faInstagram, faTwitter, faDiscord, faCheck, faCheckSquare);
 export default function Home() {
@@ -44,6 +47,7 @@ export default function Home() {
 
 //   const isConnected = Boolean(accounts[0]);
 
+<<<<<<< HEAD
     async function connectAccount() {
         if(window.ethereum)  {
             // window.web3 = new Web3(web3.currentProvider);
@@ -64,6 +68,26 @@ export default function Home() {
             const web3Provider = new providers.Web3Provider(provider);
         }
     }
+=======
+//     async function connectAccount() {
+//         if(window.ethereum)  {
+//             const accounts = await window.ethereum.request({
+//                 method: "eth_requestAccounts",
+//             });
+//             setAccounts(accounts);
+//         } else {
+//             //  Create WalletConnect Provider
+//             const provider = new WalletConnectProvider({
+//                 infuraId: "9de8cf7dd24f4ece94441cc3c8307ff9",
+//             });
+            
+//             //  Enable session (triggers QR Code modal)
+//             await provider.enable();
+
+//             const web3Provider = new providers.Web3Provider(provider);
+//         }
+//     }
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
 
 // const windowHeight = window.innerHeight;
 //   const windowWidth = window.innerWidth - 10;

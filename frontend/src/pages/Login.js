@@ -91,7 +91,11 @@ export default function Login() {
               Sign in to Palego
             </Typography>
 
+<<<<<<< HEAD
             <Typography sx={{ color: 'text.secondary',margin: '1rem auto', textAlign: 'center', mb: 5 }}>Enter your details below.</Typography>
+=======
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
 
             <LoginForm />
 

@@ -5,6 +5,17 @@
   "version": "1.4.0",
   "proxy": "http://127.0.0.1:5000",
   "private": false,
+<<<<<<< HEAD
+=======
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
+    "lint": "eslint --ext .js,.jsx ./src",
+    "lint:fix": "eslint --fix --ext .js,.jsx ./src"
+  },
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -74,11 +85,19 @@
     "numeral": "^2.0.6",
     "os": "^0.1.2",
     "os-browserify": "^0.3.0",
+<<<<<<< HEAD
     "postcss": "^8.4.8",
+=======
+    "postcss": "^8.4.13",
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
     "postcss-cli": "^9.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-apexcharts": "^1.4.0",
+<<<<<<< HEAD
+=======
+    "react-app-rewired": "^2.2.1",
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
     "react-bootstrap": "^2.4.0",
     "react-crypto-chart": "0.0.6",
     "react-dom": "^18.1.0",
@@ -87,7 +106,11 @@
     "react-password-checklist": "^1.3.3",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
+<<<<<<< HEAD
     "react-scripts": "^4.0.3",
+=======
+    "react-scripts": "^5.0.1",
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
     "react-tradingview-widget": "^1.3.2",
     "react-ts-tradingview-widgets": "^1.0.10",
     "redux": "^4.2.0",
@@ -100,9 +123,12 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "tailwindcss": "^3.0.24",
+<<<<<<< HEAD
     "tronbox": "^2.7.25",
     "trongrid": "^1.2.6",
     "tronweb": "^4.2.0",
+=======
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
     "url": "^0.11.0",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4",

@@ -13,8 +13,12 @@ dotenv.config();
 // async..await is not allowed in global scope, must use a wrapper
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
+<<<<<<< HEAD
     host: "palegor.com",
     port: 587,
+=======
+    service: "gmail",
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
     auth: {
       user: process.env.AUTH_EMAIL, // generated ethereal user
       pass: process.env.AUTH_PASS, // generated ethereal password
@@ -47,6 +51,7 @@ dotenv.config();
   //     }
   // });
 
+<<<<<<< HEAD
   // transporter.verify((error, success) => {
   //   if(error) {
   //    console.log(error) 
@@ -55,6 +60,16 @@ dotenv.config();
   //     console.log(success);
   //   }
   // })
+=======
+  transporter.verify((error, success) => {
+    if(error) {
+     console.log(error) 
+    }else {
+      console.log("ready for message");
+      console.log(success);
+    }
+  })
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
 
   
   const sendverificationMail = (_id,username,emailCode,email) => {
@@ -122,11 +137,20 @@ const authUser = asyncHandler(async (req, res) => {
     const userid = user._id;
     //check if user has a referral
     const referral = await Referral.find({ userId: user._id }); 
+<<<<<<< HEAD
     if(referral ) {
+=======
+    console.log(referral)
+    if(referral && referral[0].sponsorId) {
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
       const sponsorid = referral[0].sponsorId;
       const getsponsor = await User.find({_id:sponsorid});
       const upline = getsponsor[0].username;
       const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
+<<<<<<< HEAD
+=======
+      console.log(noofDirectDownlines)
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
       // const getusersuplines = await User.find(user._id).populate({
       //   path:"refId", model:"referrals"
       // });
@@ -137,9 +161,12 @@ const authUser = asyncHandler(async (req, res) => {
             sponsorId: sponsorid,
             directdownlines: noofDirectDownlines,
             sponsor: upline,
+<<<<<<< HEAD
             trxwalletaddressbase58: user.trxwalletaddressbase58,
             trxwalletaddresshex:user.trxwalletaddresshex,
             bscwalletaddress: user.bscwalletaddress,
+=======
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
             isAdmin: user.isAdmin,
             pic: user.pic,
             token: generateToken(user._id),
@@ -150,9 +177,12 @@ const authUser = asyncHandler(async (req, res) => {
         username: user.username,
         email: user.email,
         isAdmin: user.isAdmin,
+<<<<<<< HEAD
         trxwalletaddressbase58: user.trxwalletaddressbase58,
         trxwalletaddresshex:user.trxwalletaddresshex,
         bscwalletaddress: user.bscwalletaddress,
+=======
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
         pic: user.pic,
         token: generateToken(user._id),
       });
@@ -170,6 +200,7 @@ const authUser = asyncHandler(async (req, res) => {
 //@route           POST /api/users/
 //@access          Public
 const registerUser = asyncHandler(async (req, res) => {
+<<<<<<< HEAD
   const { 
     username, 
     email, 
@@ -180,6 +211,9 @@ const registerUser = asyncHandler(async (req, res) => {
     trxwalletaddresshex,
     trxwalletprivatekey, pic 
   } = req.body;
+=======
+  const { username, email, password, pic } = req.body;
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
 
   const userExists = await User.findOne({ email });
   const usernameExists = await User.findOne({ username });
@@ -197,11 +231,14 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     email,
     password,
+<<<<<<< HEAD
     bscwalletaddress,
     bscwalletprivatekey,
     trxwalletaddressbase58,
     trxwalletaddresshex,
     trxwalletprivatekey,
+=======
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
     emailcode: uuidv4(),
     pic,
   });

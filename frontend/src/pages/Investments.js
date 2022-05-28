@@ -20,16 +20,6 @@ const SORT_OPTIONS = [
 
 export default function Blog() {
   return (
-<<<<<<<< HEAD:frontend/src/pages/FundsHistory.js
-    <Page title="Dashboard: My Funds History">
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            My Funds History
-            <div>
-              <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-                Add Fund
-========
     <Page title="Dashboard: My Investments">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -38,7 +28,6 @@ export default function Blog() {
             <div>
               <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
                 Invest Now
->>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb:frontend/src/pages/Invest.js
               </Button>
             </div>
           </Typography>

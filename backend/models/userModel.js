@@ -35,6 +35,7 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false
     },
+<<<<<<< HEAD
     bscwalletaddress: {
       type: String
     },
@@ -50,6 +51,8 @@ const userSchema = mongoose.Schema(
     trxwalletprivatekey: {
       type: String
     },
+=======
+>>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
     updatedAt: {
       type: Date,
       default: Date.now()
