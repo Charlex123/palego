@@ -48,14 +48,14 @@ export default function LoginForm() {
         }
       }  
       setLoading(true)
-      const {data} = await axios.post("/api/users/login", {
+      const {data} = await axios.post("/api/users/login/users", {
         email,
         password
       }, config);
-
       localStorage.setItem("userInfo", JSON.stringify(data))
+      console.log(data)
       setLoading(false)
-      navigate("/dashboard/app", { replace: true })
+      navigate(`/dashboard/app/${data.username}`, { replace: true })
     } catch (error) {
       console.log(error.response.data)
     }
@@ -65,41 +65,32 @@ export default function LoginForm() {
     <form className="formTag" onSubmit={submitHandler}>
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {loading && <Loading />}
-      <div className="formDiv">
-        <div className="innerformDiv">
-          <label className="formlabel" htmlFor="grid-last-name">
-            Email
-            <div className='labelDiv'>
-              <input className="forminput" id="grid-last-name" required
+      <div className="form-group">
+          <label className="formlabel" htmlFor="grid-last-name">Email</label>
+            <input className="forminput" id="grid-last-name" required
                type="email"
                value={email}
                placeholder="Enter email"
                onChange={(e) => setEmail(e.target.value)}
               />
-            </div>
-          </label>
-        </div>
       </div>
-      <div className="formDiv">
-        <div className="innerformDiv">
-          <label className="formlabel" htmlFor="grid-password">
-            Password
-            <div className='labelDiv'>
-              <input className="forminput" id="grid-password" 
-               type={passwordinputType}
-               value={password}
-               placeholder="Password"
-               onChange={(e) => setPassword(e.target.value)}
-              />
-              <button className="passhideshowButton" onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
-            </div>
-          </label>
+      <div className='labelDiv'>
+          <label className="formlabel" htmlFor="grid-password">Password</label>
+          <input className="forminput" id="grid-password" 
+            type={passwordinputType}
+            value={password}
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="passhideshowButton" onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
           <p className="formpTag">Make it as long and as crazy as you'd like</p>
-        </div>
       </div>
-      <button className="registerButton" type="submit">
-        Login
-      </button>
+        
+      <div className='mx-auto text-center'>
+        <button className="registerButton" type="submit">
+          Login
+        </button>
+      </div>
     </form>
   );
 }

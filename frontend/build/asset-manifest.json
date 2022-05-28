@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/static/css/main.577805fa.chunk.css",
+    "main.js": "/static/js/main.627f41a4.chunk.js",
+    "main.js.map": "/static/js/main.627f41a4.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.830e4a82.js",
+    "runtime-main.js.map": "/static/js/runtime-main.830e4a82.js.map",
+    "static/css/2.958bf628.chunk.css": "/static/css/2.958bf628.chunk.css",
+    "static/js/2.48795d7d.chunk.js": "/static/js/2.48795d7d.chunk.js",
+    "static/js/2.48795d7d.chunk.js.map": "/static/js/2.48795d7d.chunk.js.map",
+    "static/js/3.e44d474d.chunk.js": "/static/js/3.e44d474d.chunk.js",
+    "static/js/3.e44d474d.chunk.js.map": "/static/js/3.e44d474d.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.958bf628.chunk.css.map": "/static/css/2.958bf628.chunk.css.map",
+    "static/css/main.577805fa.chunk.css.map": "/static/css/main.577805fa.chunk.css.map",
+    "static/js/2.48795d7d.chunk.js.LICENSE.txt": "/static/js/2.48795d7d.chunk.js.LICENSE.txt",
+    "static/media/styles.css": "/static/media/ab-bg.f727e279.jpg",
+    "static/media/aboutimg.e8de9e2c.webp": "/static/media/aboutimg.e8de9e2c.webp",
+    "static/media/add-user.d4a2377c.png": "/static/media/add-user.d4a2377c.png",
+    "static/media/binancelogo.856c8975.png": "/static/media/binancelogo.856c8975.png",
+    "static/media/finance.b21fcae8.svg": "/static/media/finance.b21fcae8.svg",
+    "static/media/font-awesome.css": "/static/media/fontawesome-webfont.f691f37e.woff",
+    "static/media/headimg.aa61da4a.png": "/static/media/headimg.aa61da4a.png",
+    "static/media/invest.4244f973.png": "/static/media/invest.4244f973.png",
+    "static/media/logo.8eff396d.png": "/static/media/logo.8eff396d.png",
+    "static/media/profit.2cd0ab59.png": "/static/media/profit.2cd0ab59.png",
+    "static/media/protect.2b0f72c7.svg": "/static/media/protect.2b0f72c7.svg",
+    "static/media/secure.b74ef66d.svg": "/static/media/secure.b74ef66d.svg",
+    "static/media/teamearn.fe5f5cef.png": "/static/media/teamearn.fe5f5cef.png",
+    "static/media/withdraw.b9bcf33e.png": "/static/media/withdraw.b9bcf33e.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.830e4a82.js",
+    "static/css/2.958bf628.chunk.css",
+    "static/js/2.48795d7d.chunk.js",
+    "static/css/main.577805fa.chunk.css",
+    "static/js/main.627f41a4.chunk.js"
+  ]
+}

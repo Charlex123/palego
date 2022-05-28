@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
 // components
 import Iconify from '../../components/Iconify';
-//
+//styles
+import "../../styles/styles.css";
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
@@ -20,7 +22,9 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
   backdropFilter: 'blur(6px)',
   WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
-  backgroundColor: alpha(theme.palette.background.default, 0.72),
+  // backgroundColor: alpha(theme.palette.background.default, 0.72),
+  color: '#d6d2d2d8',
+  backgroundColor: '#01011f',
   [theme.breakpoints.up('lg')]: {
     width: `calc(100% - ${DRAWER_WIDTH + 1}px)`,
   },
@@ -41,10 +45,12 @@ DashboardNavbar.propTypes = {
 };
 
 export default function DashboardNavbar({ onOpenSidebar }) {
+  const [totalamount, settotalAmount] = useState("$10");
+
   return (
     <RootStyle>
       <ToolbarStyle>
-        <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}>
+        <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: '#d6d2d2d8', display: { lg: 'none' } }}>
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
 
@@ -52,7 +58,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <LanguagePopover />
+          <span style={{color: '#d6d2d2d8',position: 'relative',fontWeight: 'bold'}}>{totalamount}<span className='superscript'>Bonus</span></span>
           <NotificationsPopover />
           <AccountPopover />
         </Stack>

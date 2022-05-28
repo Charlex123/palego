@@ -69,7 +69,7 @@ export default function Register() {
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
               Already have an account? {''}
-              <Link variant="subtitle2" component={RouterLink} to="/login">
+              <Link variant="subtitle2" sx={{color: '#f1f1f1'}} component={RouterLink} to="/login/users">
                 Login
               </Link>
             </Typography>
@@ -78,23 +78,23 @@ export default function Register() {
 
         <Container >
           <ContentStyle className='regContainer'>
-            <Typography variant="h4" gutterBottom>
-              Earn 1-2% Daily With Automated Crypto Arbitrage Robot <span sx={{ color: 'text.primary' }}>Palego</span>
+            <Typography variant="h4" gutterBottom sx={{ color: '#f1f1f1', margin: '1rem auto', textAlign: 'center' }}>
+              Earn 1-2% Daily With Automated Crypto Arbitrage Robot <span sx={{ color: '#f1f1f1' }}>Palego</span>
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>The Best Crypto Arbitrage Robot</Typography>
+            <Typography sx={{ color: 'text.secondary',margin: '1rem auto', textAlign: 'center', mb: 5 }}>The Best Crypto Arbitrage Robot</Typography>
 
             {/* <AuthSocial /> */}
 
             <RegisterForm />
 
-            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+            <Typography variant="body2" align="center" sx={{ color: '#f1f1f1', mt: 3 }}>
               By registering, I agree to Palego&nbsp;
-              <Link underline="always" color="text.primary" href="#">
+              <Link underline="always" color="text.secondary" href="#">
                 Terms of Service
               </Link>
               {' '}and{' '}
-              <Link underline="always" color="text.primary" href="#">
+              <Link underline="always" color="text.secondary" href="#">
                 Privacy Policy
               </Link>
               .
@@ -103,7 +103,7 @@ export default function Register() {
             {!smUp && (
               <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
                 Already have an account?{' '}
-                <Link variant="subtitle2" to="/login" component={RouterLink}>
+                <Link variant="subtitle2" to="/login/users" component={RouterLink}>
                   Login
                 </Link>
               </Typography>

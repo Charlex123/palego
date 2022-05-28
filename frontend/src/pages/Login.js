@@ -9,7 +9,6 @@ import Page from '../components/Page';
 import Logo from '../components/Logo';
 // sections
 import { LoginForm } from '../sections/auth/login';
-import AuthSocial from '../sections/auth/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -68,33 +67,31 @@ export default function Login() {
           <Logo />
 
           {smUp && (
-            <Typography variant="body2" sx={{ mt: { md: -2 } }}>
+            <Typography variant="body2" sx={{ color: 'text.secondary', mt: { md: -2 } }}>
               Don’t have an account? {''}
-              <Link variant="subtitle2" component={RouterLink} to="/register">
+              <Link variant="subtitle2" sx={{ color: '#f1f1f1'}} component={RouterLink} to="/register">
                 Get started
               </Link>
             </Typography>
           )}
         </HeaderStyle>
 
-        {mdUp && (
+        {/* {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               Hi, Welcome Back
             </Typography>
             <img src="/static/illustrations/illustration_login.png" alt="login" />
           </SectionStyle>
-        )}
+        )} */}
 
         <Container maxWidth="sm">
           <ContentStyle>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom sx={{ color: '#f1f1f1', margin: '1rem auto', textAlign: 'center' }}>
               Sign in to Palego
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>
-
-            <AuthSocial />
+            <Typography sx={{ color: 'text.secondary',margin: '1rem auto', textAlign: 'center', mb: 5 }}>Enter your details below.</Typography>
 
             <LoginForm />
 

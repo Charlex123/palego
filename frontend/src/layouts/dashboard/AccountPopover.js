@@ -104,7 +104,7 @@ export default function AccountPopover() {
 
         <MenuItem onClick={() => {
           localStorage.removeItem("userInfo")
-          navigate("/login")
+          navigate("/")
           }} sx={{ m: 1 }}>
           Logout
         </MenuItem>

@@ -14,7 +14,11 @@ import '../../../styles/index.css';
 import '../../../styles/register.css';
 // component
 import Iconify from '../../../components/Iconify';
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import { providers } from "ethers";
+import Web3 from "web3";
 
+const TronWeb = require('tronweb');
 // ----------------------------------------------------------------------
 library.add(faEye, faEyeSlash);
 export default function RegisterForm() {
@@ -23,7 +27,6 @@ export default function RegisterForm() {
   const { id } = useParams();
   
   const sponsorId = id;
-  console.log(sponsorId)
   const [email, setEmail] = useState("");
   const [username, setUserame] = useState("");
   const [pic, setPic] = useState(
@@ -36,9 +39,22 @@ export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [passwordinputType, setpasswordinputType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(<FontAwesomeIcon icon={faEye} />);
-  
-  
-  const togglePasswordVisiblity = () => {
+  //   const [accounts, setAccounts] = useState([]);
+
+//   const isConnected = Boolean(accounts[0]);
+
+
+    // mainnet 
+    // const web3 = new Web3('https://bsc-dataseed1.binance.org:443');
+    // testnet
+    const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
+
+    const bscaccount = web3.eth.accounts.create();
+    const bscwalletaddress = bscaccount.address;
+    const bscwalletprivatekey = bscaccount.privateKey;
+
+    
+    const togglePasswordVisiblity = () => {
     if(passwordinputType === "password") {
       setpasswordinputType("text")
       setEyeIcon(<FontAwesomeIcon icon={faEye} />)
@@ -48,9 +64,23 @@ export default function RegisterForm() {
     }
   };
   
+
+  // TronWeb.createAccount().then(function(res){
+  //     console.log(res)
+  //     console.log(res.length)
+  // });
+  // const gettrxdet = [];
+    
+    ;
+  // const gettrxdet = TronWeb.createAccount().then(res => setTrxwalletAddressBase58(res.address.base58) );
+// console.log(gettrxdet)
+  // console.log(trxwalletaddresshex)
+  // console.log(trxwalletprivatekey)
+  
+
   const submitHandler = async (e) => {
     e.preventDefault();
-
+    
     if (password !== confirmpassword) {
       setMessage("Passwords do not match");
     }else {
@@ -62,17 +92,28 @@ export default function RegisterForm() {
           }
         }  
         setLoading(true)
+
+        const res = await TronWeb.createAccount();
+        const trxwalletaddressbase58 = res.address.base58;
+        const trxwalletaddresshex = res.address.hex;
+        const trxwalletprivatekey = res.privateKey;
         const {data} = await axios.post("/api/users/register", {
           username,
           sponsorId,
           email,
           password,
+          bscwalletaddress,
+          bscwalletprivatekey,
+          trxwalletaddressbase58,
+          trxwalletaddresshex,
+          trxwalletprivatekey,
           pic
         }, config);
   
+        console.log(data)
         localStorage.setItem("userInfo", JSON.stringify(data))
         setLoading(false)
-        navigate("/dashboard/app", { replace: true })
+        navigate(`/regsuccess/user/${data.username}`, { replace: true })
       } catch (error) {
         setError(error.response.data.message)
         console.log(error.response.data)
@@ -81,70 +122,48 @@ export default function RegisterForm() {
   
 }
 
-
-
-
   return (
     <form className="formTag" onSubmit={submitHandler}>
+      
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
       {loading && <Loading />}
-      <div className="formDiv">
-        <div className="innerformDiv">
-          <label className="formlabel" htmlFor="grid-last-name">
-            Username
-            <div className='labelDiv'>
-              <input className="forminput" id="grid-uaer-name" type="varchar" placeholder="Enter username" required
-              value={username}
-              onChange={(e) => setUserame(e.target.value)}
-              />
-            </div>
-          </label>
-        </div>
+      
+      <div className='form-group'>
+          <label className="formlabel" htmlFor="grid-last-name">Username</label>
+          <input className="forminput" id="grid-user-name" type="varchar" placeholder="Enter username" required
+            value={username}
+            onChange={(e) => setUserame(e.target.value)}
+            />
       </div>
-      <div className="formDiv">
-        <div className="innerformDiv">
-          <label className="formlabel" htmlFor="grid-email">
-            Email
-            <div className='labelDiv'>
+          
+      <div className="form-group">
+        <label className="formlabel" htmlFor="grid-email"> Email</label>
               <input className="forminput" id="email" type="email" placeholder="Enter email" required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               />
-            </div>
-          </label>
-        </div>
       </div>
-      <div className="formDiv">
-        <div className="innerformDiv">
-          <label className="formlabel" htmlFor="grid-password">
-            Password
-            <div className='labelDiv'>
-              <input className="forminput" id="password" type={passwordinputType} placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              />
-              <button className="passhideshowButton" onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
-            </div>
-          </label>
-          <p className="formpTag">Make it as long and as crazy as you'd like</p>
-        </div>
+
+      <div className='form-group'>
+          <label className="formlabel" htmlFor="grid-password"> Password</label>
+            <input className="forminput" id="password" type={passwordinputType} placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+            <button className="passhideshowButton" onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
+            <p className="formpTag">Make it as long and as crazy as you'd like</p>
       </div>
-      <div className="formDiv">
-        <div className="innerformDiv">
-          <label className="formlabel" htmlFor="grid-password">
-            Confirm Password
-            <div className='labelDiv'>
-              <input className="forminput" id="confirmpassword" type={passwordinputType} placeholder="Confirm password"
-              value={confirmpassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              <button className="passhideshowButton" onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
-            </div>
-          </label>
-          <p className="formpTag">Your password is encrypted and secured, we will not disclose your password with any third</p>
+
+      <div className="form-group">
+          <label className="formlabel" htmlFor="grid-password">Confirm Password</label>
+            <input className="forminput" id="confirmpassword" type={passwordinputType} placeholder="Confirm password"
+            value={confirmpassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <button className="passhideshowButton" onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
+           <p className="formpTag">Your password is encrypted and secured, we will not disclose your password with any third</p>
         </div>
-      </div>
       <div className='font-sm' style={{fontSize: 12}}>
         <PasswordChecklist
           rules={["minLength","specialChar","number","capital","match"]}
@@ -155,9 +174,11 @@ export default function RegisterForm() {
         />
       </div>
       
-      <button className="registerButton" type="submit">
-        Register
-      </button>
+      <div className='mx-auto text-center'>
+        <button className="registerButton" type="submit">
+          Register
+        </button>
+      </div>
     </form>
   );
 }

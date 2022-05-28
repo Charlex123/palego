@@ -1,20 +1,21 @@
 {
   "name": "palego",
   "version": "1.0.0",
-  "description": "Notes Taking App",
-  "main": "server.js",
+  "description": "Palego Trading Robot",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node backend/server",
-    "server": "nodemon backend/server",
+    "start": "node backend/app",
+    "app": "nodemon backend/app",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run app\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d"
   },
   "author": "Piyush Agarwal",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.2",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
@@ -23,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.15",
     "nodemailer": "^6.7.3",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
