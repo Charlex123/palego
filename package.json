@@ -2,11 +2,7 @@
   "name": "palego",
   "version": "1.0.0",
   "description": "Palego Trading Robot",
-<<<<<<< HEAD
   "main": "app.js",
-=======
-  "main": "server.js",
->>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
   "type": "module",
   "scripts": {
     "start": "node backend/app",

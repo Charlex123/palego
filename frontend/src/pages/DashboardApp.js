@@ -28,29 +28,18 @@ export default function DashboardApp() {
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
   const sponsor = userDetails.sponsor || "None";
   const directdownlines = userDetails.directdownlines || 0;
-<<<<<<< HEAD
   console.log(userDetails)
-=======
->>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }} style={{textTransform: 'capitalize',color: '#f1f1f1'}}>
           Hi, Welcome back {userDetails.username}
-<<<<<<< HEAD
           <div className='bonus'><small>You have received a <span style={{color: '#f5b221d5'}}>$10</span> welcome bonus </small></div>
-=======
-          <div className='bonus'><small>You have received a <span style={{color: 'green'}}>$10</span> welcome bonus </small></div>
->>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
           {/* <div>My upline: {sponsor}</div>
           <div>My Direct DownLines: {directdownlines}</div> */}
         </Typography>
         <div className='reflink'>My Referral Link: 
-<<<<<<< HEAD
           <Button href={`http://localhost:3000/register/user/${userDetails._id}`} target="_blank" variant="" style={{fontSize: 14,fontWeight: '400'}}>
-=======
-          <Button href={`http://localhost:3000/register/user/${userDetails._id}`} target="_blank" variant="" style={{fontSize: 14,}}>
->>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
           {`http://localhost:3000/register/user/${userDetails._id}`}
           </Button>
           {/* <Link to={`http://localhost:3000/register/user/${userDetails._id}`} target="_blank" variant="">

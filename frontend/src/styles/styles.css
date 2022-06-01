@@ -2,29 +2,11 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik+Wet+Paint:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Creepster:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
-<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
-=======
->>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
 
 body {
   background-color: #01011f !important;
 }
-<<<<<<< HEAD
-.superscript {
-  position: absolute;background-color: #f5b221d5;padding: .1rem .1rem;
-  font-size: 10px;margin-top: -1rem;font-family: "Montserrat";border-radius: 2px;
-}
-.bonus {
-  background-color: #5555f381;border-radius: 8px;font-size: 16px;width: max-content;padding: .4rem 1rem;
-  color: #f1f1f1;margin: 1rem 0;font-family: "Montserrat";
-}
-.reflink {
-  color: #f1f1f1;margin-bottom: 5rem;font-size: 14px;font-weight: 500;
-  font-family: "Montserrat";
-}
-=======
->>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
 .head-area {
   width: 100%;
 }
@@ -198,13 +180,8 @@ body {
   text-align: center;justify-content: center;margin: 2rem auto;max-width: 10rem;
   padding: 1rem 1rem 0 0;
 }
-<<<<<<< HEAD
 /* .bg-image-overlay {
   position: absolute;
-=======
-.bg-image-overlay {
-  /* position: absolute;
->>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
   height: 100%;
   width: 100%;
   background-color: #000000;
@@ -214,13 +191,8 @@ body {
   bottom: 0;
   background-size: cover;
   opacity: .8;
-<<<<<<< HEAD
   z-index: 2;
 } */
-=======
-  z-index: 2; */
-}
->>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
 .faqs-section {
   padding: 4rem auto;background-color: #01011f;margin: 4rem 0 8rem 0;position: relative;
 }

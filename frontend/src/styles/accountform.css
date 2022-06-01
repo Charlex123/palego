@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rubik+Wet+Paint:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Creepster:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
+.container-d {
+    width: 60%;margin: auto;
+}
+.qrcode {
+    width: 10rem;height: 10rem;
+}
+.walletbalances {
+    margin: 5rem 0 2rem 0;
+}
+.wallet-bal label {
+    font-size: 12px;color: #727070;margin-top: .2rem;padding: .2rem;font-family: "Montserrat";
+}
+.forminput {
+    border-radius: 12px;width: 100% !important;height: 40px;padding: .2rem .8rem;
+    border: none;background: transparent;border: 1px solid #1f1e207e;color: #727070;
+}
+.forminput::placeholder {
+    font-size: 12px;
+}
+select {
+    border-radius: 12px;width: 100% !important;height: 40px;padding: .2rem .8rem;
+    border: none;background: transparent;border: 1px solid #1f1e207e;color: #727070;
+}
+.bal {
+    color: #c2bdbdec;font-style: italic;margin-left: .4rem;
+}
+#bscwallet {
+    margin-left: .8rem;display: none;
+}
+#bscwallet p{
+    font-size: 13px;color: #f7c7c785;margin-left: 0;
+}
+#bscwallet p.networktype {
+    color: #f7c7c785;font-style: italic;font-size: 12px;margin-bottom: .2rem;margin-top: 1rem;
+}
+#bscwallet p.not {
+    color: #f7c7c785;font-style: italic;font-size: 12px;font-family: "Nunito";
+}
+#trxwallet p.networktype {
+    color: #f7c7c785;font-style: italic;font-size: 12px;margin-bottom: .2rem;margin-top: 1rem;
+}
+#trxwallet p.not {
+    color: #f7c7c785;font-style: italic;font-size: 12px;font-family: "Nunito";
+}
+#trxwallet {
+    margin-left: .8rem;display: none;
+}
+#trxwallet p{
+    font-size: 13px;color: #f7c7c785;margin-left: 0;
+}
+.formlabel {
+    color: #727070;margin-top: .5rem;padding: .6rem;font-family: "Montserrat";font-size: 13px;
+}
+.formTag {
+    background-color: #f0efef;border-radius: 8px;padding: 1rem;
+}
+.formDiv {
+}
+.innerformDiv {
+}
+.formpTag {
+    font-size: 12px;font-family: "Montserrat";font-style: italic;
+}
+.formflexDiv {
+}
+.formchildFlex {
+    
+}
+.labelDiv {
+    width: 100%;
+}
+.regContainer {
+    
+}
+.registerButton {
+    border-radius: 12px;margin: 2rem auto;background-color: #1f1e207e;
+    padding: .4rem 1rem;border: none;color: #f1f1f1;
+}
+.passhideshowButton {
+    text-align: right;float: right;margin-top: .6rem;margin-right: .5rem;
+    border: none;color: #dbd9dd7e;background-color: transparent;
+}

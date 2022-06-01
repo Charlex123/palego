@@ -58,11 +58,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-<<<<<<< HEAD
           <span style={{color: '#d6d2d2d8',position: 'relative',fontWeight: 'bold'}}>{totalamount}<span className='superscript'>Bonus</span></span>
-=======
-          <span style={{color: '#323222',fontWeight: 'bold'}}>{totalamount}<span className='superscript'>Bonus</span></span>
->>>>>>> 85e603692b71ffa1304bcd6bcd6fcde5e85553fb
           <NotificationsPopover />
           <AccountPopover />
         </Stack>
