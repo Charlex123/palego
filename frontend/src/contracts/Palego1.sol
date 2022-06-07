@@ -3,94 +3,10 @@
 pragma solidity >0.5.16;
 
 interface IBEP20 {
-  /**
-   * @dev Returns the amount of tokens in existence.
-   */
-//   function totalSupply() external view returns (uint256);
-
-//   /**
-//    * @dev Returns the token decimals.
-//    */
-//   function decimals() external view returns (uint8);
-
-//   /**
-//    * @dev Returns the token symbol.
-//    */
-//   function symbol() external view returns (string memory);
-
-//   /**
-//   * @dev Returns the token name.
-//   */
-//   function name() external view returns (string memory);
-
-  /**
-   * @dev Returns the bep token owner.
-   */
-//   function getOwner() external view returns (address);
-
-  /**
-   * @dev Returns the amount of tokens owned by `account`.
-   */
-//   function balanceOf(address account) external view returns (uint256);
-
-  /**
-   * @dev Moves `amount` tokens from the caller's account to `recipient`.
-   *
-   * Returns a boolean value indicating whether the operation succeeded.
-   *
-   * Emits a {Transfer} event.
-   */
   function transfer(address recipient, uint256 amount) external returns (bool);
 
-  /**
-   * @dev Returns the remaining number of tokens that `spender` will be
-   * allowed to spend on behalf of `owner` through {transferFrom}. This is
-   * zero by default.
-   *
-   * This value changes when {approve} or {transferFrom} are called.
-   */
-//   function allowance(address _owner, address spender) external view returns (uint256);
-
-  /**
-   * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
-   *
-   * Returns a boolean value indicating whether the operation succeeded.
-   *
-   * IMPORTANT: Beware that changing an allowance with this method brings the risk
-   * that someone may use both the old and the new allowance by unfortunate
-   * transaction ordering. One possible solution to mitigate this race
-   * condition is to first reduce the spender's allowance to 0 and set the
-   * desired value afterwards:
-   * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-   *
-   * Emits an {Approval} event.
-   */
-//   function approve(address spender, uint256 amount) external returns (bool);
-
-  /**
-   * @dev Moves `amount` tokens from `sender` to `recipient` using the
-   * allowance mechanism. `amount` is then deducted from the caller's
-   * allowance.
-   *
-   * Returns a boolean value indicating whether the operation succeeded.
-   *
-   * Emits a {Transfer} event.
-   */
-//   function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
-
-  /**
-   * @dev Emitted when `value` tokens are moved from one account (`from`) to
-   * another (`to`).
-   *
-   * Note that `value` may be zero.
-   */
   event Transfer(address indexed from, address indexed to, uint256 value);
 
-  /**
-   * @dev Emitted when the allowance of a `spender` for an `owner` is set by
-   * a call to {approve}. `value` is the new allowance.
-   */
-//   event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
 // contract Context {
@@ -309,7 +225,8 @@ contract Palego is IBEP20{
     address investor;
     uint timeNow = block.timestamp;
     address owner;
-
+    uint minimuminvestAmount;
+    uint minimuminvestDuration = timeNow + 7 * 1 days;
     IBEP20 BEP20USDT = IBEP20(address(0x55d398326f99059fF775485246999027B3197955));
     
     struct userInvestDetail{
@@ -343,6 +260,7 @@ contract Palego is IBEP20{
     constructor (address ownerAddress) {
         owner = ownerAddress;
         investor = msg.sender; 
+        minimuminvestAmount = 20;
     }
 
     event StakedEvent(address indexed investor,uint investment_duration, uint investment_amount, uint investmentrewardperDay, uint totalinvestmentReward, uint total_reward, bool hasStake, bool unStaked);
@@ -352,7 +270,7 @@ contract Palego is IBEP20{
     event UpdateRewardevent(uint investmentrewardperDay, uint investmentrewardperHour, uint currentinvestmentReward);
     event WithdrawalEvent(address indexed Withdrawer, uint total_Reward, uint WithdrawTime);
 
-    function hasStaked(address _investor) public view returns(bool) {
+    function hasInvested(address _investor) public view returns(bool) {
         if(userDetails[_investor].hasStake == true) return true;
         return false;
     }
@@ -380,7 +298,7 @@ contract Palego is IBEP20{
         require(investor != address(0), "Investor cannot be a zero address");
         require(referrer != address(0), "Referrer cannot be a zero address");
         require(referrer != investor,"You cannot refer yourself");
-        require(hasStaked(referrer) != false, "Referrer have to invest first");
+        require(hasInvested(referrer) != false, "Referrer have to invest first");
         
         if(userDetails[investor].hasStake == true) {
             revert("You currently have an investment running, you can only upgrade");
@@ -454,10 +372,12 @@ function _transfer(address sender, address recipient, uint256 amount) internal {
     emit Transfer(sender, recipient, amount);
   }
 
-    function stake(uint investment_amount, uint investment_duration) public payable returns(uint) {
-        // require(_balanceOf[investor] >= investment_amount, "staker must have enough tokens to stake");
+    function invest(uint investment_amount, uint investment_duration) public payable returns(uint) {
+        require(investment_duration >= minimuminvestDuration, "Minimum investment is 20USDT");
+        require(investment_amount >= minimuminvestAmount, "Minimum investment is 20USDT");
+        require(_balanceOf[investor] >= investment_amount, "Investor must have enough tokens to stake");
         require(investor == msg.sender, "Only account owner can stake");
-        require(investor != address(0), "Staker cannot be a zero address");
+        require(investor != address(0), "Investor cannot be a zero address");
 
         
 
@@ -506,7 +426,6 @@ function _transfer(address sender, address recipient, uint256 amount) internal {
             revert("invalid investment period");
         }
         
-        
         // updateusertokenbalance
         BEP20USDT.transfer(address(this), investment_amount);
         uint investmentrewardperDay = userDetails[investor].investmentRewardPerDay;
@@ -521,7 +440,7 @@ function _transfer(address sender, address recipient, uint256 amount) internal {
     }
 
     function getstakeDetails(address user_address) public view returns(uint rewardTime, uint stakeAmount, uint stakeDuration, uint investmentRewardPerDay, uint totalinvestmentReward, uint totalReward, string memory packageName) {
-        require(hasStaked(user_address) != false, "You have to invest first");
+        require(hasInvested(user_address) != false, "You have to invest first");
         require(investor != address(0), "Staker cannot be a zero");
 
         return (
@@ -536,7 +455,7 @@ function _transfer(address sender, address recipient, uint256 amount) internal {
     }
 
     function getrefDetails(address user_address) public view returns(address referrer, uint refCount) {
-        require(hasStaked(user_address) != false, "You have to invest first");
+        require(hasInvested(user_address) != false, "You have to invest first");
         require(user_address != address(0), "Staker cannot be a zero");
 
         return (
@@ -546,7 +465,7 @@ function _transfer(address sender, address recipient, uint256 amount) internal {
     }
 
     function upgradeStake(uint topup_amount, uint investment_duration) public returns (bool) {
-        require(hasStaked(investor) != false, "You have to invest first");
+        require(hasInvested(investor) != false, "You have to invest first");
         require(investor != address(0), "Staker cannot be a zero");
 
         // uint oldStakeAmount = userDetails[investor].investmentAmount;
@@ -606,7 +525,7 @@ function _transfer(address sender, address recipient, uint256 amount) internal {
     }
 
     function getCurrentReward() public returns(uint) {
-        require(hasStaked(investor) != false, "You have to invest first");
+        require(hasInvested(investor) != false, "You have to invest first");
         uint investmentrewardperDay = userDetails[investor].investmentRewardPerDay; 
         uint investmentrewardperHour = investmentrewardperDay.div(22);
         userDetails[investor].currentinvestmentReward += investmentrewardperHour;
@@ -616,7 +535,7 @@ function _transfer(address sender, address recipient, uint256 amount) internal {
     }
 
     function withdrawStake() public payable returns(bool) {
-        require(hasStaked(investor) != false);
+        require(hasInvested(investor) != false);
         if(timeNow >= userDetails[investor].rewardTime) {
             uint total_Reward = userDetails[investor].totalReward;
             uint WithdrawTime = timeNow;
@@ -644,7 +563,7 @@ function _transfer(address sender, address recipient, uint256 amount) internal {
     }
 
     // function unStakeToken() public returns(uint) {
-    //     require(hasStaked(investor) != false);
+    //     require(hasInvested(investor) != false);
     //     userDetails[investor].unStaked = true;
 
     //     address uninvest = investor;
