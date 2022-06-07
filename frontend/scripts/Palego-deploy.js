@@ -12,17 +12,14 @@ async function main() {
   // If this script is run directly using `node` you may want to call compile
   // manually to make sure everything is compiled
   // await hre.run('compile');
-  // const Palego = await hre.ethers.getContractFactory("Palego");
-  // const PaleGo = await Palego.deploy();
 
-  // await PaleGo.deployed();
-
-  // console.log("Palego deployed to:", PaleGo.address);
   // We get the contract to deploy
-  const BEP20USDTcontractaddres = "0x55d398326f99059fF775485246999027B3197955";
   const Palego = await hre.ethers.getContractFactory("Palego");
-  const PaleGo = await Palego.deploy(Palego,BEP20USDTcontractaddres);
-  console.log("PaleGo deployed to:", PaleGo.address);
+  const PaleGo = await Palego.deploy();
+
+  await PaleGo.deployed();
+
+  console.log("Palego deployed to:", PaleGo.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
