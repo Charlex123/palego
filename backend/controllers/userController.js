@@ -114,36 +114,38 @@ dotenv.config();
 //@access          Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
     // get user id
     const userid = user._id;
     //check if user has a referral
-    const referral = await Referral.find({ userId: user._id }); 
-    if(referral ) {
+    const referral = await Referral.find({ userId: user._id });
+    if(!referral || !referral.length === 0) {
       const sponsorid = referral[0].sponsorId;
-      const getsponsor = await User.find({_id:sponsorid});
-      const upline = getsponsor[0].username;
-      const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
-      // const getusersuplines = await User.find(user._id).populate({
-      //   path:"refId", model:"referrals"
-      // });
-          res.status(201).json({
-            _id: user._id,
-            username: user.username,
-            email: user.email,
-            sponsorId: sponsorid,
-            directdownlines: noofDirectDownlines,
-            sponsor: upline,
-            trxwalletaddressbase58: user.trxwalletaddressbase58,
-            trxwalletaddresshex:user.trxwalletaddresshex,
-            bscwalletaddress: user.bscwalletaddress,
-            isAdmin: user.isAdmin,
-            pic: user.pic,
-            token: generateToken(user._id),
-          });
+      if(sponsorid) {
+        const getsponsor = await User.find({_id:sponsorid});
+        const upline = getsponsor[0].username;
+        const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
+        // const getusersuplines = await User.find(user._id).populate({
+        //   path:"refId", model:"referrals"
+        // });
+            res.status(201).json({
+              _id: user._id,
+              username: user.username,
+              email: user.email,
+              sponsorId: sponsorid,
+              directdownlines: noofDirectDownlines,
+              sponsor: upline,
+              trxwalletaddressbase58: user.trxwalletaddressbase58,
+              trxwalletaddresshex:user.trxwalletaddresshex,
+              bscwalletaddress: user.bscwalletaddress,
+              isAdmin: user.isAdmin,
+              pic: user.pic,
+              token: generateToken(user._id),
+            });
+      }
+      
     }else {
       res.status(201).json({
         _id: user._id,
@@ -157,8 +159,6 @@ const authUser = asyncHandler(async (req, res) => {
         token: generateToken(user._id),
       });
     }
-    
-
   } else {
     res.status(401);
     throw new Error("Invalid Email or Password");
