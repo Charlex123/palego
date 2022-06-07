@@ -28,7 +28,6 @@ export default function DashboardApp() {
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
   const sponsor = userDetails.sponsor || "None";
   const directdownlines = userDetails.directdownlines || 0;
-  console.log(userDetails)
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">

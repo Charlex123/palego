@@ -136,7 +136,6 @@ export default function Addfunds() {
           <div className='form-group'>
               <label className="formlabel" htmlFor="grid-password">Select Funding Wallet</label>
               <select className="forminput" value={value} onChange={handleChange}>
-                <option>Select Wallet</option>
                 <option value="trc20">TRC20 Wallet</option>
                 <option value="bep20">BEP20 Wallet</option>
               </select>

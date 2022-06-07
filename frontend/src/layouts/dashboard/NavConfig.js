@@ -25,6 +25,11 @@ const navConfig = [
     icon: getIcon('eva:people-fill'),
   },
   {
+    title: 'assets',
+    path: `/dashboard/assets/`+getUsername(),
+    icon: getIcon('eva:shopping-bag-fill'),
+  },
+  {
     title: 'team',
     path: `/dashboard/team/`+getUsername(),
     icon: getIcon('eva:shopping-bag-fill'),
