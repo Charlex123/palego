@@ -56,21 +56,31 @@ export default function Addfunds() {
   }
   getbscuserWalletBalance();
 
-  // console.log(tronWeb)
-console.log(usertrxwalletaddressbase58)
   async function gettrxuserWalletBalance() {
-    await tronWeb.trx.getBalance(usertrxwalletaddressbase58)
-  const balance = await tronWeb.trx.getBalance(usertrxwalletaddressbase58);
-    console.log(balance)
+  const usertrxbalance = await tronWeb.trx.getBalance(usertrxwalletaddressbase58);
+  setusertrxwalletBalance(usertrxbalance)
   }
   gettrxuserWalletBalance();
 
   const maxAmount = async (e) => {
-    const userbscbalance = await web3.eth.getBalance(userbscwalletaddress);
-    const usertrxbalance = await tronWeb.trx.getBalance(usertrxwalletaddressbase58);
-    setAmount({userbscbalance} ? {usertrxbalance} : 0);
+    const bscbalance = await web3.eth.getBalance(userbscwalletaddress);
+    const trxbalance = await tronWeb.trx.getBalance(usertrxwalletaddressbase58);
+
+    if(value == "bep20") {
+      setAmount(bscbalance);
+    }else if(value == "trc20") {
+      setAmount(trxbalance);
+    }
+    
+    console.log(amount)
   };
   
+  // generate random number between 1 and 2
+  
+ const random = Math.floor(Math.random() * (200 - 100) + 100)/100;
+ 
+  console.log(random)
+
   useEffect(() => {
     setusertotalwalletBalance(userbscwalletbalance+usertotalwalletbalance);  
     },[])
@@ -118,8 +128,9 @@ console.log(usertrxwalletaddressbase58)
           "Content-type": "application/json"
         }
       }  
-      const {data} = await axios.post("/api/users/login/users", {
-        amount
+      const {data} = await axios.post("/api/users/addfunds", {
+        amount,
+        random
       }, config);
       localStorage.setItem("userInfo", JSON.stringify(data))
       navigate(`/dashboard/app/${data.username}`, { replace: true })
@@ -157,7 +168,7 @@ console.log(usertrxwalletaddressbase58)
                 <input className="forminput" id="grid-last" required
                   type="text"
                   value={amount}
-                  placeholder="Funding Amount"
+                  placeholder="enter funding amount"
                   onChange={(e) => setAmount(e.target.value)}
                   />
               <button className="passhideshowButton" onClick={maxAmount} type="button">Max</button>
