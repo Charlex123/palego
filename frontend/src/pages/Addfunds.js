@@ -17,8 +17,14 @@ import Web3 from "web3";
 import Palego from "../contracts/Palego.sol";
 import BEP20USDTABI from "../contracts/ABI/BEP20USDT.json";
 
-const tronWeb = require('tronweb');
-// import Select from 'react-select'
+const TronWeb = require('tronweb')
+const HttpProvider = TronWeb.providers.HttpProvider;
+const fullNode = new HttpProvider("https://api.trongrid.io");
+const solidityNode = new HttpProvider("https://api.trongrid.io");
+const eventServer = new HttpProvider("https://api.trongrid.io");
+const privateKey = "3481E79956D4BD95F358AC96D151C976392FC4E3FC132F78A847906DE588C145";
+const tronWeb = new TronWeb(fullNode,solidityNode,eventServer,privateKey);
+
 // ----------------------------------------------------------------------
 library.add(faEye, faEyeSlash);
 
@@ -52,12 +58,12 @@ export default function Addfunds() {
 
   // console.log(tronWeb)
 console.log(usertrxwalletaddressbase58)
-  // async function gettrxuserWalletBalance() {
-    // await tronWeb.trx.getBalance(usertrxwalletaddressbase58)
-  const tx = tronWeb.trx.getBalance('TTSFjEG3Lu9WkHdp4JrWYhbGP6K1REqnGQ').then(result => console.log(result));
-    // console.log(balance)
-  // }
-  // gettrxuserWalletBalance();
+  async function gettrxuserWalletBalance() {
+    await tronWeb.trx.getBalance(usertrxwalletaddressbase58)
+  const balance = await tronWeb.trx.getBalance(usertrxwalletaddressbase58);
+    console.log(balance)
+  }
+  gettrxuserWalletBalance();
 
   const maxAmount = async (e) => {
     const userbscbalance = await web3.eth.getBalance(userbscwalletaddress);
