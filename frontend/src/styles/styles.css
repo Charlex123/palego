@@ -11,6 +11,9 @@ body {
   position: absolute;font-size: 10px;margin-top: -.6rem;background-color: #ff6565;
   border-radius: 4px;padding: .1rem .1rem;color: #ffffff;font-weight: 100;
 }
+#inputamount {
+  display: none;
+}
 .head-area {
   width: 100%;
 }

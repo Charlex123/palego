@@ -12,10 +12,11 @@ import Verify from './pages/Verify';
 import Withdrawals from './pages/Withdrawals';
 import Withdraw from './pages/Withdraw';
 import Addfunds from "./pages/Addfunds";
+import Deposit from "./pages/Deposit";
 import RegSuccess from './pages/RegSuccess';
 import ResetPassword from './pages/ResetPassword';
 import DashboardApp from './pages/DashboardApp';
-import Team from './pages/Team';
+import LeaderBoard from './pages/Leaderboard';
 import Assets from './pages/Assets';
 import Home from './Home';
 
@@ -29,8 +30,9 @@ export default function Router() {
       children: [
         { path: 'app/:id', element: <DashboardApp /> },
         { path: 'user/:id', element: <User /> },
-        { path: 'team/:id', element: <Team/> },
+        { path: 'leaderboard/:id', element: <LeaderBoard/> },
         { path: 'withdrawals/:id', element: <Withdrawals /> },
+        { path: 'deposit/:id', element: <Deposit /> },
         { path: 'assets/:id', element: <Assets /> },
         { path: 'fundshistory/:id', element: <FundsHistory  /> },
         { path: 'addfunds/:id', element: <Addfunds  /> },

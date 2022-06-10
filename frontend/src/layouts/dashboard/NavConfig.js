@@ -30,8 +30,13 @@ const navConfig = [
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
-    title: 'team',
-    path: `/dashboard/team/`+getUsername(),
+    title: 'leaderboard',
+    path: `/dashboard/leaderboard/`+getUsername(),
+    icon: getIcon('eva:shopping-bag-fill'),
+  },
+  {
+    title: 'deposit',
+    path: `/dashboard/deposit/`+getUsername(),
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {

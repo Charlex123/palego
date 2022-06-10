@@ -4,16 +4,18 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { faCopy, faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import "../styles/accountform.css";
 // component
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import Iconify from '../components/Iconify';
 import qrcode from "../images/qr_code.png";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { providers } from "ethers";
 import Web3 from "web3";
+import Palego from "../contracts/Palego.sol";
 import BEP20USDTABI from "../contracts/ABI/BEP20USDT.json";
 
 const TronWeb = require('tronweb');
@@ -25,18 +27,10 @@ export default function Addfunds() {
  
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
 
-  const navigate = useNavigate();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [userbscwalletbalance, setuserbscwalletBalance] = useState(0);
 
-  const [passwordinputType, setpasswordinputType] = useState("password");
-  const [eyeIcon, setEyeIcon] = useState(<FontAwesomeIcon icon={faEye} />);
   const [value, setValue] = useState("");
+  const [copystatus, setCopyStatus] = useState("");
   
   // mainnet 
   // const web3 = new Web3('https://bsc-dataseed1.binance.org:443');
@@ -47,27 +41,15 @@ export default function Addfunds() {
   const userbscwalletaddress = userDetails.bscwalletaddress;
   const usertrxwalletaddressbase58 = userDetails.trxwalletaddressbase58;
   
-  async function getuserWalletBalance() {
+  async function getuserbscWalletBalance() {
     const userbscbalance = await web3.eth.getBalance(userbscwalletaddress);
     setuserbscwalletBalance(userbscbalance)
   }
-  getuserWalletBalance();
+  getuserbscWalletBalance();
 
-
-  console.log(userDetails)
-  const togglePasswordVisiblity = () => {
-    if(passwordinputType === "password") {
-      setpasswordinputType("text")
-      setEyeIcon(<FontAwesomeIcon icon={faEye} />)
-    }else {
-      setpasswordinputType("password")
-      setEyeIcon(<FontAwesomeIcon icon={faEyeSlash} />);
-    }
-  };
   
   const handleChange = (e) => {
     setValue(e.target.value);
-    console.log(value);
     if(value == "bep20") {
       const bscwallet = document.getElementById("bscwallet");
       const trcwallet = document.getElementById("trxwallet");
@@ -82,33 +64,10 @@ export default function Addfunds() {
   };
 
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
-    try {
-      const config = {
-        headers: {
-          "Content-type": "application/json"
-        }
-      }  
-      setLoading(true)
-      const {data} = await axios.post("/api/users/login/users", {
-        email,
-        password
-      }, config);
-      localStorage.setItem("userInfo", JSON.stringify(data))
-      setLoading(false)
-      navigate(`/dashboard/app/${data.username}`, { replace: true })
-    } catch (error) {
-      console.log(error.response.data)
-    }
-  }
 
   return (
     <div className='container-d'>
-        <form className="" onSubmit={submitHandler}>
-          {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-          {loading && <Loading />}
+        <form className="">
           <div><img src={qrcode} className="qrcode"/></div>
           <div className='walletbalances'>
             <div className="wallet-bal">
@@ -121,21 +80,10 @@ export default function Addfunds() {
                 <label className="" htmlFor="grid-last-name">Total Wallet Balance(USDT): <span className='bal'></span></label>
             </div>
           </div>
-          <div className="form-group">
-              <label className="formlabel" htmlFor="grid-last-name">Amount</label>
-                <input className="forminput" id="grid-last" required
-                  type="email"
-                  value={email}
-                  placeholder="Funding Amount"
-                  onChange={(e) => setEmail(e.target.value)}
-                  />
-              <button className="passhideshowButton" onClick={togglePasswordVisiblity} type="button">Max</button>
-          </div>
           
           <div className='form-group'>
               <label className="formlabel" htmlFor="grid-password">Select Funding Wallet</label>
               <select className="forminput" value={value} onChange={handleChange}>
-                <option>Select Wallet</option>
                 <option value="trc20">TRC20 Wallet</option>
                 <option value="bep20">BEP20 Wallet</option>
               </select>
@@ -148,7 +96,10 @@ export default function Addfunds() {
                 <p className='not'>Use Bep20 as network</p>
               </div>
               <div className='flex'>
-                <p>Depsit Wallet:<input value={userbscwalletaddress} readOnly className='forminput'/></p>
+                <p>Depsit Wallet:<input value={userbscwalletaddress} readOnly className='forminput'/><CopyToClipboard text={userbscwalletaddress}
+          onCopy={() => setCopyStatus('copied!!!')}>
+          <button type='button' style={{background: 'transparent',textAlign: 'left', color: '#f1f1f1', float: 'right', border: 'none'}}><FontAwesomeIcon icon={faCopy}/> {copystatus}</button>
+        </CopyToClipboard></p>
                 <p className='not'>Transfer usdt only to this bep20 wallet address above</p>
               </div>
             </div>
@@ -161,29 +112,16 @@ export default function Addfunds() {
                 <p className='not'>Use Trc20 as network</p>
               </div>
               <div className='flex'>
-                <p>Depsit Wallet:<input value={usertrxwalletaddressbase58} readOnly className='forminput'/></p>
+                <p>Depsit Wallet:<input value={usertrxwalletaddressbase58} id='trxwalletaddress' readOnly className='forminput'/><CopyToClipboard text={userbscwalletaddress}
+          onCopy={() => setCopyStatus('copied!!!')}>
+          <button type='button' style={{background: 'transparent',textAlign: 'left', color: '#f1f1f1', float: 'right', border: 'none'}}><FontAwesomeIcon icon={faCopy}/> {copystatus}</button>
+        </CopyToClipboard></p>
                 <p className='not'>Transfer usdt only to this Trc20 wallet address above</p>
               </div>
             </div>
           </div>
 
-          {/* <Select options={options} /> */}
-
-          <div className='labelDiv'>
-              <label className="formlabel" htmlFor="grid-password">Transaction Pin</label>
-              <input className="forminput" id="transactionpin" 
-                type={passwordinputType}
-                value={password}
-                placeholder="Transaction Pin"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-          </div>
-            
-          <div className='mx-auto text-center'>
-            <button className="registerButton" type="submit">
-              Add Funds
-            </button>
-          </div>
+          {/* <Select options={options} /> */}           
         </form>
     </div>
   );
