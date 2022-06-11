@@ -20,9 +20,9 @@ async function main() {
   // console.log("Palego deployed to:", PaleGo.address);
   // We get the contract to deploy
   const BEP20USDTcontractaddres = "0x55d398326f99059fF775485246999027B3197955";
-  const Palego = await hre.ethers.getContractFactory("Palego");
-  const PaleGo = await Palego.deploy(Palego,BEP20USDTcontractaddres);
-  console.log("PaleGo deployed to:", PaleGo.address);
+  const BEP20Palego = await hre.ethers.getContractFactory("BEP20Palego");
+  const BEP20PaleGo = await Palego.deploy(BEP20Palego,BEP20USDTcontractaddres);
+  console.log("BEP20PaleGo deployed to:", BEP20PaleGo.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

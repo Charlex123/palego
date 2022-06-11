@@ -14,7 +14,10 @@ import qrcode from "../images/qr_code.png";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { providers } from "ethers";
 import Web3 from "web3";
-import BEP20USDTABI from "../contracts/ABI/BEP20USDT.json";
+import BEP20Palego from "../contracts/BEP20Palego.sol";
+import BEP20PalegoAbi from "../contracts/ABI/BEP20Palego.json";
+import TRC20Palego from "../tronbox/contracts/TRC20Palego.sol";
+import TRC20PalegoAbi from "../tronbox/contracts/ABI/TRC20Palego.json";
 
 const TronWeb = require('tronweb');
 // import Select from 'react-select'

@@ -14,9 +14,10 @@ import qrcode from "../images/qr_code.png";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { providers } from "ethers";
 import Web3 from "web3";
-import Palego from "../contracts/Palego.sol";
-import BEP20USDTABI from "../contracts/ABI/BEP20USDT.json";
-
+import BEP20Palego from "../contracts/BEP20Palego.sol";
+import BEP20PalegoAbi from "../contracts/ABI/BEP20Palego.json";
+import TRC20Palego from "../tronbox/contracts/TRC20Palego.sol";
+import TRC20PalegoAbi from "../tronbox/contracts/ABI/TRC20Palego.json";
 const TronWeb = require('tronweb')
 const HttpProvider = TronWeb.providers.HttpProvider;
 const fullNode = new HttpProvider("https://api.trongrid.io");
@@ -46,7 +47,10 @@ export default function Addfunds() {
   // testnet
   // const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
   
-  const BSCContractaddress = "0x86e89F524Bce338194a910C7E5aF04887Ed9A370";
+  const TRC20USDTcontractaddres =  "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+  const BEP20USDTcontractaddres =  "0x55d398326f99059fF775485246999027B3197955";
+  const PalegoBEP20ContractAddress = "0xF3005B94480F8D15FE434F07B0A047840620d958";
+  const PalegoTRC20ContractAddress = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
   const userbscwalletaddress = userDetails.bscwalletaddress;
   const usertrxwalletaddressbase58 = userDetails.trxwalletaddressbase58;
   
@@ -61,6 +65,25 @@ export default function Addfunds() {
   setusertrxwalletBalance(usertrxbalance)
   }
   gettrxuserWalletBalance();
+
+  const destination = PalegoTRC20ContractAddress;
+  async function transferUSDT(e) {
+
+    setValue(e.target.value);
+    const amountinputField = document.getElementById("inputamount");
+    if(value == "bep20") {
+      const contract = await web3.eth.contract(BEP20PalegoAbi, BEP20Palego);
+
+      const resp = await contract.methods.transfer(PalegoBEP20ContractAddress, amount).send();
+      console.log("transfer:", resp);
+    }else if(value == "trc20") {
+      const contract = tronWeb.contract(TRC20PalegoAbi,TRC20Palego);
+
+      const resp = await contract.methods.transfer(PalegoTRC20ContractAddress, amount).send();
+      console.log("transfer:", resp);
+    }
+    
+}
 
   const maxAmount = async (e) => {
     const bscbalance = await web3.eth.getBalance(userbscwalletaddress);
@@ -214,7 +237,7 @@ export default function Addfunds() {
           </div>
             
           <div className='mx-auto text-center'>
-            <button className="registerButton" type="submit">
+            <button className="addfundsbtn" type="button" onClick={transferUSDT}>
               Add Funds
             </button>
           </div>

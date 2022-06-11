@@ -1,6 +1,6 @@
 // SPDX-License-Identifier:GPL-3.0
 
-pragma solidity >0.5.16;
+pragma solidity ^0.8.0;
 
 interface IBEP20 {
   function transfer(address recipient, uint256 amount) external returns (bool);
@@ -9,79 +9,79 @@ interface IBEP20 {
 
 }
 
-// contract Context {
-//   // Empty internal constructor, to prevent people from mistakenly deploying
-//   // an instance of this contract, which should be used via inheritance.
-//   constructor () internal { }
+contract Context {
+  // Empty internal constructor, to prevent people from mistakenly deploying
+  // an instance of this contract, which should be used via inheritance.
+  constructor () { }
 
-//   function _msgSender() internal view returns (address payable) {
-//     return msg.sender;
-//   }
+  function _msgSender() public view returns (address payable) {
+    return payable(msg.sender);
+  }
 
-//   function _msgData() internal view returns (bytes memory) {
-//     this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
-//     return msg.data;
-//   }
-// }
+  function _msgData() internal view returns (bytes memory) {
+    this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+    return msg.data;
+  }
+}
 
-// contract Ownable is Context {
-//   address private _owner;
+contract Ownable is Context {
+  address private _owner;
 
-//   event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+  event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
-//   /**
-//    * @dev Initializes the contract setting the deployer as the initial owner.
-//    */
-//   constructor () internal {
-//     address msgSender = _msgSender();
-//     _owner = msgSender;
-//     emit OwnershipTransferred(address(0), msgSender);
-//   }
+  /**
+   * @dev Initializes the contract setting the deployer as the initial owner.
+   */
+  constructor () {
+    address msgSender = _msgSender();
+    _owner = msgSender;
+    emit OwnershipTransferred(address(0), msgSender);
+  }
 
-//   /**
-//    * @dev Returns the address of the current owner.
-//    */
-//   function owner() public view returns (address) {
-//     return _owner;
-//   }
+  /**
+   * @dev Returns the address of the current owner.
+   */
+  function owner() public view returns (address) {
+    return _owner;
+  }
 
-//   /**
-//    * @dev Throws if called by any account other than the owner.
-//    */
-//   modifier onlyOwner() {
-//     require(_owner == _msgSender(), "Ownable: caller is not the owner");
-//     _;
-//   }
+  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() {
+    require(_owner == _msgSender(), "Ownable: caller is not the owner");
+    _;
+  }
 
-//   /**
-//    * @dev Leaves the contract without owner. It will not be possible to call
-//    * `onlyOwner` functions anymore. Can only be called by the current owner.
-//    *
-//    * NOTE: Renouncing ownership will leave the contract without an owner,
-//    * thereby removing any functionality that is only available to the owner.
-//    */
-//   function renounceOwnership() public onlyOwner {
-//     emit OwnershipTransferred(_owner, address(0));
-//     _owner = address(0);
-//   }
+  /**
+   * @dev Leaves the contract without owner. It will not be possible to call
+   * `onlyOwner` functions anymore. Can only be called by the current owner.
+   *
+   * NOTE: Renouncing ownership will leave the contract without an owner,
+   * thereby removing any functionality that is only available to the owner.
+   */
+  function renounceOwnership() public onlyOwner {
+    emit OwnershipTransferred(_owner, address(0));
+    _owner = address(0);
+  }
 
-//   /**
-//    * @dev Transfers ownership of the contract to a new account (`newOwner`).
-//    * Can only be called by the current owner.
-//    */
-//   function transferOwnership(address newOwner) public onlyOwner {
-//     _transferOwnership(newOwner);
-//   }
+  /**
+   * @dev Transfers ownership of the contract to a new account (`newOwner`).
+   * Can only be called by the current owner.
+   */
+  function transferOwnership(address newOwner) public onlyOwner {
+    _transferOwnership(newOwner);
+  }
 
-//   /**
-//    * @dev Transfers ownership of the contract to a new account (`newOwner`).
-//    */
-//   function _transferOwnership(address newOwner) internal {
-//     require(newOwner != address(0), "Ownable: new owner is the zero address");
-//     emit OwnershipTransferred(_owner, newOwner);
-//     _owner = newOwner;
-//   }
-// }
+  /**
+   * @dev Transfers ownership of the contract to a new account (`newOwner`).
+   */
+  function _transferOwnership(address newOwner) internal {
+    require(newOwner != address(0), "Ownable: new owner is the zero address");
+    emit OwnershipTransferred(_owner, newOwner);
+    _owner = newOwner;
+  }
+}
 
 
 library SafeMath {
@@ -220,11 +220,10 @@ library SafeMath {
   }
 }
 
-contract Palego is IBEP20{
+contract BEP20Palego is IBEP20, Ownable{
     using SafeMath for uint256;
     address investor;
     uint timeNow = block.timestamp;
-    address owner;
     IBEP20 BEP20USDT = IBEP20(address(0x55d398326f99059fF775485246999027B3197955));
     
     // struct userInvestDetail{
@@ -258,23 +257,23 @@ contract Palego is IBEP20{
     mapping (address => uint256) private _balances;
 
     mapping (address => mapping (address => uint256)) private _allowances;
-    constructor (address ownerAddress) {
-        owner = ownerAddress;
-        investor = msg.sender; 
+
+    constructor () {
+        investor = msg.sender;
     }
 
-    event StakedEvent(address indexed investor,uint investment_duration, uint investment_amount, uint investmentrewardperDay, uint totalinvestmentReward, uint total_reward, bool hasStake, bool unStaked);
-    event UpdateStakedEvent(address indexed investor,uint investment_duration, uint newStakeAmount, bool hasStake);
-    event UpgradeEvent(address indexed investor,uint investment_duration, uint investment_amount, uint investmentrewardperDay, uint totalinvestment_reward, uint total_reward, address ref_Errer, bool hasStake, bool unStaked);
-    // event UnstakeEvent(address indexed unstaker, uint unstakeFee, uint _amtUnstaked);
-    event UpdateRewardevent(uint investmentrewardperDay, uint investmentrewardperHour, uint currentinvestmentReward);
-    event WithdrawalEvent(address indexed Withdrawer, uint total_Reward, uint WithdrawTime);
-    function transfer(address recipient, uint256 amount) external returns (bool) {
+    // event StakedEvent(address indexed investor,uint investment_duration, uint investment_amount, uint investmentrewardperDay, uint totalinvestmentReward, uint total_reward, bool hasStake, bool unStaked);
+    // event UpdateStakedEvent(address indexed investor,uint investment_duration, uint newStakeAmount, bool hasStake);
+    // event UpgradeEvent(address indexed investor,uint investment_duration, uint investment_amount, uint investmentrewardperDay, uint totalinvestment_reward, uint total_reward, address ref_Errer, bool hasStake, bool unStaked);
+    // // event UnstakeEvent(address indexed unstaker, uint unstakeFee, uint _amtUnstaked);
+    // event UpdateRewardevent(uint investmentrewardperDay, uint investmentrewardperHour, uint currentinvestmentReward);
+    // event WithdrawalEvent(address indexed Withdrawer, uint total_Reward, uint WithdrawTime);
+    function transfer(address recipient, uint256 amount) external virtual override returns (bool) {
     _transfer(investor, recipient, amount);
     return true;
   }
 
-    function balanceOf(address account) external view returns (uint256) {
+    function balanceOf(address account) external virtual override view returns (uint256) {
         return _balances[account];
     }
 
@@ -287,5 +286,19 @@ contract Palego is IBEP20{
     emit Transfer(sender, recipient, amount);
     }
 
-    
+  /**
+   * @dev See {BEP20-transferFrom}.
+   *
+   * Emits an {Approval} event indicating the updated allowance. This is not
+   * required by the EIP. See the note at the beginning of {BEP20};
+   *
+   * Requirements:
+   * - `sender` and `recipient` cannot be the zero address.
+   * - `sender` must have a balance of at least `amount`.
+   * - the caller must have allowance for `sender`'s tokens of at least
+   * `amount`.
+   */
+  
+  
+     
 }

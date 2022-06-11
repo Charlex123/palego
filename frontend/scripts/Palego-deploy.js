@@ -13,11 +13,20 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
+//   var Test = artifacts.require("./Test.sol");
+// var Migrations = artifacts.require("./Migrations.sol");
+
+// module.exports = function(deployer) {
+//   deployer.deploy(Test);
+//   deployer.deploy(Migrations);
+// };
+
+const BEP20USDTcontractaddres =  "0x55d398326f99059fF775485246999027B3197955";
   // We get the contract to deploy
   const Palego = await hre.ethers.getContractFactory("Palego");
   const PaleGo = await Palego.deploy();
 
-  await PaleGo.deployed();
+  await PaleGo.deployed(BEP20USDTcontractaddres);
 
   console.log("Palego deployed to:", PaleGo.address);
 }
