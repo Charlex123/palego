@@ -5,7 +5,7 @@ import {
   resendverificationMail,
   updateUserProfile,
   verifyUser,
-  addFunds,
+  addAssets,
   updateTransactionPin,
   resetPassword
 } from "../controllers/userController.js";
@@ -16,7 +16,7 @@ router.post("/register", registerUser);
 router.post("/verify", verifyUser);
 router.post("/regsuccess", resendverificationMail);
 router.post("/resetpassword", resetPassword);
-router.post("/addfunds", addFunds);
+router.post("/addfunds", addAssets);
 router.post("/updatetransactionpin", updateTransactionPin);
 router.post("/login/users", authUser);
 router.route("/profile").post(protect, updateUserProfile);

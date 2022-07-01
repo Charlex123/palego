@@ -32,12 +32,17 @@ library.add(faEye, faEyeSlash);
 export default function Addfunds() {
  
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
-
+  console.log(userDetails)
   const navigate = useNavigate();
 
   const [amount, setAmount] = useState("");
+  const [assettype, setAssetType] = useState("");
+  const [assetaddress, setAssetAddress] = useState("");
+  const [error, setError] = useState(false);
+  const [userid] = useState(userDetails._id);
   const [userbscwalletbalance, setuserbscwalletBalance] = useState(0);
   const [usertrxwalletbalance, setusertrxwalletBalance] = useState(0);
+  const [message, setMessage] = useState(null);
   const [usertotalwalletbalance, setusertotalwalletBalance] = useState(0);
   const [tpin, setTPin] = useState("");
   const [value, setValue] = useState("");
@@ -78,23 +83,21 @@ export default function Addfunds() {
   //   .on("changed", function(log){
   //   });
 
-  async function transferUSDT(e) {
+//   async function transferUSDT(e) {
 
-    setValue(e.target.value);
-    const amountinputField = document.getElementById("inputamount");
-    if(value == "bep20") {
-      const contract = await web3.eth.contract(BEP20PalegoAbi, BEP20Palego);
-
-      const resp = await contract.methods.transfer(PalegoBEP20ContractAddress, amount).send();
-      console.log("transfer:", resp);
-    }else if(value == "trc20") {
-      const contract = tronWeb.contract(TRC20PalegoAbi,TRC20Palego);
-
-      const resp = await contract.methods.transfer(PalegoTRC20ContractAddress, amount).send();
-      console.log("transfer:", resp);
-    }
+//     setValue(e.target.value);
+//     const amountinputField = document.getElementById("inputamount");
+//     if(value == "bep20") {
+//       const contract = await web3.eth.contract(BEP20PalegoAbi, BEP20Palego);
+//       const resp = await contract.methods.transfer(PalegoBEP20ContractAddress, amount).send();
+//       console.log("transfer:", resp);
+//     }else if(value == "trc20") {
+//       const contract = tronWeb.contract(TRC20PalegoAbi,TRC20Palego);
+//       const resp = await contract.methods.transfer(PalegoTRC20ContractAddress, amount).send();
+//       console.log("transfer:", resp);
+//     }
     
-}
+// }
 
   const maxAmount = async (e) => {
     const bscbalance = await web3.eth.getBalance(userbscwalletaddress);
@@ -105,16 +108,12 @@ export default function Addfunds() {
     }else if(value == "trc20") {
       setAmount(trxbalance);
     }
-    
-    console.log(amount)
   };
   
   // generate random number between 1 and 2
   
  const random = Math.floor(Math.random() * (200 - 100) + 100)/100;
  
-  console.log(random)
-
   useEffect(() => {
     setusertotalwalletBalance(userbscwalletbalance+usertotalwalletbalance);  
     },[])
@@ -143,18 +142,42 @@ export default function Addfunds() {
       bscwallet.style.display = "none";
       trcwallet.style.display = "block";
       amountinputField.style.display = "block";
+      setAssetType("bep20");
+      setAssetAddress(usertrxwalletaddressbase58)
     }else if(value == "trc20") {
       const trcwallet = document.getElementById("trxwallet");
       const bscwallet = document.getElementById("bscwallet");
       trcwallet.style.display = "none";
       bscwallet.style.display = "block";
-      amountinputField.style.display = "block"
+      amountinputField.style.display = "block";
+      setAssetType("trc20");
+      setAssetAddress(userbscwalletaddress);
     }
   };
 
-
+  
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log(amount)
+    console.log(random)
+    const dailyProfit = (random/100) * amount;
+    const assetdailyprofitratio = random;
+    const minassetduration = 86400;
+    const profitamount = amount - dailyProfit;
+    console.log(assetaddress)
+    console.log(assettype)
+    console.log(dailyProfit);
+    console.log(profitamount);
+
+    if (amount < 20) {
+      setMessage("Mininum Asset Funds Is $20 USDT");
+    }
+    else if(tpin != userDetails.tpin) {
+      setMessage("Your transaction details do not match");
+    }
+    else if(tpin > 5) {
+      setMessage("Transaction pin must be a 4 digit number");
+    }
 
     try {
       const config = {
@@ -164,7 +187,12 @@ export default function Addfunds() {
       }  
       const {data} = await axios.post("/api/users/addfunds", {
         amount,
-        random
+        assetdailyprofitratio,
+        assettype,
+        userid,
+        dailyProfit,
+        minassetduration,
+        profitamount
       }, config);
       console.log(data)
       // navigate(`/dashboard/app/${data.username}`, { replace: true })
@@ -177,6 +205,8 @@ export default function Addfunds() {
     <div className='container-d'>
         <form className="" onSubmit={submitHandler}>
           <div><img src={qrcode} className="qrcode"/></div>
+          {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+          {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
           <div className='walletbalances'>
             <div className="wallet-bal">
                 <label className="" htmlFor="grid-last-name">Trx Wallet Balance(USDT): <span className='bal'>{userbscwalletbalance}USDT</span></label>
@@ -248,7 +278,7 @@ export default function Addfunds() {
           </div>
             
           <div className='mx-auto text-center'>
-            <button className="addfundsbtn" type="button" onClick={transferUSDT}>
+            <button className="addfundsbtn" type="submit">
               Add Funds
             </button>
           </div>

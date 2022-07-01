@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import Referral from "../models/referralModel.js";
+import Assets from "../models/assetsModel.js";
 import generateToken from "../utils/generateToken.js";
 import mongoose from "mongoose";
 import nodemailer from "nodemailer";
@@ -189,7 +190,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const userExists = await User.findOne({ email });
   const usernameExists = await User.findOne({ username });
-  console.log('level', level)
+  
   if (usernameExists) {
     res.status(404);
     throw new Error("Username already exists");
@@ -211,7 +212,74 @@ const registerUser = asyncHandler(async (req, res) => {
     trxwalletaddresshex,
     trxwalletprivatekey,
     emailcode: uuidv4(),
-    pic,
+    pic
+  });
+
+  if (user) {
+
+    const sponsorId = req.body.sponsorId;
+    if(sponsorId) {
+
+      const { sponsorId } = req.body;
+      const userId = user._id;
+      const ref = await Referral.create({
+        sponsorId,userId
+      });
+
+      if(ref) {
+        const addrefId = User.updateOne(
+          {_id:user._id}, 
+          {refId: ref._id },
+          {multi:true}, 
+            function(err, numberAffected){  
+            });
+        if(addrefId) {
+
+        }
+        
+      }
+      
+      
+    }else {
+
+    }
+    const _id = user._id;
+    const username = user.username;
+    const emailCode = user.emailcode;
+    const email = user.email;
+    const verifystatus = user.verified;
+
+    if(verifystatus === false) {
+      sendverificationMail(_id,username,emailCode,email);
+    }
+    
+  } else {
+    res.status(400);
+    throw new Error("User not found");
+  }
+});
+
+
+const addAssets = asyncHandler(async (req, res) => {
+  const { 
+    amount,
+    assetdailyprofitratio,
+    assettype,
+    userid,
+    dailyProfit,
+    minassetduration,
+    profitamount 
+  } = req.body;
+
+  
+  const asset = await Assets.create({
+    amount,
+    assetdailyprofitratio,
+    assettype,
+    userid,
+    dailyProfit,
+    minassetduration,
+    profitamount
   });
 
   if (user) {
@@ -402,4 +470,4 @@ const resendverificationMail = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, updateUserProfile, registerUser, verifyUser, resendverificationMail, resetPassword, updateTransactionPin };
+export { authUser, updateUserProfile, registerUser, verifyUser, resendverificationMail, resetPassword, addAssets, updateTransactionPin };

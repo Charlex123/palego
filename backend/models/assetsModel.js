@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 const assetschema = mongoose.Schema(
   {
-    asset: {
+    assettype: {
       type: String,
       required: true,
     },
@@ -11,7 +11,11 @@ const assetschema = mongoose.Schema(
       type: String,
       required: true,
     },
-    assettype: {
+    assetdailyprofitratio: {
+      type: String,
+      required: true,
+    },
+    dailyprofit: {
       type: String,
       required: true,
     },
@@ -19,7 +23,7 @@ const assetschema = mongoose.Schema(
       type: String,
       required: true,
     },
-    duration: {
+    minassetduration: {
       type: String,
       required: true,
     },
@@ -28,7 +32,7 @@ const assetschema = mongoose.Schema(
       required: true,
     },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true
     },
   },
@@ -38,6 +42,6 @@ const assetschema = mongoose.Schema(
 );
 
 
-const Investment = mongoose.model("assets", assetschema);
+const Assets = mongoose.model("assets", assetschema);
 
-export default Investment;
+export default Assets;
