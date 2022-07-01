@@ -18,6 +18,14 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+import Alert from 'react-bootstrap/Alert';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+// Styles
+import "../styles/dashboard.css";
 // components
 import Page from '../components/Page';
 import Label from '../components/Label';
@@ -25,8 +33,12 @@ import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
+import Loading from "../components/Loading";
+import ErrorMessage from "../components/ErrorMessage";
+
 // mock
 import USERLIST from '../_mock/user';
+import { faBorderNone } from '@fortawesome/free-solid-svg-icons';
 
 // ----------------------------------------------------------------------
 
@@ -71,164 +83,258 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User() {
-  const [page, setPage] = useState(0);
+  const navigate = useNavigate();
 
-  const [order, setOrder] = useState('asc');
-
-  const [selected, setSelected] = useState([]);
-
-  const [orderBy, setOrderBy] = useState('name');
-
-  const [filterName, setFilterName] = useState('');
-
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
+  const userDetails = JSON.parse(localStorage.getItem('userInfo'));
+  
+  const [otpin] = useState(userDetails.tpin);
+  const [userid] = useState(userDetails._id);
+  const [tpin , setTPin] = useState("");
+  const [newpassword , setNewPassword] = useState("");
+  const [confirmnewpassword , setConfirmNewPassword] = useState("");
+  const [showAlert , setShowAlert] = useState("");
+  const [confirmtpin , setConfirmTPin] = useState("");
+  const [tpininputType, settpininputType] = useState("password");
+  const [otpininputType, setotpininputType] = useState("password");
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [eyeIcon, setEyeIcon] = useState(<FontAwesomeIcon icon={faEye} />);
+  const [passwordinputType, setpasswordinputType] = useState("password");
+  
+  const otoggletpinVisiblity = () => {
+    if(otpininputType === "password") {
+      setotpininputType("text")
+      setEyeIcon(<FontAwesomeIcon icon={faEye} />)
+    }else {
+      setotpininputType("password")
+      setEyeIcon(<FontAwesomeIcon icon={faEyeSlash} />);
     }
-    setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+  const toggletpinVisiblity = () => {
+    if(tpininputType === "password") {
+      settpininputType("text")
+      setEyeIcon(<FontAwesomeIcon icon={faEye} />)
+    }else {
+      settpininputType("password")
+      setEyeIcon(<FontAwesomeIcon icon={faEyeSlash} />);
     }
-    setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const toggletpasswordVisiblity = () => {
+    if(passwordinputType === "password") {
+      setpasswordinputType("text")
+      setEyeIcon(<FontAwesomeIcon icon={faEye} />)
+    }else {
+      setpasswordinputType("password")
+      setEyeIcon(<FontAwesomeIcon icon={faEyeSlash} />);
+    }
   };
+  
+    const tpinsubmitHandler = async (e) => {
+      e.preventDefault();
+      
+      if (tpin !== confirmtpin) {
+        setMessage("transaction pins do not match");
+      }else if (tpin.length > 4) {
+        setMessage("transaction pin must be a 4 digits number");
+      }
+      else {
+        setMessage(null);
+        try {
+          const config = {
+            headers: {
+              "Content-type": "application/json"
+            }
+          }  
+          setLoading(true);
+          
+          const {data} = await axios.post("/api/users/updatetransactionpin", {
+            userid,
+            tpin
+          }, config);
+          
+          setLoading(false)
+          setShowAlert(<Alert >
+            Transaction Pin Change Success
+          </Alert>)
+        } catch (error) {
+          setError(error.response.data.message)
+          console.log(error.response.data)
+        }
+    }
+    
+  }
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  function updatetpin() {
+    const tpinDiv = document.getElementById("showtpinform");
+          if(tpinDiv.style.display == "none") {
+            tpinDiv.style.display = 'block';
+          }else {
+            tpinDiv.style.display = 'none';
+          }
+  }
 
-  const handleFilterByName = (event) => {
-    setFilterName(event.target.value);
-  };
+  function updatepass() {
+    const npassinDiv = document.getElementById("showupdatepassform");
+          if(npassinDiv.style.display == "none") {
+            npassinDiv.style.display = 'block';
+          }else {
+            npassinDiv.style.display = 'none';
+          }
+  }
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  function deleteaccount() {
+    
+  }
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const passsubmitHandler = async (e) => {
+    e.preventDefault();
+    
+    if (newpassword !== confirmnewpassword) {
+      setMessage("passwords do not match");
+    }else if (newpassword.length < 6) {
+      setMessage("Password must be more than 6 characters");
+    }
+    else {
+      setMessage(null);
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json"
+          }
+        }  
+        setLoading(true);
+        
+        const {data} = await axios.post("/api/users/resetpassword", {
+          userid,
+          newpassword
+        }, config);
+        
+        setLoading(false)
+        setShowAlert(<Alert >
+          Password Change Success
+        </Alert>)
+      } catch (error) {
+        setError(error.response.data.message)
+        console.log(error.response.data)
+      }
+  }
+  
+}
 
-  const isUserNotFound = filteredUsers.length === 0;
-
+  
+  const pic = userDetails.pic;
   return (
-    <Page title="User">
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            User
-          </Typography>
-          <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
-        </Stack>
+  <Page title="User">
+    <Container>
+        <h1>My Profile</h1>
+        <div className='row'>
+          <div className='col-md-8'>
+            <div className='row mt-4 mb-4'>
+              <div className='col-md-2'>
+                  <div>
+                    <img src={pic} className="p-img"/>
+                  </div>
+              </div>
+              <div className='col-md-9'>
+                  <div className="bg-transparent text-secondary">My Username: <span>{userDetails.username}</span></div>
+                  <div className="bg-transparent text-secondary">My Email: <span>{userDetails.email}</span></div>
+              </div>
+            </div>
+            <div className="bg-transparent">
+              <div className=" text-secondary">Change Profile Image: <button>Upload Image</button></div>
+            </div>
+            <div className='tpin'>
+              <div className='tranxpin'>
+                  <span>Default Transaction Pin: </span><div className='txpin'><input type={otpininputType} value={otpin} /> <button className="passhideshowButton" onClick={otoggletpinVisiblity} type="button">{eyeIcon}</button> <button onClick={updatetpin}>Update Transaction Pin</button></div>
+              </div>
+              <div className='settpin' id="showtpinform">
+              {showAlert}
+              <form className="formTag" onSubmit={tpinsubmitHandler}>
+                
+                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+                {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+                {loading && <Loading />}
+                
+                <div className='form-group'>
+                    <label className="formlabel" htmlFor="grid-tpin"> Transaction pin</label>
+                      <input className="forminput" id="tpin" type={tpininputType} placeholder="Enter transaction"
+                      value={tpin}
+                      onChange={(e) => setTPin(e.target.value)}
+                      />
+                      <button className="passhideshowButton" onClick={toggletpinVisiblity} type="button">{eyeIcon}</button>
+                      
+                </div>
 
-        <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+                <div className="form-group">
+                    <label className="formlabel" htmlFor="grid-tpin">Confirm transaction pin</label>
+                      <input className="forminput" id="confirmtpin" type={tpininputType} placeholder="Confirm transaction pin"
+                      value={confirmtpin}
+                      onChange={(e) => setConfirmTPin(e.target.value)}
+                      />
+                      <button className="passhideshowButton border-0" onClick={toggletpinVisiblity} type="button">{eyeIcon}</button>
+                    <p className="formpTag">Your transaction pin is encrypted and secured, we will not disclose your tpin with any third</p>
+                  </div>
+                
+                <div className='mx-auto text-center'>
+                  <button className="registerButton" type="submit">
+                    Submit
+                  </button>
+                </div>
+              </form>
+              </div>
+            </div>
 
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                    const isItemSelected = selected.indexOf(name) !== -1;
+            <div className='tpass'>
+              <div>Update Your Password: <button onClick={updatepass}>Update Password</button></div>
+              <div className='setpass' id="showupdatepassform">
+              {showAlert}
+              <form className="formTag" onSubmit={passsubmitHandler}>
+                
+                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+                {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+                {loading && <Loading />}
+                
+                <div className='form-group'>
+                    <label className="formlabel" htmlFor="grid-tpin"> New Password</label>
+                      <input className="forminput" id="newpassword" type={passwordinputType} placeholder="Enter transaction"
+                      value={newpassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      />
+                      <button className="passhideshowButton" onClick={toggletpasswordVisiblity} type="button">{eyeIcon}</button>
+                      
+                </div>
 
-                    return (
-                      <TableRow
-                        hover
-                        key={id}
-                        tabIndex={-1}
-                        role="checkbox"
-                        selected={isItemSelected}
-                        aria-checked={isItemSelected}
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
-                        </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
-                            <Typography variant="subtitle2" noWrap>
-                              {name}
-                            </Typography>
-                          </Stack>
-                        </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-                        <TableCell align="left">
-                          <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
-                            {sentenceCase(status)}
-                          </Label>
-                        </TableCell>
+                <div className="form-group">
+                    <label className="formlabel" htmlFor="grid-tpin">Confirm transaction pin</label>
+                      <input className="forminput" id="confirmnewpassword" type={passwordinputType} placeholder="Confirm transaction pin"
+                      value={confirmnewpassword}
+                      onChange={(e) => setConfirmNewPassword(e.target.value)}
+                      />
+                      <button className="passhideshowButton border-0" onClick={toggletpasswordVisiblity} type="button">{eyeIcon}</button>
+                    <p className="formpTag">Your transaction pin is encrypted and secured, we will not disclose your tpin with any third</p>
+                  </div>
+                
+                <div className='mx-auto text-center '>
+                  <button className="registerButton" type="submit">
+                    Submit
+                  </button>
+                </div>
+              </form>
+              </div>
+            </div>
 
-                        <TableCell align="right">
-                          <UserMoreMenu />
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-
-                {isUserNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <SearchNotFound searchQuery={filterName} />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={USERLIST.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
+            <div className='del-acc mt-4 pt-4'>
+              <button onClick={deleteaccount} className="bg-danger rounded">Delete Account</button>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className="text-secondary">User Level <div className='user-level'>{userDetails.level}</div></div>
+          </div>
+        
+        </div>
       </Container>
     </Page>
   );

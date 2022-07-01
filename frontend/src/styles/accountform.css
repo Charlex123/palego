@@ -34,31 +34,31 @@ select {
     margin-left: .8rem;display: none;
 }
 #bscwallet p{
-    font-size: 13px;color: #f7c7c785;margin-left: 0;
+    font-size: 13px;color: #e0dbdbd7;margin-left: 0;
 }
 #bscwallet p.networktype {
-    color: #f7c7c785;font-style: italic;font-size: 12px;margin-bottom: .2rem;margin-top: 1rem;
+    color: #e0dbdbd7;font-style: italic;font-size: 12px;margin-bottom: .2rem;margin-top: 1rem;
 }
 #bscwallet p.not {
-    color: #f7c7c785;font-style: italic;font-size: 12px;font-family: "Nunito";
+    color: #e0dbdbd7;font-style: italic;font-size: 12px;font-family: "Nunito";
 }
 #trxwallet p.networktype {
-    color: #f7c7c785;font-style: italic;font-size: 12px;margin-bottom: .2rem;margin-top: 1rem;
+    color: #e0dbdbd7;font-style: italic;font-size: 12px;margin-bottom: .2rem;margin-top: 1rem;
 }
 #trxwallet p.not {
-    color: #f7c7c785;font-style: italic;font-size: 12px;font-family: "Nunito";
+    color: #e0dbdbd7;font-style: italic;font-size: 12px;font-family: "Nunito";
 }
 #trxwallet {
     margin-left: .8rem;display: none;
 }
 #trxwallet p{
-    font-size: 13px;color: #f7c7c785;margin-left: 0;
+    font-size: 13px;color: #e0dbdbd7;margin-left: 0;
 }
 .formlabel {
     color: #727070;margin-top: .5rem;padding: .6rem;font-family: "Montserrat";font-size: 13px;
 }
 .formTag {
-    background-color: #f0efef;border-radius: 8px;padding: 1rem;
+    background-color: #5a5c6e36;border-radius: 8px;padding: 1rem;margin: 1rem 0;
 }
 .formDiv {
 }
@@ -84,5 +84,8 @@ select {
 }
 .passhideshowButton {
     text-align: right;float: right;margin-top: .6rem;margin-right: .5rem;
-    border: none;color: #dbd9dd7e;background-color: transparent;
+    border: none;color: #d1cfd3e1;background-color: transparent;
+}
+.addfundsbtn {
+    margin: 3rem auto;padding: .3rem .6rem;border-radius: 8px;background-color: transparent;color: #f0efef;box-shadow: 1px 1px 1px 1px #8583863a;cursor: pointer;
 }

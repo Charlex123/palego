@@ -21,6 +21,14 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true
     },
+    level: {
+      type: String,
+      required: true
+    },
+    tpin: {
+      type: Number,
+      required: true
+    },
     emailcode: {
       type: String,
       required: true

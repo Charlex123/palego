@@ -134,6 +134,8 @@ const authUser = asyncHandler(async (req, res) => {
               _id: user._id,
               username: user.username,
               email: user.email,
+              level: user.level,
+              tpin: user.tpin,
               sponsorId: sponsorid,
               directdownlines: noofDirectDownlines,
               sponsor: upline,
@@ -151,6 +153,8 @@ const authUser = asyncHandler(async (req, res) => {
         _id: user._id,
         username: user.username,
         email: user.email,
+        level: user.level,
+        tpin: user.tpin,
         isAdmin: user.isAdmin,
         trxwalletaddressbase58: user.trxwalletaddressbase58,
         trxwalletaddresshex:user.trxwalletaddresshex,
@@ -173,7 +177,9 @@ const registerUser = asyncHandler(async (req, res) => {
   const { 
     username, 
     email, 
-    password, 
+    password,
+    level,
+    tpin, 
     bscwalletaddress,
     bscwalletprivatekey,
     trxwalletaddressbase58,
@@ -183,7 +189,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const userExists = await User.findOne({ email });
   const usernameExists = await User.findOne({ username });
-
+  console.log('level', level)
   if (usernameExists) {
     res.status(404);
     throw new Error("Username already exists");
@@ -197,6 +203,8 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     email,
     password,
+    level,
+    tpin,
     bscwalletaddress,
     bscwalletprivatekey,
     trxwalletaddressbase58,
@@ -258,7 +266,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    user.name = req.body.name || user.name;
+    user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
     user.pic = req.body.pic || user.pic;
     if (req.body.password) {
@@ -282,23 +290,19 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 
-const resetPassword = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-
+const updateTransactionPin = asyncHandler(async (req, res) => {
+  const userid = req.body.userid;
+  const user = await User.findById(userid);
   if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.pic = req.body.pic || user.pic;
-    if (req.body.password) {
-      user.password = req.body.password;
-    }
-
+    user.tpin = req.body.tpin;
+    
     const updatedUser = await user.save();
 
     res.json({
       _id: updatedUser._id,
-      name: updatedUser.name,
+      username: updatedUser.username,
       email: updatedUser.email,
+      tpin: updatedUser.tpin,
       pic: updatedUser.pic,
       isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
@@ -307,6 +311,29 @@ const resetPassword = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User Not Found");
   }
+});
+
+
+const resetPassword = asyncHandler(async (req, res) => {
+    const userid = req.body.userid;
+    const user = await User.findById(userid);
+    if (user) {
+      user.password = req.body.newpassword;
+      
+      const updatedUser = await user.save();
+
+      res.json({
+        _id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        pic: updatedUser.pic,
+        isAdmin: updatedUser.isAdmin,
+        token: generateToken(updatedUser._id),
+      });
+    } else {
+      res.status(404);
+      throw new Error("User Not Found");
+    }
 });
 
 
@@ -375,4 +402,4 @@ const resendverificationMail = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, updateUserProfile, registerUser, verifyUser, resendverificationMail, resetPassword };
+export { authUser, updateUserProfile, registerUser, verifyUser, resendverificationMail, resetPassword, updateTransactionPin };

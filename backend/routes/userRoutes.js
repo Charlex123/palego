@@ -5,6 +5,8 @@ import {
   resendverificationMail,
   updateUserProfile,
   verifyUser,
+  addFunds,
+  updateTransactionPin,
   resetPassword
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
@@ -14,6 +16,8 @@ router.post("/register", registerUser);
 router.post("/verify", verifyUser);
 router.post("/regsuccess", resendverificationMail);
 router.post("/resetpassword", resetPassword);
+router.post("/addfunds", addFunds);
+router.post("/updatetransactionpin", updateTransactionPin);
 router.post("/login/users", authUser);
 router.route("/profile").post(protect, updateUserProfile);
 

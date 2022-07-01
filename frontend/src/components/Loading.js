@@ -1,7 +1,7 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
 
-function Loading({ size = 100 }) {
+function Loading({ size = 40 }) {
   return (
     <div
       style={{

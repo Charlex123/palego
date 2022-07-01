@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rubik+Wet+Paint:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Creepster:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Sofia:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
+body {
+    font-size: 14px !important;font-family: "Montserrat";line-height: 26px;color: #b3b9b9 !important;
+}
+.p-img {
+    border-radius: 50%;width: 40px;height: 40px;
+}
+.tpin {
+    margin: 2rem 0;
+}
+.tranxpin {
+    margin: 1rem 0;
+}
+.tranxpin input{
+    background-color: transparent;border: none;color: #d4d3d363;display: flex;width: 5rem;box-shadow: 1px 1px 1px 2px #6d6e6e4d;
+    border-radius: 8px;margin-left: -.6rem;
+}
+.tranxpin input::placeholder {
+    margin-left: .4rem;
+}
+.tranxpin .txpin {
+    display: flex;margin: .2rem 0;background-color: transparent;width: max-content;padding: .2rem .6rem;border-radius: 8px;
+}
+.tranxpin .txpin button{
+    display: flex;box-shadow: none;margin-top: 0;border-radius: 8px;padding: .3rem .8rem;
+}
+.tpass button {
+    box-shadow: none;margin-top: 0;border-radius: 8px;padding: .3rem .8rem;
+}
+button.passhideshowButton {
+    box-shadow: none;
+}
+button {
+    padding: .2rem .4rem; background-color: #6d6e6e4d;color: #d4d3d3;font-size: 14px;
+    font-family: "Nunito";box-shadow: 1px 1px 2px 2px #6d6e6e4d;border: none;border-radius: 4px;
+}
+.settpin {
+    display: none;
+}
+.setpass {
+    display: none;
+}
+.user-level {
+    font-family: "Nunito";font-weight: 600;color: #f3f5fcdc;
+}

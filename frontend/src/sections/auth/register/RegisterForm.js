@@ -17,6 +17,7 @@ import Iconify from '../../../components/Iconify';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { providers } from "ethers";
 import Web3 from "web3";
+import { functions } from 'lodash';
 
 const TronWeb = require('tronweb')
 const HttpProvider = TronWeb.providers.HttpProvider;
@@ -36,6 +37,7 @@ export default function RegisterForm() {
   const sponsorId = id;
   const [email, setEmail] = useState("");
   const [username, setUserame] = useState("");
+  const [transactionpin, setTransactionPin] = useState("");
   const [pic, setPic] = useState(
     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
   );
@@ -43,6 +45,8 @@ export default function RegisterForm() {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(false);
+  const [level, setLevel] = useState("White Label");
+  const [tpin, setTPin] = useState(1234);
   const [loading, setLoading] = useState(false);
   const [passwordinputType, setpasswordinputType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(<FontAwesomeIcon icon={faEye} />);
@@ -71,17 +75,6 @@ export default function RegisterForm() {
     }
   };
   
-
-  TronWeb.createAccount().then(function(res){
-      console.log(res)
-      console.log(res.length)
-  });
-    
-    ;
-//   const gettrxdet = TronWeb.createAccount().then(res => setTrxwalletAddressBase58(res.address.base58) );
-// console.log(gettrxdet)
-//   console.log(trxwalletaddresshex)
-//   console.log(trxwalletprivatekey)
   
 
   const submitHandler = async (e) => {
@@ -97,7 +90,8 @@ export default function RegisterForm() {
             "Content-type": "application/json"
           }
         }  
-        setLoading(true)
+        setLoading(true);
+        setLevel("White Whale");
 
         const res = await TronWeb.createAccount();
         const trxwalletaddressbase58 = res.address.base58;
@@ -107,6 +101,8 @@ export default function RegisterForm() {
           username,
           sponsorId,
           email,
+          level,
+          tpin,
           password,
           bscwalletaddress,
           bscwalletprivatekey,

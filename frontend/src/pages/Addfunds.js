@@ -66,7 +66,18 @@ export default function Addfunds() {
   }
   gettrxuserWalletBalance();
 
-  const destination = PalegoTRC20ContractAddress;
+  // var subscription = web3.eth.subscribe('logs', {
+  //   address: '0x123456..',
+  //   }, function(error, result){
+  //   if (!error)
+  //   console.log(result);
+  //   })
+  //   .on("data", function(log){
+  //   console.log(log);
+  //   })
+  //   .on("changed", function(log){
+  //   });
+
   async function transferUSDT(e) {
 
     setValue(e.target.value);
@@ -155,8 +166,8 @@ export default function Addfunds() {
         amount,
         random
       }, config);
-      localStorage.setItem("userInfo", JSON.stringify(data))
-      navigate(`/dashboard/app/${data.username}`, { replace: true })
+      console.log(data)
+      // navigate(`/dashboard/app/${data.username}`, { replace: true })
     } catch (error) {
       console.log(error.response.data)
     }

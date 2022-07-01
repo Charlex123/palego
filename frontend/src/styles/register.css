@@ -13,10 +13,10 @@
     border: none;
 }
 .formlabel {
-    color: #727070;margin-top: 1rem;padding: .6rem;font-family: "Montserrat";
+    color: #e4e0e0;margin-top: 1rem;padding: .6rem;font-family: "Montserrat";
 }
 .formTag {
-    background-color: #f0efef;border-radius: 8px;padding: 1rem;margin: auto;
+    background-color: transparent;border-radius: 8px;padding: 1rem;margin: auto;
 }
 .formDiv {
 }

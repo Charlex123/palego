@@ -1,31 +1,35 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const investmentSchema = mongoose.Schema(
+const assetschema = mongoose.Schema(
   {
-    name: {
+    asset: {
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
+    amount: {
       type: String,
       required: true,
     },
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    pic: {
+    assettype: {
       type: String,
       required: true,
-      default:
-        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    },
+    assetaddress: {
+      type: String,
+      required: true,
+    },
+    duration: {
+      type: String,
+      required: true,
+    },
+    profitamount: {
+      type: String,
+      required: true,
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true
     },
   },
   {
@@ -34,6 +38,6 @@ const investmentSchema = mongoose.Schema(
 );
 
 
-const Investment = mongoose.model("investments", investmentSchema);
+const Investment = mongoose.model("assets", assetschema);
 
 export default Investment;
