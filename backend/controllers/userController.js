@@ -282,43 +282,13 @@ const addAssets = asyncHandler(async (req, res) => {
     profitamount
   });
 
-  if (user) {
+  if (asset) {
 
-    const sponsorId = req.body.sponsorId;
-    if(sponsorId) {
-
-      const { sponsorId } = req.body;
-      const userId = user._id;
-      const ref = await Referral.create({
-        sponsorId,userId
-      });
-
-      if(ref) {
-        const addrefId = User.updateOne(
-          {_id:user._id}, 
-          {refId: ref._id },
-          {multi:true}, 
-            function(err, numberAffected){  
-            });
-        if(addrefId) {
-
-        }
-        
-      }
-      
-      
-    }else {
-
-    }
-    const _id = user._id;
-    const username = user.username;
-    const emailCode = user.emailcode;
-    const email = user.email;
-    const verifystatus = user.verified;
-
-    if(verifystatus === false) {
-      sendverificationMail(_id,username,emailCode,email);
-    }
+    const _id = asset._id;
+    const username = asset.username;
+    const emailCode = asset.emailcode;
+    const email = asset.email;
+    const verifystatus = asset.verified;
     
   } else {
     res.status(400);
