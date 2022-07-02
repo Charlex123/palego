@@ -266,6 +266,7 @@ const addAssets = asyncHandler(async (req, res) => {
     assetdailyprofitratio,
     assettype,
     userId,
+    status,
     assetaddress,
     dailyprofit,
     minassetduration,
@@ -278,6 +279,7 @@ const addAssets = asyncHandler(async (req, res) => {
     assetdailyprofitratio,
     assettype,
     userId,
+    status,
     assetaddress,
     dailyprofit,
     minassetduration,
@@ -292,6 +294,7 @@ const addAssets = asyncHandler(async (req, res) => {
        assetaddress: asset.assetaddress,
        assettype: asset.assettype,
        userid: asset.userId,
+       status: asset.status,
        dailyprofit: asset.dailyprofit,
        minassetduration: asset.minassetduration,
        profitamount: asset.profitamount

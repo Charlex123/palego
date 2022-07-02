@@ -41,6 +41,7 @@ export default function Addfunds() {
   const [assetaddress, setAssetAddress] = useState("");
   const [error, setError] = useState(false);
   const [userId] = useState(userDetails._id);
+  const [status] = useState("Active");
   const [userbscwalletbalance, setuserbscwalletBalance] = useState(0);
   const [usertrxwalletbalance, setusertrxwalletBalance] = useState(0);
   const [message, setMessage] = useState(null);
@@ -187,6 +188,7 @@ export default function Addfunds() {
         assettype,
         assetaddress,
         userId,
+        status,
         dailyprofit,
         minassetduration,
         profitamount

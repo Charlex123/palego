@@ -23,6 +23,10 @@ const assetschema = mongoose.Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      required: true
+    },
     minassetduration: {
       type: String,
       required: true,

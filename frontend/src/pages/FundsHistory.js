@@ -1,6 +1,9 @@
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import axios from 'axios';
 // material
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
+import { Table } from 'react-bootstrap';
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -18,17 +21,87 @@ const SORT_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function Blog() {
+export default function MyAssets() {
+  
+  const userDetails = JSON.parse(localStorage.getItem('userInfo'));
+  const userAssets = JSON.parse(localStorage.getItem('assetdetails'));
+  const [userid] = useState(userDetails._id);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    getAssetDetails();
+  });
+
+  const getAssetDetails = async (e) => {
+  
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json"
+        }
+      }  
+
+      const {data} = await axios.post("/api/users/assetdetails", {
+        userid
+      }, config);
+      localStorage.setItem("assetdetails", JSON.stringify(data.asset))
+    } catch (error) {
+      console.log(error.response.data)
+    }
+
+}
+
+var sum = 0;
+
+for(var i=0; i < userAssets.length; i++){
+
+    sum += parseInt(userAssets[i].amount);
+}
+
+
   return (
     <Page title="Dashboard: My Funds History">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            My Funds History
-            <div>
-              <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-                Add Fund
-              </Button>
+            My Asset History
+            <div className='asset-history'>
+              <div class="tsum">Total Assets Sum: <span>{sum+'USDT'}</span></div>
+
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Amount(USDT)</th>
+                    <th>Daily Profit</th>
+                    <th>Type</th>
+                    <th>Daily Profit Ratio</th>
+                    <th>Mininum Duration</th>
+                    <th>Wallet Address</th>
+                  </tr>
+                </thead>
+              <tbody>
+                  {userAssets.map((asset) => (
+                      <tr key={asset._id}>
+                        <td>#</td>
+                        <td>{asset.amount}</td>
+                        <td>{asset.dailyprofit+ "USDT"}</td>
+                        <td>{asset.assettype + " usdt"}</td>
+                        <td>{asset.assetdailyprofitratio +'%'}</td>
+                        <td>{asset.minassetduration+'s'+" (24Hours)"}</td>
+                        <td>{asset.assetaddress}</td>
+                      </tr>
+                ))}
+              </tbody>
+            </Table>
+            
+              <div className="link-sect">
+                <ul>
+                    <li><a href="">Withdraw History</a></li>
+                    <li><a href="">Add Asset</a></li>
+                </ul>
+              </div>
             </div>
           </Typography>
           
