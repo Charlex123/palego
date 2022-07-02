@@ -73,6 +73,7 @@ for(var i=0; i < userAssets.length; i++){
                   <ul>
                     <li>Assets Amount: {asset.amount}</li>
                     <li>Assets Daily Profit: {asset.dailyprofit+ "USDT"}</li>
+                    <li>Assets Status: {asset.status}</li>
                     <li className="text-capitalize">Assets Type: {asset.assettype + " usdt"}</li>
                     <li>Assets Daily Profit Ratio: {asset.assetdailyprofitratio +'%'}</li>
                     <li>Assets Mininum Investment Window: {asset.minassetduration+'s'+" (24Hours)"}</li>
@@ -83,9 +84,9 @@ for(var i=0; i < userAssets.length; i++){
 
               <div className="link-sect">
                 <ul>
-                    <li><a href="">Assets History</a></li>
-                    <li><a href="">Withdraw History</a></li>
-                    <li><a href="">Add Asset</a></li>
+                    <li><a href={`/dashboard/assetshistory/${userDetails.username}`}>Assets History</a></li>
+                    <li><a href={`/dashboard/withdrawals/${userDetails.username}`}>Withdraw History</a></li>
+                    <li><a href={`/dashboard/addasset/${userDetails.username}`}>Add Asset</a></li>
                 </ul>
               </div>
             </div>

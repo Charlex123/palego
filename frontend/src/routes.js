@@ -3,7 +3,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
-import FundsHistory from './pages/FundsHistory';
+import AssetsHistory from './pages/AssetsHistory';
 import User from './pages/User';
 import Login from './pages/Login';
 import NotFound from './pages/Page404';
@@ -11,7 +11,7 @@ import Register from './pages/Register';
 import Verify from './pages/Verify';
 import Withdrawals from './pages/Withdrawals';
 import Withdraw from './pages/Withdraw';
-import Addfunds from "./pages/AddFunds";
+import AddAsset from "./pages/AddAsset";
 import Deposit from "./pages/Deposit";
 import RegSuccess from './pages/RegSuccess';
 import AssetAnalysis from './pages/AssetAnalysis';
@@ -36,8 +36,8 @@ export default function Router() {
         { path: 'deposit/:id', element: <Deposit /> },
         { path: 'myassets/:id', element: <MyAssets /> },
         { path: 'assetanalysis/:id', element: <AssetAnalysis /> },
-        { path: 'fundshistory/:id', element: <FundsHistory  /> },
-        { path: 'addfunds/:id', element: <Addfunds  /> },
+        { path: 'assetshistory/:id', element: <AssetsHistory  /> },
+        { path: 'addasset/:id', element: <AddAsset  /> },
         { path: 'withdraw/:id', element: <Withdraw  /> },
       ],
     },

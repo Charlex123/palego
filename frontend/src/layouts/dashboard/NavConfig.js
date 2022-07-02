@@ -45,17 +45,17 @@ const navConfig = [
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
-    title: 'Add Funds',
-    path: `/dashboard/addfunds/`+getUsername(),
+    title: 'Add Asset',
+    path: `/dashboard/addasset/`+getUsername(),
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
-    title: 'Funding History',
-    path: `/dashboard/fundshistory/`+getUsername(),
+    title: 'Assets History',
+    path: `/dashboard/assetshistory/`+getUsername(),
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
-    title: 'Withdraw',
+    title: 'Withdraw Asset',
     path: `/dashboard/withdraw/`+getUsername(),
     icon: getIcon('eva:file-text-fill'),
   },

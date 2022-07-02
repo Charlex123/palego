@@ -59,7 +59,6 @@ for(var i=0; i < userAssets.length; i++){
     sum += parseInt(userAssets[i].amount);
 }
 
-
   return (
     <Page title="Dashboard: My Funds History">
       <Container>
@@ -76,6 +75,7 @@ for(var i=0; i < userAssets.length; i++){
                     <th>Amount(USDT)</th>
                     <th>Daily Profit</th>
                     <th>Type</th>
+                    <th>Status</th>
                     <th>Daily Profit Ratio</th>
                     <th>Mininum Duration</th>
                     <th>Wallet Address</th>
@@ -88,6 +88,7 @@ for(var i=0; i < userAssets.length; i++){
                         <td>{asset.amount}</td>
                         <td>{asset.dailyprofit+ "USDT"}</td>
                         <td>{asset.assettype + " usdt"}</td>
+                        <td>{asset.status}</td>
                         <td>{asset.assetdailyprofitratio +'%'}</td>
                         <td>{asset.minassetduration+'s'+" (24Hours)"}</td>
                         <td>{asset.assetaddress}</td>
@@ -98,8 +99,8 @@ for(var i=0; i < userAssets.length; i++){
             
               <div className="link-sect">
                 <ul>
-                    <li><a href="">Withdraw History</a></li>
-                    <li><a href="">Add Asset</a></li>
+                    <li><a href={`/dashboard/withdrawals/${userDetails.username}`}  >Withdraw History</a></li>
+                    <li><a href={`/dashboard/addasset/${userDetails.username}`}>Add Asset</a></li>
                 </ul>
               </div>
             </div>
