@@ -1,4 +1,6 @@
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import axios from 'axios';
 // material
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
@@ -18,7 +20,38 @@ const SORT_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function Blog() {
+export default function MyAssets() {
+  
+  const userDetails = JSON.parse(localStorage.getItem('userInfo'));
+  const [userid] = useState(userDetails._id);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    getAssetDetails();
+  });
+
+  const getAssetDetails = async (e) => {
+  
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json"
+        }
+      }  
+
+      const {data} = await axios.post("/api/users/assetdetails", {
+        userid
+      }, config);
+
+      console.log(data)
+      localStorage.setItem("assetdetails", JSON.stringify(data))
+    } catch (error) {
+      console.log(error.response.data)
+    }
+}
+  
+
   return (
     <Page title="Dashboard: My Funds History">
       <Container>
@@ -26,9 +59,7 @@ export default function Blog() {
           <Typography variant="h4" gutterBottom>
             My Funds History
             <div>
-              <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-                Add Fund
-              </Button>
+              
             </div>
           </Typography>
           

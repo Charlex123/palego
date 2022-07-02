@@ -4,6 +4,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
+import Alert from 'react-bootstrap/Alert';
 import { faCopy, faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import "../styles/accountform.css";
 // component
@@ -39,12 +40,13 @@ export default function Addfunds() {
   const [assettype, setAssetType] = useState("");
   const [assetaddress, setAssetAddress] = useState("");
   const [error, setError] = useState(false);
-  const [userid] = useState(userDetails._id);
+  const [userId] = useState(userDetails._id);
   const [userbscwalletbalance, setuserbscwalletBalance] = useState(0);
   const [usertrxwalletbalance, setusertrxwalletBalance] = useState(0);
   const [message, setMessage] = useState(null);
   const [usertotalwalletbalance, setusertotalwalletBalance] = useState(0);
   const [tpin, setTPin] = useState("");
+  const [showAlert , setShowAlert] = useState("");
   const [value, setValue] = useState("");
   
   // mainnet 
@@ -142,7 +144,7 @@ export default function Addfunds() {
       bscwallet.style.display = "none";
       trcwallet.style.display = "block";
       amountinputField.style.display = "block";
-      setAssetType("bep20");
+      setAssetType("trc20");
       setAssetAddress(usertrxwalletaddressbase58)
     }else if(value == "trc20") {
       const trcwallet = document.getElementById("trxwallet");
@@ -150,7 +152,7 @@ export default function Addfunds() {
       trcwallet.style.display = "none";
       bscwallet.style.display = "block";
       amountinputField.style.display = "block";
-      setAssetType("trc20");
+      setAssetType("bep20");
       setAssetAddress(userbscwalletaddress);
     }
   };
@@ -158,24 +160,18 @@ export default function Addfunds() {
   
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(amount)
-    console.log(random)
-    const dailyProfit = (random/100) * amount;
+    const dailyprofit = (random/100) * amount;
     const assetdailyprofitratio = random;
     const minassetduration = 86400;
-    const profitamount = amount - dailyProfit;
+    const profitamount = amount - dailyprofit;
     console.log(assetaddress)
-    console.log(assettype)
-    console.log(dailyProfit);
-    console.log(profitamount);
-
     if (amount < 20) {
       setMessage("Mininum Asset Funds Is $20 USDT");
     }
     else if(tpin != userDetails.tpin) {
-      setMessage("Your transaction details do not match");
+      setMessage("Your transaction pin do not match");
     }
-    else if(tpin > 5) {
+    else if(tpin.length > 4) {
       setMessage("Transaction pin must be a 4 digit number");
     }
 
@@ -189,12 +185,16 @@ export default function Addfunds() {
         amount,
         assetdailyprofitratio,
         assettype,
-        userid,
-        dailyProfit,
+        assetaddress,
+        userId,
+        dailyprofit,
         minassetduration,
         profitamount
       }, config);
       console.log(data)
+      setShowAlert(<Alert >
+        Transaction Pin Change Success
+      </Alert>)
       // navigate(`/dashboard/app/${data.username}`, { replace: true })
     } catch (error) {
       console.log(error.response.data)
@@ -207,6 +207,7 @@ export default function Addfunds() {
           <div><img src={qrcode} className="qrcode"/></div>
           {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
           {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+          {showAlert}
           <div className='walletbalances'>
             <div className="wallet-bal">
                 <label className="" htmlFor="grid-last-name">Trx Wallet Balance(USDT): <span className='bal'>{userbscwalletbalance}USDT</span></label>

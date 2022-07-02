@@ -11,13 +11,14 @@ import Register from './pages/Register';
 import Verify from './pages/Verify';
 import Withdrawals from './pages/Withdrawals';
 import Withdraw from './pages/Withdraw';
-import Addfunds from "./pages/Addfunds";
+import Addfunds from "./pages/AddFunds";
 import Deposit from "./pages/Deposit";
 import RegSuccess from './pages/RegSuccess';
+import AssetAnalysis from './pages/AssetAnalysis';
 import ResetPassword from './pages/ResetPassword';
 import DashboardApp from './pages/DashboardApp';
 import LeaderBoard from './pages/Leaderboard';
-import Assets from './pages/Assets';
+import MyAssets from './pages/MyAssets';
 import Home from './Home';
 
 // ----------------------------------------------------------------------
@@ -33,7 +34,8 @@ export default function Router() {
         { path: 'leaderboard/:id', element: <LeaderBoard/> },
         { path: 'withdrawals/:id', element: <Withdrawals /> },
         { path: 'deposit/:id', element: <Deposit /> },
-        { path: 'assets/:id', element: <Assets /> },
+        { path: 'myassets/:id', element: <MyAssets /> },
+        { path: 'assetanalysis/:id', element: <AssetAnalysis /> },
         { path: 'fundshistory/:id', element: <FundsHistory  /> },
         { path: 'addfunds/:id', element: <Addfunds  /> },
         { path: 'withdraw/:id', element: <Withdraw  /> },

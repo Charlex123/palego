@@ -265,8 +265,9 @@ const addAssets = asyncHandler(async (req, res) => {
     amount,
     assetdailyprofitratio,
     assettype,
-    userid,
-    dailyProfit,
+    userId,
+    assetaddress,
+    dailyprofit,
     minassetduration,
     profitamount 
   } = req.body;
@@ -276,20 +277,51 @@ const addAssets = asyncHandler(async (req, res) => {
     amount,
     assetdailyprofitratio,
     assettype,
-    userid,
-    dailyProfit,
+    userId,
+    assetaddress,
+    dailyprofit,
     minassetduration,
     profitamount
   });
 
   if (asset) {
+ 
+    res.status(201).json({
+       amount: asset.amount,
+       assetdailyprofitratio: asset.assetdailyprofitratio,
+       assetaddress: assetaddress,
+       assettype: asset.assettype,
+       userid: asset.userid,
+       dailyprofit: asset.dailyprofit,
+       minassetduration: asset.minassetduration,
+       profitamount: asset.profitamount
+    });
+  } else {
+    res.status(400);
+    throw new Error("User not found");
+  }
+});
 
-    const _id = asset._id;
-    const username = asset.username;
-    const emailCode = asset.emailcode;
-    const email = asset.email;
-    const verifystatus = asset.verified;
-    
+
+const assetDetails = asyncHandler(async (req, res) => {
+  const { 
+    userid
+  } = req.body;
+
+  const asset = await Assets.find({ userId: userid });
+  console.log(asset)
+  if (asset) {
+ 
+    res.status(201).json({
+       amount: asset.amount,
+       assetdailyprofitratio: asset.assetdailyprofitratio,
+       assetaddress: assetaddress,
+       assettype: asset.assettype,
+       userid: asset.userid,
+       dailyprofit: asset.dailyprofit,
+       minassetduration: asset.minassetduration,
+       profitamount: asset.profitamount
+    });
   } else {
     res.status(400);
     throw new Error("User not found");
@@ -440,4 +472,4 @@ const resendverificationMail = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, updateUserProfile, registerUser, verifyUser, resendverificationMail, resetPassword, addAssets, updateTransactionPin };
+export { authUser, updateUserProfile, registerUser, verifyUser, assetDetails, resendverificationMail, resetPassword, addAssets, updateTransactionPin };
