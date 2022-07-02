@@ -27,6 +27,33 @@ export default function MyAssets() {
   const userAssets = JSON.parse(localStorage.getItem('assetdetails'));
   const [userid] = useState(userDetails._id);
 
+  // scheduleWarning(time, triggerThis) {
+
+  //   // get hour and minute from hour:minute param received, ex.: '16:00'
+  //   const hour = Number(time.split(':')[0]);
+  //   const minute = Number(time.split(':')[1]);
+
+  //   // create a Date object at the desired timepoint
+  //   const startTime = new Date(); startTime.setHours(hour, minute);
+  //   const now = new Date();
+
+  //   // increase timepoint by 24 hours if in the past
+  //   if (startTime.getTime() < now.getTime()) {
+  //     startTime.setHours(startTime.getHours() + 24);
+  //   }
+
+  //   // get the interval in ms from now to the timepoint when to trigger the alarm
+  //   const firstTriggerAfterMs = startTime.getTime() - now.getTime();
+
+  //   // trigger the function triggerThis() at the timepoint
+  //   // create setInterval when the timepoint is reached to trigger it every day at this timepoint
+  //   setTimeout(function(){
+  //     triggerThis();
+  //     setInterval(triggerThis, 24 * 60 * 60 * 1000);
+  //   }, firstTriggerAfterMs);
+
+  // }
+
   useEffect(() => {
     // Update the document title using the browser API
     getAssetDetails();
@@ -91,7 +118,7 @@ for(var i=0; i < userAssets.length; i++){
                         <td>{asset.status}</td>
                         <td>{asset.assetdailyprofitratio +'%'}</td>
                         <td>{asset.minassetduration+'s'+" (24Hours)"}</td>
-                        <td>{asset.assetaddress}</td>
+                        <td>{asset.shortassetaddress+'...'}</td>
                       </tr>
                 ))}
               </tbody>

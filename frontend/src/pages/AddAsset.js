@@ -164,7 +164,9 @@ export default function Addfunds() {
     const dailyprofit = (random/100) * amount;
     const assetdailyprofitratio = random;
     const minassetduration = 86400;
-    const profitamount = amount - dailyprofit;
+    const profitamountt = amount - dailyprofit;
+    const profitamount = profitamountt.toFixed(2);
+    const shortassetaddress = assetaddress.slice(0, 10);
     console.log(assetaddress)
     if (amount < 20) {
       setMessage("Mininum Asset Funds Is $20 USDT");
@@ -187,6 +189,7 @@ export default function Addfunds() {
         assetdailyprofitratio,
         assettype,
         assetaddress,
+        shortassetaddress,
         userId,
         status,
         dailyprofit,
@@ -195,7 +198,7 @@ export default function Addfunds() {
       }, config);
       console.log(data)
       setShowAlert(<Alert >
-        Transaction Pin Change Success
+        {assettype} asset of {amount+'USDT'} sucessfully added
       </Alert>)
       // navigate(`/dashboard/app/${data.username}`, { replace: true })
     } catch (error) {

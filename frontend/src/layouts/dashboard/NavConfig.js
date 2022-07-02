@@ -15,8 +15,8 @@ function getUsername() {
 };
 const navConfig = [
   {
-    title: 'My Assets',
-    path: `/dashboard/myassets/`+getUsername(),
+    title: 'Add Asset',
+    path: `/dashboard/addasset/`+getUsername(),
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
@@ -25,19 +25,14 @@ const navConfig = [
     icon: getIcon('eva:file-text-fill'),
   },
   {
+    title: 'Assets History',
+    path: `/dashboard/assetshistory/`+getUsername(),
+    icon: getIcon('eva:shopping-bag-fill'),
+  },
+  {
     title: 'Dashboard',
     path:`/dashboard/app/`+getUsername(),
     icon: getIcon('eva:pie-chart-2-fill'),
-  },
-  {
-    title: 'profile',
-    path: `/dashboard/user/`+getUsername(),
-    icon: getIcon('eva:people-fill'),
-  },
-  {
-    title: 'Leader Board',
-    path: `/dashboard/leaderboard/`+getUsername(),
-    icon: getIcon('eva:shopping-bag-fill'),
   },
   {
     title: 'deposit',
@@ -45,14 +40,19 @@ const navConfig = [
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
-    title: 'Add Asset',
-    path: `/dashboard/addasset/`+getUsername(),
+    title: 'Leader Board',
+    path: `/dashboard/leaderboard/`+getUsername(),
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
-    title: 'Assets History',
-    path: `/dashboard/assetshistory/`+getUsername(),
+    title: 'My Assets',
+    path: `/dashboard/myassets/`+getUsername(),
     icon: getIcon('eva:shopping-bag-fill'),
+  },
+  {
+    title: 'profile',
+    path: `/dashboard/user/`+getUsername(),
+    icon: getIcon('eva:people-fill'),
   },
   {
     title: 'Withdraw Asset',

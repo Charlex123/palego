@@ -19,6 +19,10 @@ const assetschema = mongoose.Schema(
       type: String,
       required: true,
     },
+    shortassetaddress: {
+      type: String,
+      required: true
+    },
     assetaddress: {
       type: String,
       required: true,
