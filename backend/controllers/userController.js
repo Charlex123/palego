@@ -289,9 +289,9 @@ const addAssets = asyncHandler(async (req, res) => {
     res.status(201).json({
        amount: asset.amount,
        assetdailyprofitratio: asset.assetdailyprofitratio,
-       assetaddress: assetaddress,
+       assetaddress: asset.assetaddress,
        assettype: asset.assettype,
-       userid: asset.userid,
+       userid: asset.userId,
        dailyprofit: asset.dailyprofit,
        minassetduration: asset.minassetduration,
        profitamount: asset.profitamount
@@ -309,18 +309,9 @@ const assetDetails = asyncHandler(async (req, res) => {
   } = req.body;
 
   const asset = await Assets.find({ userId: userid });
-  console.log(asset)
   if (asset) {
- 
     res.status(201).json({
-       amount: asset.amount,
-       assetdailyprofitratio: asset.assetdailyprofitratio,
-       assetaddress: assetaddress,
-       assettype: asset.assettype,
-       userid: asset.userid,
-       dailyprofit: asset.dailyprofit,
-       minassetduration: asset.minassetduration,
-       profitamount: asset.profitamount
+       asset: asset
     });
   } else {
     res.status(400);

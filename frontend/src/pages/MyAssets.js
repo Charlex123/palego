@@ -23,6 +23,7 @@ const SORT_OPTIONS = [
 export default function MyAssets() {
   
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
+  const userAssets = JSON.parse(localStorage.getItem('assetdetails'));
   const [userid] = useState(userDetails._id);
 
   useEffect(() => {
@@ -43,14 +44,19 @@ export default function MyAssets() {
       const {data} = await axios.post("/api/users/assetdetails", {
         userid
       }, config);
-
-      console.log(data)
-      localStorage.setItem("assetdetails", JSON.stringify(data))
+      localStorage.setItem("assetdetails", JSON.stringify(data.asset))
     } catch (error) {
       console.log(error.response.data)
     }
+
 }
-  
+
+var sum = 0;
+
+for(var i=0; i < userAssets.length; i++){
+
+    sum += parseInt(userAssets[i].amount);
+}
 
   return (
     <Page title="Dashboard: My Funds History">
@@ -59,7 +65,12 @@ export default function MyAssets() {
           <Typography variant="h4" gutterBottom>
             My Funds History
             <div>
-              
+            {/* {userAssets.map((asset) => (
+              <div className="" key={asset._id}>
+                  {asset.amount}
+              </div>
+            ))} */}
+              Total Assets Sum: {sum+'USDT'}
             </div>
           </Typography>
           
