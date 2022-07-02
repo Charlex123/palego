@@ -43,6 +43,10 @@ const assetschema = mongoose.Schema(
       type: String,
       required: true
     },
+    assetaddtime: {
+      type: Number,
+      required: true
+    }
   },
   {
     timestamps: true,

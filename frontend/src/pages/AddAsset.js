@@ -161,6 +161,7 @@ export default function Addfunds() {
   
   const submitHandler = async (e) => {
     e.preventDefault();
+    const assetaddtime = new Date().getTime();
     const dailyprofit = (random/100) * amount;
     const assetdailyprofitratio = random;
     const minassetduration = 86400;
@@ -194,7 +195,8 @@ export default function Addfunds() {
         status,
         dailyprofit,
         minassetduration,
-        profitamount
+        profitamount,
+        assetaddtime
       }, config);
       console.log(data)
       setShowAlert(<Alert >

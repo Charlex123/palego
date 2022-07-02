@@ -271,7 +271,8 @@ const addAssets = asyncHandler(async (req, res) => {
     assetaddress,
     dailyprofit,
     minassetduration,
-    profitamount 
+    profitamount,
+    assetaddtime 
   } = req.body;
 
   
@@ -285,7 +286,8 @@ const addAssets = asyncHandler(async (req, res) => {
     assetaddress,
     dailyprofit,
     minassetduration,
-    profitamount
+    profitamount,
+    assetaddtime
   });
 
   if (asset) {
@@ -300,7 +302,8 @@ const addAssets = asyncHandler(async (req, res) => {
        status: asset.status,
        dailyprofit: asset.dailyprofit,
        minassetduration: asset.minassetduration,
-       profitamount: asset.profitamount
+       profitamount: asset.profitamount,
+       assetaddress
     });
   } else {
     res.status(400);
