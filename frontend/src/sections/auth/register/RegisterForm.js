@@ -48,6 +48,9 @@ export default function RegisterForm() {
   const [level, setLevel] = useState("White Label");
   const [tpin, setTPin] = useState(1234);
   const [loading, setLoading] = useState(false);
+  const [refBonus] = useState(0);
+  const [totalrefBonus] = useState(0);
+  const [withdrawnRefBonus] = useState(0);
   const [passwordinputType, setpasswordinputType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(<FontAwesomeIcon icon={faEye} />);
   //   const [accounts, setAccounts] = useState([]);
@@ -104,6 +107,9 @@ export default function RegisterForm() {
           level,
           tpin,
           password,
+          refBonus,
+          totalrefBonus,
+          withdrawnRefBonus,
           bscwalletaddress,
           bscwalletprivatekey,
           trxwalletaddressbase58,

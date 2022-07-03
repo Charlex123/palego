@@ -3,9 +3,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 // material
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
-import { Table } from 'react-bootstrap';
 // components
 import Page from '../components/Page';
+import Table from 'react-bootstrap/Table';
 import Iconify from '../components/Iconify';
 import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
 // mock
@@ -13,22 +13,14 @@ import POSTS from '../_mock/blog';
 
 // ----------------------------------------------------------------------
 
-const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' },
-];
-
-// ----------------------------------------------------------------------
-
-export default function MyAssets() {
+export default function AssetsHistory() {
   
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
-  const userAssets = JSON.parse(localStorage.getItem('assetdetails'));
   const [userid] = useState(userDetails._id);
+  const [userAssets, setUserAssets] = useState(userDetails.asset);
+  const [status] = useState("Withdraw");
 
-  
-  function scheduleWithdrawal(enableWithdrawal) {
+  function scheduleWithdrawal(updateassetprofitdetails) {
     const time = '00:00';
     // get hour and minute from hour:minute param received, ex.: '16:00'
     const hour = Number(time.split(':')[0]);
@@ -50,26 +42,57 @@ export default function MyAssets() {
     // trigger the function triggerThis() at the timepoint
     // create setInterval when the timepoint is reached to trigger it every day at this timepoint
     setTimeout(function(){
-      enableWithdrawal();
-      setInterval(enableWithdrawal, 24 * 60 * 60 * 1000);
+      updateassetprofitdetails();
+      setInterval(updateassetprofitdetails, 24 * 60 * 60 * 1000);
     }, firstTriggerAfterMs);
 
   }
 
-  function enableWithdrawal() {
+  async function updateassetprofitdetails() {
     for(var i=0; i < userAssets.length; i++){
-      
+      const dailyPrft = userAssets[i].dailyprofit++;
+
+      const assetaddTime_ = userAssets[i].assetaddtime;
     }
   }
 
-  function updateAssetWidthStatus() {
+  async function updateAssetWidthStatus() {
+    for(var i=0; i < userAssets.length; i++){
+      const minassetDurWindow = userAssets[i].minassetduration;
+      const assetaddTime_ = userAssets[i].assetaddtime;
+      const timeNow = new Date().getTime();
+      const twentyfourHourCompletion = parseInt(assetaddTime_) + parseInt(minassetDurWindow);
+      if(timeNow > twentyfourHourCompletion) {
+        // allow withdrawal
+
+        const assetid = userAssets[i]._id;
+
+        try {
+          const config = {
+            headers: {
+              "Content-type": "application/json"
+            }
+          }  
     
+          const {data} = await axios.post("/api/users/updateassetwithdrawalstatus", {
+            status,
+            assetid
+          }, config);
+
+        } catch (error) {
+          console.log(error.response.data)
+        }
+      }else {
+        console.log('24 hour withdrawal not reached yet')
+      }
+    }
   }
 
   useEffect(() => {
     // Update the document title using the browser API
     getAssetDetails();
     scheduleWithdrawal();
+    updateAssetWidthStatus();
   });
 
   const getAssetDetails = async (e) => {
@@ -85,7 +108,7 @@ export default function MyAssets() {
       const {data} = await axios.post("/api/users/assetdetails", {
         userid
       }, config);
-      localStorage.setItem("assetdetails", JSON.stringify(data.asset))
+      setUserAssets(data.asset)
     } catch (error) {
       console.log(error.response.data)
     }
@@ -148,12 +171,6 @@ for(var i=0; i < userAssets.length; i++){
           
         </Stack>
 
-        
-        {/* <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
-          ))}
-        </Grid> */}
       </Container>
     </Page>
   );

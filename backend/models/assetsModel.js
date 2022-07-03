@@ -32,7 +32,7 @@ const assetschema = mongoose.Schema(
       required: true
     },
     minassetduration: {
-      type: String,
+      type: Number,
       required: true,
     },
     profitamount: {

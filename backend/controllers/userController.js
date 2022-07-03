@@ -121,8 +121,10 @@ const authUser = asyncHandler(async (req, res) => {
     // get user id
     const userid = user._id;
     //check if user has a referral
-    const referral = await Referral.find({ userId: user._id });
-    if(!referral || !referral.length === 0) {
+    const referral = await Referral.find({ sponsorId: user._id });
+    const asset = await Assets.find({ userId: user._id });
+    
+    if(referral.length != 0 && asset.length != 0) {
       const sponsorid = referral[0].sponsorId;
       if(sponsorid) {
         const getsponsor = await User.find({_id:sponsorid});
@@ -131,6 +133,36 @@ const authUser = asyncHandler(async (req, res) => {
         // const getusersuplines = await User.find(user._id).populate({
         //   path:"refId", model:"referrals"
         // });
+        console.log('bbbbbbbbbbbbbbbb')
+            res.status(201).json({
+              _id: user._id,
+              username: user.username,
+              email: user.email,
+              level: user.level,
+              tpin: user.tpin,
+              sponsorId: sponsorid,
+              asset: asset,
+              directdownlines: noofDirectDownlines,
+              sponsor: upline,
+              trxwalletaddressbase58: user.trxwalletaddressbase58,
+              trxwalletaddresshex:user.trxwalletaddresshex,
+              bscwalletaddress: user.bscwalletaddress,
+              isAdmin: user.isAdmin,
+              pic: user.pic,
+              token: generateToken(user._id),
+            });
+      }
+      
+    }else if(referral.length != 0 && asset.length === 0) {
+      const sponsorid = referral[0].sponsorId;
+      if(sponsorid) {
+        const getsponsor = await User.find({_id:sponsorid});
+        const upline = getsponsor[0].username;
+        const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
+        // const getusersuplines = await User.find(user._id).populate({
+        //   path:"refId", model:"referrals"
+        // });
+        console.log('a//////////////////')
             res.status(201).json({
               _id: user._id,
               username: user.username,
@@ -149,13 +181,33 @@ const authUser = asyncHandler(async (req, res) => {
             });
       }
       
+    }else if(referral.length === 0 && asset.length != 0) {
+      
+        console.log('a//////////////////')
+            res.status(201).json({
+              _id: user._id,
+              username: user.username,
+              email: user.email,
+              level: user.level,
+              tpin: user.tpin,
+              asset: asset,
+              trxwalletaddressbase58: user.trxwalletaddressbase58,
+              trxwalletaddresshex:user.trxwalletaddresshex,
+              bscwalletaddress: user.bscwalletaddress,
+              isAdmin: user.isAdmin,
+              pic: user.pic,
+              token: generateToken(user._id),
+            });
+      
     }else {
+      console.log('asssssssssss')
       res.status(201).json({
         _id: user._id,
         username: user.username,
         email: user.email,
         level: user.level,
         tpin: user.tpin,
+        asset: asset,
         isAdmin: user.isAdmin,
         trxwalletaddressbase58: user.trxwalletaddressbase58,
         trxwalletaddresshex:user.trxwalletaddresshex,
@@ -220,10 +272,10 @@ const registerUser = asyncHandler(async (req, res) => {
     const sponsorId = req.body.sponsorId;
     if(sponsorId) {
 
-      const { sponsorId } = req.body;
+      const { sponsorId, refBonus, totalrefBonus, withdrawnRefBonus } = req.body;
       const userId = user._id;
       const ref = await Referral.create({
-        sponsorId,userId
+        sponsorId,userId,refBonus,totalrefBonus,withdrawnRefBonus
       });
 
       if(ref) {
@@ -267,6 +319,7 @@ const addAssets = asyncHandler(async (req, res) => {
     assettype,
     userId,
     status,
+    totalwithdrawals,
     shortassetaddress,
     assetaddress,
     dailyprofit,
@@ -282,6 +335,7 @@ const addAssets = asyncHandler(async (req, res) => {
     assettype,
     userId,
     status,
+    totalwithdrawals,
     shortassetaddress,
     assetaddress,
     dailyprofit,
@@ -316,11 +370,10 @@ const assetDetails = asyncHandler(async (req, res) => {
   const { 
     userid
   } = req.body;
-
   const asset = await Assets.find({ userId: userid });
   if (asset) {
     res.status(201).json({
-       asset: asset
+       asset
     });
   } else {
     res.status(400);
@@ -376,6 +429,27 @@ const updateTransactionPin = asyncHandler(async (req, res) => {
       pic: updatedUser.pic,
       isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
+
+const updateAssetWithdrawalStatus = asyncHandler(async (req, res) => {
+  const { 
+    assetid
+  } = req.body;
+  const asset = await Assets.findById(assetid);
+  if (asset) {
+    asset.status = req.body.status;
+    
+    const updatedAsset = await asset.save();
+    console.log(updatedAsset)
+    res.json({
+      _id: updatedAsset._id,
+      status: updatedAsset.status,
     });
   } else {
     res.status(404);
@@ -472,4 +546,4 @@ const resendverificationMail = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, updateUserProfile, registerUser, verifyUser, assetDetails, resendverificationMail, resetPassword, addAssets, updateTransactionPin };
+export { authUser, updateUserProfile, registerUser, verifyUser, assetDetails, resendverificationMail, resetPassword, addAssets, updateTransactionPin, updateAssetWithdrawalStatus };

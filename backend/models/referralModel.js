@@ -10,6 +10,18 @@ const referralSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true
     },
+    refBonus: {
+      type: Number,
+      required: true
+    },
+    totalrefBonus: {
+      type: Number,
+      required: true
+    },
+    withdrawnRefBonus: {
+      type: Number,
+      required: true
+    },
     createdAt : {
         type: Date,
         default: Date.now()

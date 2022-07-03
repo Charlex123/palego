@@ -224,7 +224,7 @@ export default function User() {
   
 }
 
-  
+  console.log(userDetails)  
   const pic = userDetails.pic;
   return (
   <Page title="User">

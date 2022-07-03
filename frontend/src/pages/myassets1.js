@@ -23,7 +23,7 @@ const SORT_OPTIONS = [
 export default function MyAssets() {
   
   const userDetails = JSON.parse(localStorage.getItem('userInfo'));
-//   const userAssets = JSON.parse(localStorage.getItem('assetdetails'));
+  const userAssets = JSON.parse(localStorage.getItem('assetdetails'));
   const [userid] = useState(userDetails._id);
 
   useEffect(() => {
@@ -44,18 +44,19 @@ export default function MyAssets() {
       const {data} = await axios.post("/api/users/assetdetails", {
         userid
       }, config);
+      localStorage.setItem("assetdetails", JSON.stringify(data.asset))
     } catch (error) {
       console.log(error.response.data)
     }
 
 }
+console.log(userAssets)
+var sum = 0;
 
-// var sum = 0;
+for(var i=0; i < userAssets.length; i++){
 
-// for(var i=0; i < userAssets.length; i++){
-
-//     sum += parseInt(userAssets[i].amount);
-// }
+    sum += parseInt(userAssets[i].amount);
+}
 
 
   return (
@@ -63,17 +64,37 @@ export default function MyAssets() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            My Asset Analysis
+            My Asset History
             <div>
+              <div class="tsum">Total Assets Sum: <span>{sum+'USDT'}</span></div>
+
+              <div className='row'>
+                
+                {userAssets.map((asset) => (
+                  
+                  <div  className='col-md-6'>
+                      <div className="asset-list-cont" key={asset._id}>
+                        <ul>
+                          <li>Assets Amount: {asset.amount}</li>
+                          <li>Assets Daily Profit: {asset.dailyprofit+ "USDT"}</li>
+                          <li>Assets Status: {asset.status}</li>
+                          <li className="text-capitalize">Assets Type: {asset.assettype + " usdt"}</li>
+                          <li>Assets Daily Profit Ratio: {asset.assetdailyprofitratio +'%'}</li>
+                          <li>Assets Mininum Investment Window: {asset.minassetduration+'s'+" (24Hours)"}</li>
+                          <li>Assets Wallet Address: {asset.assetaddress}</li>
+                        </ul>
+                    </div>
+                  </div>
+                ))}
+                
+              </div>
+
               <div className="link-sect">
-                <div className='row'>
-                    <div className="col-md-4"><a href={`/dashboard/addasset/${userDetails.username}`}>Add Asset</a></div>
-                    <div className="col-md-4"><a href={`/dashboard/assetshistory/${userDetails.username}`}>Assets History</a></div>
-                    <div className="col-md-4"><a href={`/dashboard/withdraw/${userDetails.username}`}>Withdraw Asset</a></div>
-                    <div className="col-md-4"><a href={`/dashboard/deposit/${userDetails.username}`}>Deposit Fund</a></div>
-                    <div className="col-md-4"><a href={`/dashboard/assetshistory/${userDetails.username}`}>Assets History</a></div>
-                    <div className="col-md-4"><a href={`/dashboard/withdrawals/${userDetails.username}`}>Withdrawal History</a></div>
-                </div>
+                <ul>
+                    <li><a href={`/dashboard/assetshistory/${userDetails.username}`}>Assets History</a></li>
+                    <li><a href={`/dashboard/withdrawals/${userDetails.username}`}>Withdraw History</a></li>
+                    <li><a href={`/dashboard/addasset/${userDetails.username}`}>Add Asset</a></li>
+                </ul>
               </div>
             </div>
           </Typography>
@@ -81,11 +102,6 @@ export default function MyAssets() {
         </Stack>
 
         
-        {/* <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
-          ))}
-        </Grid> */}
       </Container>
     </Page>
   );

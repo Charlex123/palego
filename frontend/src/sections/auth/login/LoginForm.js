@@ -53,7 +53,6 @@ export default function LoginForm() {
         password
       }, config);
       localStorage.setItem("userInfo", JSON.stringify(data))
-      console.log(data)
       setLoading(false)
       navigate(`/dashboard/app/${data.username}`, { replace: true })
     } catch (error) {

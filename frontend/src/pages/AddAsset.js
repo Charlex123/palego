@@ -24,7 +24,7 @@ const HttpProvider = TronWeb.providers.HttpProvider;
 const fullNode = new HttpProvider("https://api.trongrid.io");
 const solidityNode = new HttpProvider("https://api.trongrid.io");
 const eventServer = new HttpProvider("https://api.trongrid.io");
-const privateKey = "3481E79956D4BD95F358AC96D151C976392FC4E3FC132F78A847906DE588C145";
+const privateKey = "4773F044A1950B2798010E37885EB113E087B28B0FDDEA9A8EBB525BD83AD513";
 const tronWeb = new TronWeb(fullNode,solidityNode,eventServer,privateKey);
 
 // ----------------------------------------------------------------------
@@ -50,16 +50,18 @@ export default function Addfunds() {
   const [showAlert , setShowAlert] = useState("");
   const [value, setValue] = useState("");
   
+  console.log(userId)
   // mainnet 
   const web3 = new Web3('https://bsc-dataseed1.binance.org:443');
   // testnet
   // const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
   
-  const TRC20USDTcontractaddres =  "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-  const BEP20USDTcontractaddres =  "0x55d398326f99059fF775485246999027B3197955";
-  const PalegoBEP20ContractAddress = "0xF3005B94480F8D15FE434F07B0A047840620d958";
-  const PalegoTRC20ContractAddress = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+  // const TRC20USDTcontractaddres =  "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+  // const BEP20USDTcontractaddres =  "0x55d398326f99059fF775485246999027B3197955";
+  // const PalegoBEP20ContractAddress = "0xF3005B94480F8D15FE434F07B0A047840620d958";
+  // const PalegoTRC20ContractAddress = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
   const userbscwalletaddress = userDetails.bscwalletaddress;
+  console.log(userbscwalletaddress)
   const usertrxwalletaddressbase58 = userDetails.trxwalletaddressbase58;
   
   async function getbscuserWalletBalance() {
@@ -70,6 +72,7 @@ export default function Addfunds() {
 
   async function gettrxuserWalletBalance() {
   const usertrxbalance = await tronWeb.trx.getBalance(usertrxwalletaddressbase58);
+  console.log(usertrxbalance)
   setusertrxwalletBalance(usertrxbalance)
   }
   gettrxuserWalletBalance();
@@ -168,15 +171,18 @@ export default function Addfunds() {
     const profitamountt = amount - dailyprofit;
     const profitamount = profitamountt.toFixed(2);
     const shortassetaddress = assetaddress.slice(0, 10);
-    console.log(assetaddress)
+
     if (amount < 20) {
       setMessage("Mininum Asset Funds Is $20 USDT");
+      return;
     }
     else if(tpin != userDetails.tpin) {
       setMessage("Your transaction pin do not match");
+      return;
     }
     else if(tpin.length > 4) {
       setMessage("Transaction pin must be a 4 digit number");
+      return;
     }
 
     try {
@@ -198,7 +204,6 @@ export default function Addfunds() {
         profitamount,
         assetaddtime
       }, config);
-      console.log(data)
       setShowAlert(<Alert >
         {assettype} asset of {amount+'USDT'} sucessfully added
       </Alert>)
@@ -217,10 +222,10 @@ export default function Addfunds() {
           {showAlert}
           <div className='walletbalances'>
             <div className="wallet-bal">
-                <label className="" htmlFor="grid-last-name">Trx Wallet Balance(USDT): <span className='bal'>{userbscwalletbalance}USDT</span></label>
+                <label className="" htmlFor="grid-last-name">Trx Wallet Balance(USDT): <span className='bal'>{usertrxwalletbalance}USDT</span></label>
             </div>
             <div className="wallet-bal">
-                <label className="" htmlFor="grid-last-name">BSC Wallet Balance(USDT): <span className='bal'>{usertrxwalletbalance}USDT</span></label>
+                <label className="" htmlFor="grid-last-name">BSC Wallet Balance(USDT): <span className='bal'>{userbscwalletbalance}USDT</span></label>
             </div>
             <div className="wallet-bal">
                 <label className="" htmlFor="grid-last-name">Total Wallet Balance(USDT): <span className='bal'>{usertotalwalletbalance}USDT</span></label>

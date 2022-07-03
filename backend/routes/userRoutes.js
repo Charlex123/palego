@@ -8,6 +8,7 @@ import {
   addAssets,
   assetDetails,
   updateTransactionPin,
+  updateAssetWithdrawalStatus,
   resetPassword
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
@@ -19,7 +20,9 @@ router.post("/regsuccess", resendverificationMail);
 router.post("/resetpassword", resetPassword);
 router.post("/addfunds", addAssets);
 router.post("/assetdetails", assetDetails);
+router.get("/assetdetails/:id", assetDetails);
 router.post("/updatetransactionpin", updateTransactionPin);
+router.post("/updateassetwithdrawalstatus", updateAssetWithdrawalStatus);
 router.post("/login/users", authUser);
 router.route("/profile").post(protect, updateUserProfile);
 
