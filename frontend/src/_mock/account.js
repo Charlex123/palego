@@ -1,12 +1,33 @@
 // ----------------------------------------------------------------------
 const userDetails = JSON.parse(localStorage.getItem('userInfo'));
-const userName = userDetails.username;
-const emailD = userDetails.email;
-const pic = userDetails.pic;
+function getUsername() {
+  if(userDetails) {
+    const username = userDetails.username;
+    return username;
+  }
+   return "";
+};
+
+function getEmail() {
+  if(userDetails) {
+    const username = userDetails.email;
+    return username;
+  }
+   return "";
+};
+
+function getPic() {
+  if(userDetails) {
+    const pic = userDetails.pic;
+    return pic;
+  }
+   return "";
+};
+
 const account = {
-  displayName: userName,
-  email: emailD,
-  photoURL: pic,
+  displayName: getUsername(),
+  email: getEmail(),
+  photoURL: getPic(),
 };
 
 export default account;

@@ -37,7 +37,6 @@ export default function RegisterForm() {
   const sponsorId = id;
   const [email, setEmail] = useState("");
   const [username, setUserame] = useState("");
-  const [transactionpin, setTransactionPin] = useState("");
   const [pic, setPic] = useState(
     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
   );
@@ -48,6 +47,7 @@ export default function RegisterForm() {
   const [level, setLevel] = useState("White Label");
   const [tpin, setTPin] = useState(1234);
   const [loading, setLoading] = useState(false);
+  const [status] = useState("Inactive");
   const [refBonus] = useState(0);
   const [totalrefBonus] = useState(0);
   const [withdrawnRefBonus] = useState(0);
@@ -106,6 +106,7 @@ export default function RegisterForm() {
           email,
           level,
           tpin,
+          status,
           password,
           refBonus,
           totalrefBonus,

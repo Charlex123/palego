@@ -43,6 +43,14 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false
     },
+    status: {
+      type: String,
+      required: true
+    },
+    activated: {
+      type: Boolean,
+      default: false
+    },
     bscwalletaddress: {
       type: String
     },

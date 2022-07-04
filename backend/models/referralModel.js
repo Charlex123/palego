@@ -10,6 +10,10 @@ const referralSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true
     },
+    activated: {
+      type: Boolean,
+      default: false
+    },
     refBonus: {
       type: Number,
       required: true
