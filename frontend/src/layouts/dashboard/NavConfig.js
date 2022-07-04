@@ -14,6 +14,12 @@ function getUsername() {
    return "";
 };
 const navConfig = [
+  
+  {
+    title: 'Activate',
+    path: `/dashboard/activate/`+getUsername(),
+    icon: getIcon('eva:shopping-bag-fill'),
+  },
   {
     title: 'Add Asset',
     path: `/dashboard/addasset/`+getUsername(),
@@ -52,6 +58,11 @@ const navConfig = [
   {
     title: 'profile',
     path: `/dashboard/user/`+getUsername(),
+    icon: getIcon('eva:people-fill'),
+  },
+  {
+    title: 'referral',
+    path: `/dashboard/referral/`+getUsername(),
     icon: getIcon('eva:people-fill'),
   },
   {

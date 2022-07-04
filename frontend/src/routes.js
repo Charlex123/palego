@@ -14,6 +14,8 @@ import Withdraw from './pages/Withdraw';
 import AddAsset from "./pages/AddAsset";
 import Deposit from "./pages/Deposit";
 import RegSuccess from './pages/RegSuccess';
+import Referral from './pages/Referral';
+import Activate from './pages/Activate';
 import AssetAnalysis from './pages/AssetAnalysis';
 import ResetPassword from './pages/ResetPassword';
 import DashboardApp from './pages/DashboardApp';
@@ -35,6 +37,8 @@ export default function Router() {
         { path: 'withdrawals/:id', element: <Withdrawals /> },
         { path: 'deposit/:id', element: <Deposit /> },
         { path: 'myassets/:id', element: <MyAssets /> },
+        { path: 'activate/:id', element: <Activate /> },
+        { path: 'referral/:id', element: <Referral /> },
         { path: 'assetanalysis/:id', element: <AssetAnalysis /> },
         { path: 'assetshistory/:id', element: <AssetsHistory  /> },
         { path: 'addasset/:id', element: <AddAsset  /> },

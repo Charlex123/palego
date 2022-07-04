@@ -154,17 +154,16 @@ const authUser = asyncHandler(async (req, res) => {
               bscwalletaddress: user.bscwalletaddress,
               isAdmin: user.isAdmin,
               pic: user.pic,
-              token: generateToken(user._id),
+              token: generateToken(user._id)
             });
       }
       
-    }else if(referral.length != 0 && getrefsponsor != 0 && asset.length === 0) {
+    }else if(referral.length != 0 && getrefsponsor.length != 0 && asset.length === 0) {
       const sponsorid = getrefsponsor[0].sponsorId;
       if(sponsorid) {
         const getsponsor = await User.find({_id:sponsorid});
         const upline = getsponsor[0].username;
         const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
-        console.log(sponsorid)
         // const getusersuplines = await User.find(user._id).populate({
         //   path:"refId", model:"referrals"
         // });
@@ -177,18 +176,44 @@ const authUser = asyncHandler(async (req, res) => {
               status: user.status,
               activated: user.activated,
               sponsorId: sponsorid,
-              nofodirectdownlines: noofDirectDownlines,
+              directdownlines: referral,
+              noofdirectdownlines: noofDirectDownlines,
               sponsor: upline,
               trxwalletaddressbase58: user.trxwalletaddressbase58,
               trxwalletaddresshex:user.trxwalletaddresshex,
               bscwalletaddress: user.bscwalletaddress,
               isAdmin: user.isAdmin,
               pic: user.pic,
-              token: generateToken(user._id),
+              token: generateToken(user._id)
             });
       }
       
-    }else if((referral.length != 0 && asset.length === 0) || (referral.length != 0 && asset.length === 0)) {
+    }else if(referral.length != 0 && asset.length != 0) {
+     
+      const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
+      // const getusersuplines = await User.find(user._id).populate({
+      //   path:"refId", model:"referrals"
+      // });
+          res.status(201).json({
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            level: user.level,
+            tpin: user.tpin,
+            status: user.status,
+            asset: asset,
+            activated: user.activated,
+            directdownlines: referral,
+            nofodirectdownlines: noofDirectDownlines,
+            trxwalletaddressbase58: user.trxwalletaddressbase58,
+            trxwalletaddresshex:user.trxwalletaddresshex,
+            bscwalletaddress: user.bscwalletaddress,
+            isAdmin: user.isAdmin,
+            pic: user.pic,
+            token: generateToken(user._id),
+          });
+    
+  }else if(referral.length != 0 && asset.length === 0) {
      
         const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
         // const getusersuplines = await User.find(user._id).populate({
@@ -212,7 +237,6 @@ const authUser = asyncHandler(async (req, res) => {
             });
       
     }else if(referral.length === 0 && asset.length != 0) {
-      
             res.status(201).json({
               _id: user._id,
               username: user.username,

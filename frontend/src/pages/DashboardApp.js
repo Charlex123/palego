@@ -19,7 +19,7 @@ import {
   AppCurrentSubject,
   AppConversionRates,
 } from '../sections/@dashboard/app';
-import ReferralLink from './ReferralLink';
+import ReferralLink from './Referral';
 
 // ----------------------------------------------------------------------
 
