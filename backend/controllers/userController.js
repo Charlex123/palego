@@ -124,8 +124,8 @@ const authUser = asyncHandler(async (req, res) => {
     const referral = await Referral.find({ sponsorId: user._id });
     const getrefsponsor = await Referral.find({ userId: user._id });
     const asset = await Assets.find({ userId: user._id });
-    console.log(referral)
-    console.log(getrefsponsor)
+    // Map documents returned by `data` events
+   
     if(referral.length != 0 && asset.length != 0 && getrefsponsor.length !=0) {
       const sponsorid = getrefsponsor[0].sponsorId;
       console.log(sponsorid)
@@ -164,6 +164,7 @@ const authUser = asyncHandler(async (req, res) => {
         const getsponsor = await User.find({_id:sponsorid});
         const upline = getsponsor[0].username;
         const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
+        // const followedUsers = await User.find({ _id: { $in: followedIDs } });
         // const getusersuplines = await User.find(user._id).populate({
         //   path:"refId", model:"referrals"
         // });
@@ -191,6 +192,11 @@ const authUser = asyncHandler(async (req, res) => {
     }else if(referral.length != 0 && asset.length != 0) {
      
       const noofDirectDownlines = await Referral.countDocuments({sponsorId: userid});
+      const secondgenDownlineIds = referral.map(key => (
+        key.userId
+      ));
+      
+      const secondgenDownlines = await Referral.find().where('sponsorId').in(secondgenDownlineIds);
       // const getusersuplines = await User.find(user._id).populate({
       //   path:"refId", model:"referrals"
       // });
@@ -219,6 +225,21 @@ const authUser = asyncHandler(async (req, res) => {
         // const getusersuplines = await User.find(user._id).populate({
         //   path:"refId", model:"referrals"
         // });
+        const secondgenDownlineIds = referral.map(key => (
+          key.userId
+        ));
+        if(secondgenDownlineIds.length != 0) {
+          const secondgenDownlines = await Referral.find().where('sponsorId').in(secondgenDownlineIds);
+          const noofsecondgenDownlines = secondgenDownlineIds.length;
+
+          const thirdgenDownlineIds = secondgenDownlines.map(key =>(
+            key.userId
+          ))
+
+          if(thirdgenDownlineIds.length != 0) {
+            const thirdgenDownlines = await Referral.find().where('sponsorId').in(thirdgenDownlineIds);
+            const noofthirdgenDownlines = thirdgenDownlineIds.length;
+
             res.status(201).json({
               _id: user._id,
               username: user.username,
@@ -227,6 +248,51 @@ const authUser = asyncHandler(async (req, res) => {
               tpin: user.tpin,
               status: user.status,
               activated: user.activated,
+              irectdownlines: referral,
+              nofodirectdownlines: noofDirectDownlines,
+              secondgenDownlines: secondgenDownlines,
+              noofDirectDownlines: noofsecondgenDownlines,
+              thirdgenDownlines: thirdgenDownlines,
+              noofthirdgenDownlines: noofthirdgenDownlines,
+              trxwalletaddressbase58: user.trxwalletaddressbase58,
+              trxwalletaddresshex:user.trxwalletaddresshex,
+              bscwalletaddress: user.bscwalletaddress,
+              isAdmin: user.isAdmin,
+              pic: user.pic,
+              token: generateToken(user._id),
+            });
+          }
+
+          res.status(201).json({
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            level: user.level,
+            tpin: user.tpin,
+            status: user.status,
+            activated: user.activated,
+            irectdownlines: referral,
+            nofodirectdownlines: noofDirectDownlines,
+            secondgenDownlines: secondgenDownlines,
+            noofDirectDownlines: noofsecondgenDownlines,
+            trxwalletaddressbase58: user.trxwalletaddressbase58,
+            trxwalletaddresshex:user.trxwalletaddresshex,
+            bscwalletaddress: user.bscwalletaddress,
+            isAdmin: user.isAdmin,
+            pic: user.pic,
+            token: generateToken(user._id),
+          });
+        }
+        
+            res.status(201).json({
+              _id: user._id,
+              username: user.username,
+              email: user.email,
+              level: user.level,
+              tpin: user.tpin,
+              status: user.status,
+              activated: user.activated,
+              irectdownlines: referral,
               nofodirectdownlines: noofDirectDownlines,
               trxwalletaddressbase58: user.trxwalletaddressbase58,
               trxwalletaddresshex:user.trxwalletaddresshex,
